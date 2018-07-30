@@ -23,7 +23,7 @@ SELECT  ?dataset (COUNT(*) AS ?count) ?label WHERE { GRAPH <https://linked.opend
 }} GROUP BY ?dataset ?label
 ```
 ### list of all measures
-Use the folloing query to geta  list of all available measures. Clicking on each measure will give you additional information like unit and description. 
+Use the following query to geta  list of all available measures. Clicking on each measure will give you additional information like unit and description. 
 ```SPARQL
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX qb: <http://purl.org/linked-data/cube#>

@@ -4,7 +4,8 @@ Alle Dokumentationen stehen unter CCBY (Statistik Stadt Zürich) zur Verfügung.
 documentation on the products of Statistik Stadt Zürich
 
 ## Getting started
-https://test.lindas-data.ch/sparql-ui/
+http://ld.stadt-zuerich.ch/sparql/
+
 ## Api Reference
 
 ## Licensing

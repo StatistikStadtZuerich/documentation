@@ -1,9 +1,10 @@
 # Linked Open Statistical Data 
+This documentation covers using the linked open statistical data service provided by the [Statistics Office of the City of Zurich](https://www.stadt-zuerich.ch/statistik). 
 
 ## Getting started
-You can run your SPARQL query in http://ld.stadt-zuerich.ch/sparql/ and directly see the result as a table or chart. See the [official SPARQL Query Language documentation](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) for how to write your own query or modifify an existing one. 
+Our [examples](https://github.com/statistikstadtzuerich/documentation/tree/master/examples) provide a good starting point and exercise to work with our data if you're new to SPARQL.
 
-Our [examples](https://github.com/statistikstadtzuerich/documentation/tree/master/examples) provide a good starting point and exercise to work with our data if you're new to SPARQL. 
+You can run your SPARQL query in http://ld.stadt-zuerich.ch/sparql/ and directly see the result as a table or chart. See the [official SPARQL Query Language documentation](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) for how to write your own query or modifify an existing one. 
 
 ### list of available datasets
 Use the following query to get a list of all datasets with their respective lables. 
@@ -31,7 +32,6 @@ SELECT * WHERE {
        rdfs:label ?KennzahlLabel .
 } 
 ORDER BY ?KennzahlLabel
-
 ```
 ## Api Reference
 

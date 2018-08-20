@@ -2,6 +2,9 @@ name: example-environment
 channels:
   - conda-forge
 dependencies:
+  - setuptools
+  - wheel
   - pip:
     - sparqlkernel
+    - jupyter_contrib_nbextensions
     

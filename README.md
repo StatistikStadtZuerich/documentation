@@ -4,7 +4,8 @@ This documentation covers using the linked open statistical data service provide
 ## Getting started
 You can first start with the information in this document. As further documentation we provide a [Jupyternotebook](https://github.com/statistikstadtzuerich/documentation/blob/master/LOSD_Manual_of_Statistik_Stadt_Zurich.ipynb) . You can use it to exercise to work with our data if you're new to SPARQL.
 
-An online Jupyter notebook will soon be provided.
+An online Jupyter notebook will soon be provided:
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/statistikstadtzuerich/documentation/master)
 
 You can run your SPARQL query in https://ld.stadt-zuerich.ch/sparql/ and directly see the result as a table or chart. See the [official SPARQL Query Language documentation](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) for how to write your own query or modifify an existing one. 
 

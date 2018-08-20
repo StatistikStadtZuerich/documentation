@@ -2,7 +2,9 @@
 This documentation covers using the linked open statistical data service provided by the [Statistics Office of the City of Zurich](https://www.stadt-zuerich.ch/statistik). 
 
 ## Getting started
-Our [examples](https://github.com/statistikstadtzuerich/documentation/tree/master/examples) provide a good starting point and exercise to work with our data if you're new to SPARQL.
+You can first start with the information in this document. As further documentation we provide a [Jupyternotebook](https://github.com/statistikstadtzuerich/documentation/blob/master/LOSD_Manual_of_Statistik_Stadt_Zurich.ipynb) . You can use it to exercise to work with our data if you're new to SPARQL.
+
+An online Jupyter notebook will soon be provided.
 
 You can run your SPARQL query in https://ld.stadt-zuerich.ch/sparql/ and directly see the result as a table or chart. See the [official SPARQL Query Language documentation](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) for how to write your own query or modifify an existing one. 
 
@@ -34,7 +36,7 @@ SELECT * WHERE {
 ORDER BY ?KennzahlLabel
 ```
 ## Api Reference
+An API reference will be provided later on.
 
 ## Licensing
-
 This documentation is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (Statistik Stadt Zürich). 

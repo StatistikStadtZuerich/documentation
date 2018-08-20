@@ -35,6 +35,14 @@ SELECT * WHERE {
 } 
 ORDER BY ?KennzahlLabel
 ```
+
+## Github
+The relevant repositories are:
+* https://github.com/statistikstadtzuerich/documentation (This documentation)
+* https://github.com/statistikstadtzuerich/ld-data (The pipeline from the internal data format of SSZ to RDF)
+* https://github.com/statistikstadtzuerich/ld.stadt-zuerich.ch  (the server for managing the linked data)
+* https://github.com/statistikstadtzuerich/stat.stadt-zuerich.ch (the server to create the API)
+
 ## Api Reference
 An API reference will be provided later on.
 

@@ -1,2 +1,3 @@
 jupyter sparqlkernel install
 jupyter contrib nbextension install --user
+jupyter trust LOSD_Manual_of_Statistik_Stadt_Zurich.ipynb

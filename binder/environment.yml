@@ -3,7 +3,6 @@ channels:
   - conda-forge
 dependencies:
   - python
-  - numpy
   - pip:
     - sparqlkernel
     - jupyter_contrib_nbextensions

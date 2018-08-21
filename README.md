@@ -2,7 +2,7 @@
 This documentation covers using the linked open statistical data service provided by the [Statistics Office of the City of Zurich](https://www.stadt-zuerich.ch/statistik). 
 
 ## Getting started
-You can first start with the information in this document. As further documentation we provide a [Jupyternotebook](https://github.com/statistikstadtzuerich/documentation/blob/master/LOSD_Manual_of_Statistik_Stadt_Zurich.ipynb) . You can use it to exercise to work with our data if you're new to SPARQL.
+You can first start with the information in this document. As further documentation we provide a [Jupyternotebook](https://github.com/statistikstadtzuerich/documentation/blob/master/Linked_Data/Manual/LOSD_Manual_of_Statistik_Stadt_Zurich.ipynb) . You can use it to exercise to work with our data if you're new to SPARQL.
 
 For using the Jupyter notebook correctly refer to the section about the installation of Jupyter in this context.
 
@@ -59,7 +59,7 @@ jupyter notebook
 ```
 Then you download the notebook to your machine and start juptyter. When you have done that you may activate some extensions like "toc2"
 
-Important notice: The Sparql kernel has some quirks within. This means you have to use the [Lindas](https://lindas-data.ch/) endpoint directly and not the one provided in the middleware for the time being. We work on this. 
+Important notice: The Sparql kernel has some quirks within. This means you have to use the [Lindas](https://lindas-data.ch/) endpoint directly and not the one provided in the middleware for the time being. We work on this. Then it is especially useful to set the GRAPH as we have done in all examples in the jupyter notebook.
 
 ## Licensing
 This documentation is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (Statistik Stadt Zürich). 

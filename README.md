@@ -8,6 +8,8 @@ For using the Jupyter notebook correctly refer to the section about the installa
 
 You can run your SPARQL query in https://ld.stadt-zuerich.ch/sparql/ and directly see the result as a table or chart. See the [official SPARQL Query Language documentation](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) for how to write your own query or modifify an existing one. 
 
+An online version of the Jupyter notebooks is available on [binder](https://mybinder.org/v2/gh/statistikstadtzuerich/documentation/master?filepath=Linked_Data%2FManual%2FLOSD_Manual_of_Statistik_Stadt_Zurich.ipynb). Currently the code blocks can't be executed, unfortunately. 
+
 ### list of available datasets
 Use the following query to get a list of all datasets with their respective lables. 
 

@@ -5,5 +5,4 @@ dependencies:
   - setuptools
   - wheel
   - pip:
-    - sparqlkernel
-    - jupyter_contrib_nbextensions
+    - allthekernels

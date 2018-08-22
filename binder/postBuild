@@ -1,4 +1,4 @@
-jupyter sparqlkernel install --user
-pip install jupyter_contrib_nbextensions
-jupyter contrib nbextension install --user
+# jupyter sparqlkernel install --user
+# pip install jupyter_contrib_nbextensions
+# jupyter contrib nbextension install --user
 

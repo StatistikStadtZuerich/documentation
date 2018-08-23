@@ -23,7 +23,7 @@ This folder contains the Jupyter Notebook for LOSD - Linked Open Statistical Dat
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.4 Other important Concepts](#3.4-Other-important-Concepts)<br>
 [4 SPARQL](#SPARQL)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.1 SPARQL in this notebook](#4.1-SPARQL-in-this-notebook)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.2 Example Query&#58; all DataSets](#4.2-Example-Query&#58;-all-DataSets)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.2 Example Query&#58; all DataSets](#4.2-Example-Query--all-DataSets)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.2.1 Explanation](#4.2.1-Explanation)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.3 Example Query&#58; the first 100 Triples](#4.3-Example-Query--the-first-100-Triples)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.3.1 Explanation](#4.3.1-Explanation)<br>

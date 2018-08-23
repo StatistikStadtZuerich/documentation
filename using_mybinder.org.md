@@ -2,7 +2,7 @@
 
 We used [mybinder.org](https://mybinder.org/) to to get a version of our jupyter notebooks directly to live.
 
-You can start our main [notebook on LOSD](https://github.com/statistikstadtzuerich/documentation/blob/master/Linked_Data/Manual/LOSD_Manual_of_Statistik_Stadt_Zurich.ipynb) [here](https://mybinder.org/v2/gh/statistikstadtzuerich/documentation/master?filepath=Linked_Data%2FManual%2FLOSD_Manual_of_Statistik_Stadt_Zurich.ipynb)
+You can start our main [notebook on LOSD](https://github.com/statistikstadtzuerich/documentation/blob/master/Linked_Data/Manual/README.md) [here](https://mybinder.org/v2/gh/statistikstadtzuerich/documentation/master?filepath=Linked_Data%2FManual%2FLOSD_Manual_of_Statistik_Stadt_Zurich.ipynb)
 
 ## Configuring mybinder
 All information is in the binder subfolder:
@@ -15,6 +15,7 @@ More information about possible configurations can be found [here](https://mybin
 It may take some time to start the notebook. Afterwards it can be directly used.
 
 ## Known Issues
+* In mybinder the access to SPARQL is not running yet. The reason is, that mybinder.org blocks 8443 the port we would currently need. 
 * Not set to "trusted" yet.
 
 ## Licensing

@@ -285,7 +285,8 @@ WHERE{
   }}
 ORDER BY ?year
 ```
-![population density](images/6_population-density.PNG)
+
+<img src="images/1_topic.PNG" width="646.1" height="385"/>
 
 <a id="60" />
 

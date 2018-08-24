@@ -12,7 +12,7 @@ You can:
 * For a local installation, which works fine, refer to the section about the installation of Jupyter in this context.
 
 ## Queries, Endpoint 
-You can run your SPARQL query in https://ld.stadt-zuerich.ch/sparql/ and directly see the result as a table or chart. See the [official SPARQL Query Language documentation](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) for how to write your own query or modifify an existing one.  The endpoint is https://ld.stadt-zueri.ch/query. 
+You can run your SPARQL query in https://ld.stadt-zuerich.ch/sparql/ and directly see the result as a table or chart. See the [official SPARQL Query Language documentation](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) for how to write your own query or modifify an existing one.  The endpoint is https://ld.stadt-zuerich.ch/query. 
 
 ### List of available datasets
 Use the following query to get a list of all datasets with their respective labels. It also shows how many observations are available per dataset. 

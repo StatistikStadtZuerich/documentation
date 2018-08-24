@@ -2,13 +2,13 @@
 - <a href="#10"> 1 Getting started </a>
 - <a href="#20"> 2 Available datasets </a>
 - <a href="#30"> 3 Follow your nose </a>
-  - <a href="#31"> 3.1 Narrow down a query: population example </a>
+  - <a href="#31"> 3.1 Narrowing a query: example of population </a>
   - <a href="#32"> 3.2 Spatial units in Zurich: filter on time </a>
   - <a href="#33"> 3.3 Population over time: filter on space </a>
-- <a href="#40"> 4 Assess variable levels: instrument example </a>
-- <a href="#50"> 5 Combine datasets </a> 
-  - <a href="#51"> 5.1 birth and death example </a>
-  - <a href="#52"> 5.2 population density example </a>
+- <a href="#40"> 4 Values of categorical variables: example of music instruments </a>
+- <a href="#50"> 5 Combining datasets </a> 
+  - <a href="#51"> 5.1 Example of births and deaths </a>
+  - <a href="#52"> 5.2 Example of population density </a>
 - <a href="#60"> 6 Maps </a>
 
 <a id="10" />
@@ -95,7 +95,7 @@ WHERE
 
 <a id="31" />
 
-## 3.1 Narrowing a query: population example
+## 3.1 Narrowing a query: example of population
 It is more helpful to assess data at **observation** than at dataset level. If we are interested in the development of the population in City of Zurich the dataset BEW-RAUM-ZEIT contains all information needed; this dataset could be found with searching by topic or text pattern. The following code selects items of class *observation* that belong to the **dataset BEW-RAUM-ZEIT**. The output is limited to 10 elements, as the dataset has numerous elements.
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>

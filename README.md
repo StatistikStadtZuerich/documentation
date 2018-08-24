@@ -4,7 +4,7 @@ This documentation covers using the linked open statistical data service provide
 ## Getting started
 You can first start with the information in this document or the [getting started document by Klemens Rosin](https://github.com/statistikstadtzuerich/documentation/blob/master/Linked_Data/GettingStarted/GettingStartedZurichLOSD.md). We also provide a [short video introduction](https://youtu.be/IUyzwwwIJSk) by Adrian Gschwend about querying RDF Data Cubes. 
 
-Further documentation is provided in a [Jupyter Notebook](https://github.com/statistikstadtzuerich/documentation/blob/master/Linked_Data/Manual/LOSD_Manual_of_Statistik_Stadt_Zurich.ipynb) . 
+Further documentation is provided in a [Jupyter Notebook](https://github.com/statistikstadtzuerich/documentation/blob/master/Linked_Data/Manual/LOSD_Manual_of_Statistik_Stadt_Zurich.ipynb) (for direct viewing in the browser use one of the options below). 
 
 You can:
 * use the [Markdown version](https://github.com/statistikstadtzuerich/documentation/blob/master/Linked_Data/Manual/README.md).

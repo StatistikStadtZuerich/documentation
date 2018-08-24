@@ -109,10 +109,9 @@ WHERE{
 LIMIT 10
 ```
 
-Linked data analysis is intuitive: look at the output of the code to develop further steps; simply follow your nose! With the 'follow your nose' approach the query can be narrowed down. For example you can click this output element:
-[https://ld.stadt-zuerich.ch/statistics/observation/BEW/R00024/Z31122017](https://ld.stadt-zuerich.ch/statistics/observation/BEW/R00024/Z31122017)
-The components BEW, RAUM, ZEIT are of particular interest. By clicking on them, you see that BEW is of type **MeasureProperty**, RAUM and ZEIT are of type **DimensionProperty**.
-This information is used to define variables for population, time, and space. For the variable ?space labels are needed, since the its variable name is not self-explanatory.
+Analysis of linked data is intuitive: look at the output of the code to develop the further steps; simply follow your nose! With the 'follow your nose' approach the query can be narrowed down. For example you can click this output element:
+[https://ld.stadt-zuerich.ch/statistics/observation/BEW/R00024/Z31122017](https://ld.stadt-zuerich.ch/statistics/observation/BEW/R00024/Z31122017). The components BEW, RAUM, ZEIT are of particular interest. By clicking on them, you see that BEW is of type **MeasureProperty**, RAUM and ZEIT are of type **DimensionProperty**.
+This information is used to define variables for population, time, and space. For the variable ?space labels are needed, since the variable's values are not self-explanatory.
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -135,7 +134,7 @@ LIMIT 10
 <a id="32" />
 
 ## 3.2 Spatial units in Zurich: filter on time
-To assess spatial units in Zurich a **point in time is filtered** (e.g. December 31, 2017). This provides an overview over **spatial units** available for December 31, 2017.
+To find out what spatial units are defined for Zurich, one has to **filter a particular point in time** (e.g. December 31, 2017). This provides an overview over **spatial units** available for December 31, 2017.
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -160,7 +159,7 @@ ORDER BY ?space
 <a id="33" />
 
 ## 3.3 Population over time: filter on space
-If you scroll down in the output of the previous query, you can find the observation of the [entire City of Zurich](https://ld.stadt-zuerich.ch/statistics/observation/BEW/R30000/Z31122017). Its spatial dimension is R30000. In the code below the filter is set to the entire city to assess the **population over time**. For plotting the ?time variable a converted to a string. The plot is made with the pivot tool below the output.
+If you scroll down in the output of the previous query, you can find the observation relating to the [whole City of Zurich](https://ld.stadt-zuerich.ch/statistics/observation/BEW/R30000/Z31122017). The spatial dimension of the **entire City of Zurich is R30000**. In the code below the filter is set to the entire city to assess the **population over time**. For plotting, the variable ?time is converted to a string. The plot is created with the pivot tool below the output.
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -187,9 +186,8 @@ ORDER BY ?year
 
 <a id="40" />
 
-# 4 Assess variable levels: instrument example
-In linked data analyis it is crucial to understand the data structure; that means to know the **values per variable**. This is demonstrated with an example from a music school (Musikschule Konservatorium Zürich MKZ) and the question which instrument is played by how many students? How are the trends over time?
-First, all dataset variables are assessed to **fix variables at specific values**, here the music school and the space (fixed to the entire City of Zurich). Second, the measures over the remaining (not fixed) values are summarized; here the sum is taken over instrument and time:
+# 4 Values of categorical variables: example of music instruments
+In linked data analyis it is crucial to understand the data structure; this means that one has to know the occuring **values per variable**. This is demonstrated with an example about a music school (Musikschule Konservatorium Zürich MKZ) and the question how many students play the various musical instruments; and what trends exist over time? First, all variables of the dataset are listed; for some of them **specific values are selected**, here the music school and the space (entire City of Zurich). Second, the measures over the remaining variables are summarized; here the sum of the counts per combination of musical instrument and time is calculated.
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

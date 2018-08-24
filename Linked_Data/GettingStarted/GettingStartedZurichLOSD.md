@@ -286,7 +286,7 @@ WHERE{
 ORDER BY ?year
 ```
 
-<img src="images/1_topic.PNG" width="646.1" height="385"/>
+<img src="images/6_population-density.PNG" width="646.1" height="385"/>
 
 <a id="60" />
 

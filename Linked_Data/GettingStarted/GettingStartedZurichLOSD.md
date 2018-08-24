@@ -9,7 +9,7 @@
 - <a href="#50"> 5 Combining datasets </a> 
   - <a href="#51"> 5.1 Example of births and deaths </a>
   - <a href="#52"> 5.2 Example of population density </a>
-- <a href="#60"> 6 Maps </a>
+- <a href="#60"> 6 Map of city districs </a>
 - <a href="#70"> 7 Federated queries: Zurich and Basel </a>
 
 <a id="10" />
@@ -288,7 +288,7 @@ ORDER BY ?year
 
 <a id="60" />
 
-# 6 Maps
+# 6 Map of city districs
 Perimeter geometries of administrative units of the City of Zurich (e.g. district/Stadtkreis) can be used to generate maps. By clicking on map symbols the district population is displayed.
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

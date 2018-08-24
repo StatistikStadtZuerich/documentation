@@ -65,7 +65,7 @@ WHERE
  ORDER BY ?topicLabel ?datasetLabel
 ```
 
-![topic list](\\szh.loc\ssz\data\Projekte\LOSD\3_Realisierung\Showcases_Tutorial\LOSD_Applications\images\1_topic.PNG)
+![topic list](images/1_topic.PNG)
 
 Sometimes it is helpful to search for **text patterns in data set labels** (e.g. bev for Bevölkerung/population)
 ```SPARQL
@@ -83,7 +83,7 @@ WHERE
   }}
 ```
 
-![text pattern](\\szh.loc\ssz\data\Projekte\LOSD\3_Realisierung\Showcases_Tutorial\LOSD_Applications\images\2_regex.PNG)
+![text pattern](images/2_regex.PNG)
 
 # 3 Follow your nose
 ## 3.1 Narrow down a query: population example
@@ -171,7 +171,7 @@ WHERE{
   }}
 ORDER BY ?year
 ```
-![population](\\szh.loc\ssz\data\Projekte\LOSD\3_Realisierung\Showcases_Tutorial\LOSD_Applications\images\3_population.PNG)
+![population](images/3_population.PNG)
 
 # 4 Assess variable levels: instrument example
 In linked data analyis it is crucial to understand the data structure; that means to know the **values per variable**. This is demonstrated with an example from a music school (Musikschule Konservatorium Zürich MKZ) and the question which instrument is played by how many students? How are the trends over time?
@@ -200,7 +200,7 @@ GROUP BY ?instruLabel ?year
 ORDER BY ?instruLabel ?year 
 ```
 In this music school piano is the most popular instrument, followed by guitar and violin. The data can be plotted with the pivot tool again:
-![instruments](\\szh.loc\ssz\data\Projekte\LOSD\3_Realisierung\Showcases_Tutorial\LOSD_Applications\images\4_instruments.PNG)
+![instruments](images/4_instruments.PNG)
 
 # 5 Combine data sets 
 ## 5.1 Birth and death example
@@ -231,7 +231,7 @@ WHERE {
 ORDER BY ?year
 ```
 
-![birth and death](\\szh.loc\ssz\data\Projekte\LOSD\3_Realisierung\Showcases_Tutorial\LOSD_Applications\images\5_birth-death.PNG)
+![birth and death](images/5_birth-death.PNG)
  
 ## 5.2 Population density example
 The combination of the two data sets **population and area** statistics allows calculation **population density**. As in the birth and death example the data set linkage is based on additional triples. 
@@ -264,7 +264,7 @@ WHERE{
   }}
 ORDER BY ?year
 ```
-![population density](\\szh.loc\ssz\data\Projekte\LOSD\3_Realisierung\Showcases_Tutorial\LOSD_Applications\images\6_population-density.PNG)
+![population density](images/6_population-density.PNG)
 
 # 6 Maps
 Perimeter geometries within the City of Zurich (e.g. district/Stadtkreis) can be used to generate maps.

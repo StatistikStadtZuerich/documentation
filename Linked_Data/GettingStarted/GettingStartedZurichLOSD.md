@@ -69,10 +69,7 @@ WHERE
  ORDER BY ?topicLabel ?datasetLabel
 ```
 
-![topic list](images/1_topic.PNG)
-
-<img src="images/1_topic.PNG" width="651.7" height="257.6" img style="border:5px solid black" />
-
+<img src="images/1_topic.PNG" width="651.7" height="257.6"/>
 
 Sometimes it is helpful to search for **text patterns in dataset labels** (e.g. bev for Bevölkerung/population)
 ```SPARQL
@@ -90,7 +87,7 @@ WHERE
   }}
 ```
 
-![text pattern](images/2_regex.PNG)
+<img src="images/2_regex.PNG" width="879.9" height="222.6"/>
 
 <a id="30" />
 

@@ -291,7 +291,7 @@ ORDER BY ?year
 <a id="60" />
 
 # 6 Maps
-Perimeter geometries within the City of Zurich (e.g. district/Stadtkreis) can be used to generate maps.
+Perimeter geometries within the City of Zurich (e.g. district/Stadtkreis) can be used to generate maps. By clicking on map symbols the district population is displayed.
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

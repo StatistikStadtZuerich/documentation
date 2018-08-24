@@ -315,3 +315,5 @@ WHERE {GRAPH <https://linked.opendata.swiss/graph/zh/statistics> {
   BIND(CONCAT(STR(?spaceLabel), ": ", STR(?population)) AS ?shapeLabel)
   }} 
 ```
+
+![map](images/7_map.PNG)

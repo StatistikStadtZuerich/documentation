@@ -19,7 +19,7 @@ The City of Zurich provides linked open statistical data (LOSD). How can the dat
 - SPARQL: [tutorial](https://docs.data.world/tutorials/sparql/), [slides](http://linked-data-training.zazuko.com/SPARQL/index.html#1), [video](https://youtu.be/IUyzwwwIJSk)
 - LOSD: [City of Zurich linked data manual](https://github.com/statistikstadtzuerich/documentation/blob/master/Linked_Data/Manual/LOSD_Manual_of_Statistik_Stadt_Zurich.ipynb)
  
-The data analyses are executed on the following webpage, called SPARQL endpoint of the City of Zurich: [https://ld.stadt-zuerich.ch/sparql/](https://ld.stadt-zuerich.ch/sparql/). On the SPARQL endpoint, the default for queries is set to [https://ld.stadt-zuerich.ch/query](https://ld.stadt-zuerich.ch/query).
+The data analyses are executed on the following webpage, called **SPARQL endpoint** of the City of Zurich: [https://ld.stadt-zuerich.ch/sparql/](https://ld.stadt-zuerich.ch/sparql/). On the SPARQL endpoint, the default for queries is set to [https://ld.stadt-zuerich.ch/query](https://ld.stadt-zuerich.ch/query).
 
 <a id="20" />
 

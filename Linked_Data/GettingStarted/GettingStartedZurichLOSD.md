@@ -316,4 +316,4 @@ WHERE {GRAPH <https://linked.opendata.swiss/graph/zh/statistics> {
   }} 
 ```
 
-![map](images/7_map.PNG)
+<img src="images/7_map.PNG" width="516.6" height="470.4"/>

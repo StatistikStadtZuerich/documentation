@@ -1,5 +1,5 @@
 # Contents
-- <a href="1"> 1 Getting started </a>
+- <a href="#1"> 1 Getting started </a>
 - 2 Available data sets
 - 3 Follow your nose
   - 3.1 Narrow down a query: population example

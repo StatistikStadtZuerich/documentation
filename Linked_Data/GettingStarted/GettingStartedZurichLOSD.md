@@ -216,12 +216,12 @@ In this music school piano is the most popular instrument, followed by guitar an
 
 <a id="50" />
 
-# 5 Combine datasets 
+# 5 Combining datasets 
 
 <a id="51" />
 
-## 5.1 Birth and death example
-Linked data analysis becomes particularly helpful, if different datasets are combined. In the following example births and deaths over time are combined, and natural change (births minus deaths) is calculated. Bringing datasets together is [different in SPARQL](http://www.cs.utexas.edu/~cannata/cs345/New%20Class%20Notes/15%20JoinsinSPARQL%20(3).pdf) than in convetional table analysis: the two datasets are **simply linked by additional triples**. 
+## 5.1 Example of births and deaths
+Linked data analysis becomes particularly useful when if different datasets are combined. In the following example births and deaths over time are combined, and natural change (births minus deaths) is calculated. Combining datasets is [different in SPARQL](http://www.cs.utexas.edu/~cannata/cs345/New%20Class%20Notes/15%20JoinsinSPARQL%20(3).pdf) compared to conventionally joining tables: the two datasets are **simply linked by additional triples**. 
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
@@ -252,9 +252,8 @@ ORDER BY ?year
 
 <a id="52" />
 
-## 5.2 Population density example
-The combination of the two datasets **population and area** statistics allows calculation **population density**. As in the birth and death example the dataset linkage is based on additional triples. 
-The population density is calculated as people per hectare; however only land without forest and no waterbodies. Therefore, a land cover filter is used (BBA1000: land without forest, no water).
+## 5.2 Example of population density
+The combination of the two datasets **population** and **area** statistics allows the calculation of the **population density**. As in the birth and death example the dataset linkage is based on additional triples. Here, the population density is calculated as people per hectare; however only land without forest and waterbodies. Therefore, a land cover filter (BBA1000: land without forest, no water) should be considered when computing the density.
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -289,7 +288,7 @@ ORDER BY ?year
 <a id="60" />
 
 # 6 Maps
-Perimeter geometries within the City of Zurich (e.g. district/Stadtkreis) can be used to generate maps. By clicking on map symbols the district population is displayed.
+Perimeter geometries of administrative units of the City of Zurich (e.g. district/Stadtkreis) can be used to generate maps. By clicking on map symbols the district population is displayed.
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

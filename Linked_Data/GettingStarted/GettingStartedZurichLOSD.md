@@ -12,6 +12,7 @@
 - 6 Maps
 
 <a id="1" />
+
 # 1 Getting started 
 The City of Zurich provides linked open statistical data (LOSD). How can the data be analyzed? In this document a few basic applications are demonstrated; the programming language SPARQL is used. Additional information on SPARQL and LOSD can be found here:
 

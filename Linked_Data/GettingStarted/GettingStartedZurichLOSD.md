@@ -1,17 +1,17 @@
 # Contents
-- <a href="#1"> 1 Getting started </a>
-- 2 Available data sets
-- 3 Follow your nose
-  - 3.1 Narrow down a query: population example
-  - 3.2 Spatial units in Zurich: filter on time
-  - 3.3 Population over time: filter on space
-- 4 Assess variable levels: instrument example
-- 5 Combine data sets 
-  - 5.1 birth and death example
-  - 5.2 population density example
-- 6 Maps
+- <a href="#10"> 1 Getting started </a>
+- <a href="#20"> 2 Available data sets </a>
+- <a href="#30"> 3 Follow your nose </a>
+  - <a href="#31"> 3.1 Narrow down a query: population example </a>
+  - <a href="#32"> 3.2 Spatial units in Zurich: filter on time </a>
+  - <a href="#33"> 3.3 Population over time: filter on space </a>
+- <a href="#40"> 4 Assess variable levels: instrument example </a>
+- <a href="#50"> 5 Combine data sets </a> 
+  - <a href="#51"> 5.1 birth and death example </a>
+  - <a href="#52"> 5.2 population density example </a>
+- <a href="#60"> 6 Maps </a>
 
-<a id="1" />
+<a id="10" />
 
 # 1 Getting started 
 The City of Zurich provides linked open statistical data (LOSD). How can the data be analyzed? In this document a few basic applications are demonstrated; the programming language SPARQL is used. Additional information on SPARQL and LOSD can be found here:
@@ -20,6 +20,8 @@ The City of Zurich provides linked open statistical data (LOSD). How can the dat
 - LOSD: [City of Zurich linked data manual](https://github.com/statistikstadtzuerich/documentation/blob/master/Linked_Data/Manual/LOSD_Manual_of_Statistik_Stadt_Zurich.ipynb)
  
 The data analyses are executed on the following webpage, called SPARQL endpoint of the City of Zurich: [https://ld.stadt-zuerich.ch/sparql/](https://ld.stadt-zuerich.ch/sparql/). On the SPARQL endpoint, the default for queries is set to [https://ld.stadt-zuerich.ch/query](https://ld.stadt-zuerich.ch/query).
+
+<a id="20" />
 
 # 2 Available data sets
 Which data sets are available on the linked data platform by the City of Zurich? This can be assessed with the following code; copy the code below to the [SPARQL endpoint](https://ld.stadt-zuerich.ch/sparql/) and run the play button in the right upper corner. The core of this query means: find subjects that are of class DataSet. Prefixes are used to improve the code readability.
@@ -87,7 +89,12 @@ WHERE
 
 ![text pattern](images/2_regex.PNG)
 
+<a id="30" />
+
 # 3 Follow your nose
+
+<a id="31" />
+
 ## 3.1 Narrow down a query: population example
 Is is more helpful to assess data at **observation** than at data set level. If we are interested in the population development of the City of Zurich the data set BEW-RAUM-ZEIT contains all information needed; this data set could be found with searching by topic or text pattern.
 The core the following code means: which subjects have a class observation and belong to the **data set BEW-RAUM-ZEIT**. The output is limited to 10 elements, since the data set might consist of numerous elements.
@@ -126,6 +133,8 @@ WHERE{
 LIMIT 10
 ```
 
+<a id="32" />
+
 ## 3.2 Spatial units in Zurich: filter on time
 To assess spatial units in Zurich a **point in time is filtered** (e.g. December 31, 2017). This provides an overview over **spatial units** available for December 31, 2017.
 ```SPARQL
@@ -148,6 +157,8 @@ WHERE{
   }}
 ORDER BY ?space
 ```
+
+<a id="33" />
 
 ## 3.3 Population over time: filter on space
 If you scroll down in the output of the previous query, you can find the observation of the [entire City of Zurich](https://ld.stadt-zuerich.ch/statistics/observation/BEW/R30000/Z31122017). Its spatial dimension is R30000. In the code below the filter is set to the entire city to assess the **population over time**. For plotting the ?time variable a converted to a string. The plot is made with the pivot tool below the output.
@@ -174,6 +185,8 @@ WHERE{
 ORDER BY ?year
 ```
 ![population](images/3_population.PNG)
+
+<a id="40" />
 
 # 4 Assess variable levels: instrument example
 In linked data analyis it is crucial to understand the data structure; that means to know the **values per variable**. This is demonstrated with an example from a music school (Musikschule Konservatorium Zürich MKZ) and the question which instrument is played by how many students? How are the trends over time?
@@ -204,7 +217,12 @@ ORDER BY ?instruLabel ?year
 In this music school piano is the most popular instrument, followed by guitar and violin. The data can be plotted with the pivot tool again:
 ![instruments](images/4_instruments.PNG)
 
+<a id="50" />
+
 # 5 Combine data sets 
+
+<a id="51" />
+
 ## 5.1 Birth and death example
 Linked data analysis becomes particularly helpful, if different data sets are combined. In the following example births and deaths over time are combined, and natural change (births minus deaths) is calculated. Bringing data sets together is [different in SPARQL](http://www.cs.utexas.edu/~cannata/cs345/New%20Class%20Notes/15%20JoinsinSPARQL%20(3).pdf) than in convetional table analysis: the two data sets are **simply linked by additional triples**. 
 ```SPARQL
@@ -234,7 +252,9 @@ ORDER BY ?year
 ```
 
 ![birth and death](images/5_birth-death.PNG)
- 
+
+<a id="52" />
+
 ## 5.2 Population density example
 The combination of the two data sets **population and area** statistics allows calculation **population density**. As in the birth and death example the data set linkage is based on additional triples. 
 The population density is calculated as people per hectare; however only land without forest and no waterbodies. Therefore, a land cover filter is used (BBA1000: land without forest, no water).
@@ -267,6 +287,8 @@ WHERE{
 ORDER BY ?year
 ```
 ![population density](images/6_population-density.PNG)
+
+<a id="60" />
 
 # 6 Maps
 Perimeter geometries within the City of Zurich (e.g. district/Stadtkreis) can be used to generate maps.

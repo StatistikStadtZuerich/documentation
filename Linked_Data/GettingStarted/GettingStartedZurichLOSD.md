@@ -10,6 +10,7 @@
   - <a href="#51"> 5.1 Example of births and deaths </a>
   - <a href="#52"> 5.2 Example of population density </a>
 - <a href="#60"> 6 Maps </a>
+- <a href="#70"> 7 Federated queries </a>
 
 <a id="10" />
 
@@ -314,3 +315,51 @@ WHERE {GRAPH <https://linked.opendata.swiss/graph/zh/statistics> {
   }} 
 ```
 <img src="images/7_map.PNG" width="529.2" height="464.8"/>
+
+<a id="70" />
+
+# 7 Federated Queries
+Until now different datasets from a single SPARQL endpoint have been combined. Moreover, with **federated queries** a combination of datasets from **different SPARQL endpoints** is possible. The code below has to be executed from the Basel SPARQL endpoint ([https://ld.stadt-zuerich.ch/sparql/](https://ld.stadt-zuerich.ch/sparql/)). The Zurich datasets are embedded by the SERCIVE statement.
+```SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX zhdataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
+PREFIX zhmeasure: <https://ld.stadt-zuerich.ch/statistics/measure/>
+PREFIX zhdimension: <https://ld.stadt-zuerich.ch/statistics/property/>
+PREFIX zhcode: <https://ld.stadt-zuerich.ch/statistics/code/>
+PREFIX bsDataset: <https://ld.data-bs.ch/dataset/>
+PREFIX bsProperty: <https://ld.data-bs.ch/property/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+SELECT ?shape ?shapeLabel 
+WHERE {{
+  SERVICE <http://ld.integ.stadt-zuerich.ch/query> {
+    SELECT * 
+      WHERE {GRAPH <https://linked.opendata.swiss/graph/zh/statistics> {
+      ?obs a qb:Observation ;
+	    qb:dataSet zhdataset:BEW-RAUM-ZEIT ;
+        zhdimension:RAUM ?space ;
+        zhdimension:ZEIT ?time ;
+        zhmeasure:BEW ?population .
+      ?space rdfs:label ?spaceLabel ;
+        skos:broader zhcode:Kreis ;
+        geo:hasGeometry/geo:asWKT ?shape .
+	    BIND(CONCAT(STR(?spaceLabel), ": ", STR(?population), " (", STR(YEAR(?time)), ")") AS ?shapeLabel)
+      FILTER(?time = "2016-12-31"^^xsd:date)
+    }
+  }
+}} UNION {
+  SELECT * 
+    WHERE {GRAPH <https://linked.opendata.swiss/graph/bs/statistics> {
+      ?observation qb:dataSet bsDataset:6623 ;
+        bsProperty:jahr ?time ;
+        bsProperty:bevolkerung ?population;
+        bsProperty:raum ?space .
+      ?space rdfs:label ?spaceLabel ;
+        geo:hasGeometry/geo:asWKT ?shape .
+      BIND(CONCAT(STR(?spaceLabel), ": ", STR(?population), " (", STR(YEAR(?time)), ")") AS ?shapeLabel)
+      FILTER(?time = "2016-12-31"^^xsd:date)
+    }}
+}}
+```

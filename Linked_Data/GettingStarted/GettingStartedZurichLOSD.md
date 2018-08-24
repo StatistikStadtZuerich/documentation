@@ -313,5 +313,4 @@ WHERE {GRAPH <https://linked.opendata.swiss/graph/zh/statistics> {
   FILTER(?time = "2017-12-31"^^xsd:date)
   }} 
 ```
-
-<img src="images/7_map.PNG" width="516.6" height="470.4"/>
+<img src="images/7_map.PNG" width="529.2" height="464.8"/>

@@ -21,8 +21,7 @@ The City of Zurich provides linked open statistical data (LOSD). How can the dat
  
 The data analyses should be executed on the following webpage, called **SPARQL endpoint** of the City of Zurich: [https://ld.stadt-zuerich.ch/sparql/](https://ld.stadt-zuerich.ch/sparql/).
 
-<a href="www.nzz.ch/" target="_blank">Hello, world!</a>
-<a href="https://www.thesitewizard.com/" target="_blank">thesitewizard.com</a>
+<a href="https://www.thesitewizard.com/" target="_blank"> thesitewizard.com </a>
 
 <a id="20" />
 

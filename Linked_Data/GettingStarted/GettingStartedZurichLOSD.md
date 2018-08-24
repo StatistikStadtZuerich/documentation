@@ -304,12 +304,13 @@ WHERE {GRAPH <https://linked.opendata.swiss/graph/zh/statistics> {
   ?obs a qb:Observation ;
     qb:dataSet dataset:BEW-RAUM-ZEIT ; 
     dimension:RAUM ?space ; 
-    dimension:ZEIT "2000-12-31"^^xsd:date ;
+    dimension:ZEIT ?time;
     measure:BEW ?population .                                      
   ?space rdfs:label ?spaceLabel ;
     skos:broader code:Kreis ;          
     geo:hasGeometry/geo:asWKT ?shape .
-  BIND(CONCAT(STR(?spaceLabel), ": ", STR(?population)) AS ?shapeLabel)
+    BIND(CONCAT(STR(?spaceLabel), ": ", STR(?population), " (", STR(YEAR(?time)), ")") AS ?shapeLabel)
+  FILTER(?time = "2017-12-31"^^xsd:date)
   }} 
 ```
 

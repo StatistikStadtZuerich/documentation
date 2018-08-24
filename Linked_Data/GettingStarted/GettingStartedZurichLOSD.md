@@ -250,7 +250,7 @@ WHERE {
 ORDER BY ?year
 ```
 
-![birth and death](images/5_birth-death.PNG)
+<img src="images/5_birth-death.PNG" width="844.2" height="449.4"/>
 
 <a id="52" />
 

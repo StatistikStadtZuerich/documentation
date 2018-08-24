@@ -24,7 +24,7 @@ The data analyses should be executed on the following webpage, called **SPARQL e
 <a id="20" />
 
 # 2 Available datasets
-Which datasets are available on the linked data platform by the City of Zurich? This can be assessed with the following code; copy the code below to the [SPARQL endpoint](https://ld.stadt-zuerich.ch/sparql/) and run the play button in the right upper corner. The core of this query means: find subjects that are of class *DataSet*. Prefixes are used to improve the readability of the code.
+Which datasets are available on the linked data platform by the City of Zurich? This can be assessed with the following code; copy and paste the code below to the [SPARQL endpoint](https://ld.stadt-zuerich.ch/sparql/) and run the play button in the upper right corner. This query finds items that are of class *DataSet*. Prefixes are used to improve the readability of the code.
 ```SPARQL
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX qb: <http://purl.org/linked-data/cube#>
@@ -95,8 +95,8 @@ WHERE
 
 <a id="31" />
 
-## 3.1 Narrow down a query: population example
-It is more helpful to assess data at **observation** than at dataset level. If we are interested in the development of the population in City of Zurich the dataset BEW-RAUM-ZEIT contains all information needed; this dataset could be found with searching by topic or text pattern. The core the following code means: which subjects have a class *observation* and belong to the **dataset BEW-RAUM-ZEIT**. The output is limited to 10 elements, since the dataset might consist of numerous elements.
+## 3.1 Narrowing a query: population example
+It is more helpful to assess data at **observation** than at dataset level. If we are interested in the development of the population in City of Zurich the dataset BEW-RAUM-ZEIT contains all information needed; this dataset could be found with searching by topic or text pattern. The following code selects items of class *observation* that belong to the **dataset BEW-RAUM-ZEIT**. The output is limited to 10 elements, as the dataset has numerous elements.
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>

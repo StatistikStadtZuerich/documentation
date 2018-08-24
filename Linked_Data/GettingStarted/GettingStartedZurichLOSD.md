@@ -10,7 +10,7 @@
   - <a href="#51"> 5.1 Example of births and deaths </a>
   - <a href="#52"> 5.2 Example of population density </a>
 - <a href="#60"> 6 Maps </a>
-- <a href="#70"> 7 Federated queries </a>
+- <a href="#70"> 7 Federated queries: Zurich and Basel </a>
 
 <a id="10" />
 
@@ -318,7 +318,7 @@ WHERE {GRAPH <https://linked.opendata.swiss/graph/zh/statistics> {
 
 <a id="70" />
 
-# 7 Federated queries
+# 7 Federated queries: Zurich and Basel
 Until now different datasets from a single SPARQL endpoint have been combined. Moreover, with **federated queries** a combination of datasets from **different SPARQL endpoints** is possible. The code below has to be executed from the Basel SPARQL endpoint ([https://ld.stadt-zuerich.ch/sparql/](https://ld.stadt-zuerich.ch/sparql/)). The Zurich datasets are embedded by the SERCIVE statement.
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

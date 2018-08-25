@@ -9,7 +9,7 @@
 - <a href="#50"> 5 Combining datasets </a> 
   - <a href="#51"> 5.1 Example of births and deaths </a>
   - <a href="#52"> 5.2 Example of population density </a>
-- <a href="#60"> 6 Map of city districs </a>
+- <a href="#60"> 6 Map of city districts </a>
 - <a href="#70"> 7 Federated queries: Zurich and Basel </a>
 
 <a id="10" />
@@ -110,7 +110,7 @@ WHERE{
 LIMIT 10
 ```
 
-Analysis of linked data is intuitive: look at the output of the code to develop the further steps; simply follow your nose! With the 'follow your nose' approach the query can be narrowed down. For example you can click this output element:
+Analysis of linked data is intuitive: look at the output of the code to develop the further steps; simply follow your nose! With the 'follow your nose' approach the query can be narrowed down. For example you can click on this output element:
 [https://ld.stadt-zuerich.ch/statistics/observation/BEW/R00024/Z31122017](https://ld.stadt-zuerich.ch/statistics/observation/BEW/R00024/Z31122017). The components BEW, RAUM, ZEIT are of particular interest. By clicking on them, you see that BEW is of type **MeasureProperty**, RAUM and ZEIT are of type **DimensionProperty**.
 This information is used to define variables for population, time, and space. For the variable ?space labels are needed, since the variable's values are not self-explanatory.
 ```SPARQL
@@ -222,7 +222,7 @@ In this music school piano is the most popular instrument, followed by guitar an
 <a id="51" />
 
 ## 5.1 Example of births and deaths
-Linked data analysis becomes particularly useful when if different datasets are combined. In the following example births and deaths over time are combined, and natural change (births minus deaths) is calculated. Combining datasets is [different in SPARQL](http://www.cs.utexas.edu/~cannata/cs345/New%20Class%20Notes/15%20JoinsinSPARQL%20(3).pdf) compared to conventionally joining tables: the two datasets are **simply linked by additional triples**. 
+Linked data analysis becomes particularly useful when different datasets are combined. In the following example births and deaths over time are combined, and natural change (births minus deaths) is calculated. Combining datasets is [different in SPARQL](http://www.cs.utexas.edu/~cannata/cs345/New%20Class%20Notes/15%20JoinsinSPARQL%20(3).pdf) compared to conventionally joining tables: the two datasets are **simply linked by additional triples**. 
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
@@ -288,7 +288,7 @@ ORDER BY ?year
 
 <a id="60" />
 
-# 6 Map of city districs
+# 6 Map of city districts
 Perimeter geometries of administrative units of the City of Zurich (e.g. district/Stadtkreis) can be used to generate maps. By clicking on map symbols the district population is displayed.
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

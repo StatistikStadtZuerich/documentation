@@ -319,7 +319,7 @@ WHERE {GRAPH <https://linked.opendata.swiss/graph/zh/statistics> {
 <a id="70" />
 
 # 7 Federated queries: Zurich and Basel
-Until now different datasets from a single SPARQL endpoint have been combined. Moreover, with **federated queries** a combination of datasets from **different SPARQL endpoints** is possible. The code below has to be executed from the Basel SPARQL endpoint ([https://ld.stadt-zuerich.ch/sparql/](https://ld.stadt-zuerich.ch/sparql/)). The Zurich datasets are embedded by the SERCIVE statement.
+Until now different datasets from a single SPARQL endpoint have been combined. Moreover, with **federated queries** a combination of datasets from **different SPARQL endpoints** is possible. The code below has to be executed from the Basel SPARQL endpoint ([https://ld.data-bs.ch/sparql/](https://ld.data-bs.ch/sparql/)). The Zurich datasets are embedded by the SERCIVE statement.
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

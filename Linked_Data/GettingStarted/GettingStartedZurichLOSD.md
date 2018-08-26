@@ -9,8 +9,12 @@
 - <a href="#50"> 5 Combining datasets </a> 
   - <a href="#51"> 5.1 Example of births and deaths </a>
   - <a href="#52"> 5.2 Example of population density </a>
-- <a href="#60"> 6 Map of city districts </a>
-- <a href="#70"> 7 Federated queries: Zurich and Basel </a>
+- <a href="#60"> 6 Data with overlapping categories </a>   
+  - <a href="#61"> 6.1 Example of elderly people </a>
+  - <a href="#62"> 6.1 Example of fertility </a>
+  - <a href="#63"> 6.2 Example green area </a>  
+- <a href="#70"> 7 Map of city districts </a>
+- <a href="#80"> 8 Federated queries: Zurich and Basel </a>
 
 <a id="10" />
 
@@ -288,7 +292,102 @@ ORDER BY ?year
 
 <a id="60" />
 
-# 6 Map of city districts
+# 6 Data with overlapping categories
+
+<a id="61" />
+
+## 6.1 Example of elderly people
+Some variables have **overlapping categories**. For example the age variable consists of ALT0517 (age 80 until 84) and ALT9080 (age 80 and elder). With the **pivot tool** the variable's values can be shown. In the code, the appropriate variable values have to be selected; for **people of age 80 or elder** ALT9080 has to be selected. Here he proportion of people of age 80 or elder per city quarter is calculated.
+
+<img src="images/6_ageLabels.PNG" width="539.7" height="435.4"/>
+
+```SPARQL
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
+PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
+PREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?spaceLabel ?year (SUM(?age80Plus/?population *100) AS ?age80PlusRatio)
+#SELECT *
+WHERE{ 
+  GRAPH <https://linked.opendata.swiss/graph/zh/statistics>{   
+    ?obpop a qb:Observation ;
+      qb:dataSet dataset:BEW-RAUM-ZEIT ;  
+      measure:BEW ?population ; 
+      dimension:RAUM ?space ;
+      dimension:ZEIT ?time .        
+    
+    ?obage80 a qb:Observation ;
+      qb:dataSet dataset:BEW-RAUM-ZEIT-ALT ;  
+      measure:BEW ?age80Plus ;
+      dimension:ALT code:ALT9080 ; 
+      #dimension:ALT ?age ;       
+      dimension:RAUM ?space ;
+      dimension:ZEIT ?time .   
+              
+   ?space rdfs:label ?spaceLabel.  
+   #?age rdfs:label ?ageLabel.      
+   BIND(SUBSTR(STR(?space),45,4) AS ?spacegroup)         
+   FILTER (?spacegroup  IN ('R000', 'R001')) #quarters only
+   FILTER(?time = "2017-12-31"^^xsd:date)    
+   BIND(STR(?time) AS ?year)    
+  }}
+GROUP BY ?spaceLabel ?year
+ORDER BY ?spaceLabel ?year
+```
+
+<a id="62" />
+
+## 6.2 Example of fertility
+How many children are born per women? The fertility rate is defined as births devided by women of age 15 until 49. Because of overlapping variable values, the age range has to specified with the suitable variable values. 
+
+```SPARQL
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
+PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
+PREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?year (SUM(?population) AS ?women)  (MIN(?birth) AS ?birthmin) ((?birthmin/?women*1000) AS ?fertility)
+WHERE{ 
+  GRAPH <https://linked.opendata.swiss/graph/zh/statistics>{   
+    ?obpop a qb:Observation ;
+      qb:dataSet dataset:BEW-RAUM-ZEIT-ALT-SEX ;  
+      measure:BEW ?population ;
+      dimension:ALT ?age ; 
+      dimension:SEX code:SEX0002 ;       
+      dimension:RAUM code:R30000 ;
+      dimension:ZEIT ?time .
+    ?obgeb a qb:Observation ;
+      qb:dataSet dataset:GEB-RAUM-ZEIT ;     
+      measure:GEB ?birth ;
+      dimension:RAUM code:R30000 ;
+      dimension:ZEIT ?time .    
+    ?age rdfs:label ?ageLabel.    
+    BIND(SUBSTR(STR(?age),45,7) AS ?agegroup)    
+    FILTER (?agegroup  IN ('ALT0504', 'ALT0505', 'ALT0506', 'ALT0507', 'ALT0508', 'ALT0509', 'ALT0510'))
+    BIND(STR(?time) AS ?year)     
+  }}
+GROUP BY ?year  
+ORDER BY DESC(?year)
+```
+
+![fertility](images/6_fertility.PNG)
+
+<a id="63" />
+
+## 6.3 Example of green area
+
+
+
+
+
+<a id="70" />
+
+# 7 Map of city districts
 Perimeter geometries of administrative units of the City of Zurich (e.g. district/Stadtkreis) can be used to generate maps. By clicking on map symbols the district population is displayed.
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -316,9 +415,9 @@ WHERE {GRAPH <https://linked.opendata.swiss/graph/zh/statistics> {
 ```
 <img src="images/7_map.PNG" width="529.2" height="464.8"/>
 
-<a id="70" />
+<a id="80" />
 
-# 7 Federated queries: Zurich and Basel
+# 8 Federated queries: Zurich and Basel
 Until now different datasets from a single SPARQL endpoint have been combined. Moreover, with **federated queries** a combination of datasets from **different SPARQL endpoints** is possible. The code below has to be executed from the Basel SPARQL endpoint ([https://ld.data-bs.ch/sparql/](https://ld.data-bs.ch/sparql/)). The Zurich datasets are embedded by the SERCIVE statement.
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

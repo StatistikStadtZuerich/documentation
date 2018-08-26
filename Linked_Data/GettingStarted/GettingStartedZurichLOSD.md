@@ -14,7 +14,9 @@
   - <a href="#62"> 6.1 Example of fertility </a>
   - <a href="#63"> 6.2 Example green area </a>  
 - <a href="#70"> 7 Map of city districts </a>
-- <a href="#80"> 8 Federated queries: Zurich and Basel </a>
+- <a href="#80"> 8 Federated queries  </a>
+  - <a href="#81"> 8.1 Zurich and Basel </a>
+  - <a href="#82"> 8.2 Fountain pictures from wikidata </a>  
 
 <a id="10" />
 
@@ -489,7 +491,11 @@ WHERE {GRAPH <https://linked.opendata.swiss/graph/zh/statistics> {
 
 <a id="80" />
 
-# 8 Federated queries: Zurich and Basel
+# 8 Federated queries
+
+<a id="81" />
+
+## 8.1 Zurich and Basel
 Until now different datasets from a single SPARQL endpoint have been combined. Moreover, with **federated queries** a combination of datasets from **different SPARQL endpoints** is possible. The code below has to be executed from the Basel SPARQL endpoint ([https://ld.data-bs.ch/sparql/](https://ld.data-bs.ch/sparql/)). The Zurich datasets are embedded by the SERCIVE statement.
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -534,3 +540,33 @@ WHERE {{
     }}
 }}
 ```
+
+<a id="82" />
+
+## 8.2 Fountain pictures from wikidata
+With a federated query to wikidata the **fountains of Zurich with a picture** are shown on a map.
+
+```SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX p: <http://www.wikidata.org/prop/>
+SELECT ?item ?picture ?coord  ?coordLabel
+WHERE {
+  SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql> {
+    SELECT ?item ?picture ?coord 
+    WHERE{
+      ?item p:P528 ?statement .
+      ?statement pq:P972 wd:Q53629101 .
+      ?item wdt:P18 ?picture ; 
+        wdt:P625 ?coord .}
+  } #end of wikidata service  
+  BIND(CONCAT("<img src='", STR(?picture), "' width='200px' />") AS ?coordLabel)
+} 
+```
+<img src="images/8_fountains_map.PNG" width="552" height="426"/>
+
+

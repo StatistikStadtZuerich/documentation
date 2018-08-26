@@ -567,6 +567,6 @@ WHERE {
   BIND(CONCAT("<img src='", STR(?picture), "' width='200px' />") AS ?coordLabel)
 } 
 ```
-<img src="images/8_fountains_map.PNG" width="552" height="426"/>
+<img src="images/8_fountains.PNG" width="552" height="426"/>
 
 

@@ -339,7 +339,7 @@ ORDER BY ?spaceLabel ?year
 <a id="62" />
 
 ## 6.2 Example of fertility
-How many children are born per women? The fertility rate is defined as births devided by women of age 15 until 49. Because of overlapping variable values, the age range has to specified with the suitable variable values. 
+How many children are born per women? The fertility rate is defined as births per thousand women (age 15 until 49) and year. Because of overlapping variable values, the age range has to specified with the suitable variable values. 
 
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>

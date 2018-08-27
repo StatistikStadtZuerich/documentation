@@ -12,7 +12,7 @@
 - <a href="#60"> 6 Data with overlapping categories </a>   
   - <a href="#61"> 6.1 Example of elderly people </a>
   - <a href="#62"> 6.1 Example of fertility </a>
-  - <a href="#63"> 6.2 Example green area </a>  
+  - <a href="#63"> 6.2 Example of green area </a>  
 - <a href="#70"> 7 Map of city districts </a>
 - <a href="#80"> 8 Federated queries  </a>
   - <a href="#81"> 8.1 Zurich and Basel </a>
@@ -299,7 +299,7 @@ ORDER BY ?year
 <a id="61" />
 
 ## 6.1 Example of elderly people
-Some variables have **overlapping categories**. For example the age variable consists of ALT0517 (age 80 until 84) and ALT9080 (age 80 and elder). With the **pivot tool** the variable's values can be shown. In the code, the appropriate variable values have to be selected; for **people of age 80 or elder** ALT9080 has to be selected. Here he proportion of people of age 80 or elder per city quarter is calculated.
+Some variables have **overlapping categories**. For example the age variable consists of ALT0517 (age 80 until 84) and ALT9080 (age 80 and elder). With the **pivot tool** the variables' values can be shown. In the code, the appropriate variable values have to be selected; for **people of age 80 or elder** ALT9080 has to be chosen. Here he proportion of people of age 80 or elder per city quarter is calculated.
 
 <img src="images/6_ageLabels.PNG" width="539.7" height="435.4"/>
 
@@ -341,7 +341,7 @@ ORDER BY ?spaceLabel ?year
 <a id="62" />
 
 ## 6.2 Example of fertility
-How many children are born per women? The fertility rate is defined as births per thousand women (age 15 until 49) and year. Because of overlapping variable values, the age range has to specified with the suitable variable values. 
+How many children are born per women? The fertility rate is defined as births per thousand women (age 15 until 49) and year. Because of overlapping variable values, the age range has to be specified with the suitable variable values. 
 
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>

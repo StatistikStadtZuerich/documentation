@@ -2975,7 +2975,7 @@ plt.show()
     
 
 
-<img src="images/pythonplot.png" width="778px" style="float:none;margin-left:0"
+<img src="images/pythonplot.png" width="778px" style="float:none;margin-left:0">
 
 
 # 8 SSZVIS<a id="8"></a>

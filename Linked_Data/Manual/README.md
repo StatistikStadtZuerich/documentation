@@ -2975,7 +2975,7 @@ plt.show()
     
 
 
-![png](LOSD_Manual_of_Statistik_Stadt_Zurich_files/LOSD_Manual_of_Statistik_Stadt_Zurich_117_1.png)
+<img src="images/pythonplot.png" width="778px" style="float:none;margin-left:0"
 
 
 # 8 SSZVIS<a id="8"></a>

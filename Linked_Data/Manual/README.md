@@ -2973,8 +2973,6 @@ plt.show()
     2016 	 5176.0 	 3178.0 	 1998.0
     2017 	 5240.0 	 3279.0 	 1961.0
     
-
-
 <img src="images/pythonplot.png" width="778px" style="float:none;margin-left:0">
 
 

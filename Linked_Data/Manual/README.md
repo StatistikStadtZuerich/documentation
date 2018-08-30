@@ -73,8 +73,12 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4251">4&#46;25&#46;1 Explanation</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#426">4&#46;26 Example Query&#58; GeoSPARQL</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4261">4&#46;26&#46;1 Explanation</a><br>
-<a href="#5">5 SSZVIS</a><br>
-<a href="#6">6 OpenSource and Repositories</a><br>
+<a href="#6">6 SPARQL in R</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#61">6&#46;1 Plotting in R</a><br>
+<a href="#7">7 SPARQL in Python</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#71">7&#46;1 Plotting in Python</a><br>
+<a href="#8">8 SSZVIS</a><br>
+<a href="#9">9 OpenSource and Repositories</a><br>
 </p>
 
 # 1 Introduction<a id="1"></a>
@@ -396,7 +400,7 @@ KEN-RAUM-ZEIT-GR1-GR2-GR3-GR4-GR5
 where missing groups/dimensions ("XXX") are omitted in qb:DataSet notation.
 <br>
 
-* DataSets are accessed through the node https://ld.stadt-zuerich.ch/statistics/dataset/&lt;dataset>
+* DataSets are accessed through the node https://ld.stadt-zuerich.ch/statistics/dataset/ followed by their respective notation
 
 **qb:Observation**:<br>
 This is the actual data, the measured values. In a statistical table (as in the statistical yearbooks), the observations would be the values in the table cells.
@@ -410,27 +414,27 @@ in our DataCube notation
 where missing groups/dimensions ("XXX") are omitted in qb:Observation notation.
 <br>
  
-* Observations are accessed through the node https://ld.stadt-zuerich.ch/statistics/observation/&lt;observation>
+* Observations are accessed through the node https://ld.stadt-zuerich.ch/statistics/observation/ followed by their respective notation
 
 **qb:MeasureProperty**:<br>
 The measure components represent the observed phenomena.
 * Kennzahlen or measures of the historic data are mapped to MeasureProperty.
-* Measures are accessed through the node https://ld.stadt-zuerich.ch/statistics/measure/&lt;measure>
+* Measures are accessed through the node https://ld.stadt-zuerich.ch/statistics/measure/ followed by their respective notation
 
 **qb:DimensionProperty**:<br>
 The dimension components serve to identify the observations. A set of values for all the dimension components is sufficient to identify a single observation. Examples of dimensions include the time to which the observation applies, or a geographic region which the observation covers etc. 
 * Dimensions of the historic data are mapped to DimensionProperty.
-* Dimensions are accessed through the node https://ld.stadt-zuerich.ch/statistics/property/&lt;dimension>
+* Dimensions are accessed through the node https://ld.stadt-zuerich.ch/statistics/property/ followed by their respective notation
 
 **qb:AttributeProperty**:<br>
 The attribute components allow us to qualify and interpret the observed value(s). They enable specification of the units of measure, any scaling factors and metadata such as the status of the observation (e.g. estimated, provisional).
 * Only meta and system attributes of the historic data are mapped to AttributeProperty! 
-* Attributes are accessed through the node https://ld.stadt-zuerich.ch/statistics/attribute/&lt;attribute>
+* Attributes are accessed through the node https://ld.stadt-zuerich.ch/statistics/attribute/ followed by their respective notation
 * Units of the MeasureProperties, for instance, are mapped to an independent concept (see next section)
 
 **qb:Slice**:<br>
 A subset of observations within a DataSet. Produced by fixing one or more dimensions and refer to all observations with those dimension values as a single entity, a slice. In statistical applications it is common to work with slices in which a single dimension is left unspecified. In particular, to refer to such slices, in which the single free dimension is time, as "Time Series". Within the Data Cube vocabulary however, arbitrary dimensionality slices are allowed and particular types of slice are not denoted differently.
-* Slices of a specific &lt;DataSet&gt; and &lt;SliceKey&gt; are accessed through the nodes https://ld.stadt-zuerich.ch/statistics/dataset/&lt;DataSet&gt;/&lt;SliceKey&gt;/slice
+* Slices of a specific &lt;DataSet&gt; and &lt;SliceKey&gt; are accessed through the nodes https://ld.stadt-zuerich.ch/statistics/dataset/<DataSet\>/<SliceKey\>/slice
 <br>
 <br>
 
@@ -453,7 +457,7 @@ Shape expressions (written in RDF) are used to declare various  constraints for 
 
 More information on shapes can be found in the official [SHACL Documentation](https://www.w3.org/TR/shacl/).
 
-* Shapes of a specific &lt;DataSet&gt; are accessed through the nodes https://ld.stadt-zuerich.ch/statistics/dataset/&lt;DataSet&gt;/shape
+* Shapes of a specific &lt;DataSet&gt; are accessed through the nodes https://ld.stadt-zuerich.ch/statistics/dataset/<DataSet\>/shape
 
 **sdmx:unitMeasure** and **qudt:unit**:<br>
 The units of measurement of observations are mapped to these two concepts and accessed through the node https://ld.stadt-zuerich.ch/statistics/unit/. qudt:unit acts as the type and sdmx:unitMeasure as the relation of triples:<br>
@@ -462,26 +466,26 @@ The units of measurement of observations are mapped to these two concepts and ac
 
 **skos:Concept**:<br>
 Groupcodes of the historic data are mapped to skos:Concept and accessed through the node https://ld.stadt-zuerich.ch/statistics/code/. A skos:Concept can be viewed as an idea or notion. It is useful when describing the conceptual or intellectual structure of a knowledge organization system, and when referring to specific ideas or meanings established within a KOS. An Example:
-* &lt;<https://ld.stadt-zuerich.ch/statistics/code/R00012>&gt; is a skos:Concept representing institutions of higher education (label "Hochschulen") or, more precisely, the occupied area 
-* &lt;<https://ld.stadt-zuerich.ch/statistics/code/ABT6000>&gt; is a skos:Concept representing all apprentices (label "Lehrlinge")
+* &lt;https://ld.stadt-zuerich.ch/statistics/code/R00012&gt; is a skos:Concept representing institutions of higher education (label "Hochschulen") or, more precisely, the occupied area 
+* &lt;https://ld.stadt-zuerich.ch/statistics/code/ABT6000&gt; is a skos:Concept representing all apprentices (label "Lehrlinge")
 
 **skos:Notation**: Is a string of characters, such as "R00012" or "ABT6000", used to uniquely identify a skos:Concept within the scope of a given concept scheme. A notation is different from a lexical label in that a notation is not normally recognizable as a word or sequence of words in any natural language. An Example:
-* &lt;<https://ld.stadt-zuerich.ch/statistics/code/R00012>&gt; is a concept with skos:Notation "R00012"
+* &lt;https://ld.stadt-zuerich.ch/statistics/code/R00012&gt; is a concept with skos:Notation "R00012"
 
 **skos:inScheme**:<br>
 Tells us to which scheme a concept belongs. A skos:ConceptScheme can be viewed as an aggregation of one or more skos:Concepts. Semantic relationships (links) between those concepts may also be viewed as part of a concept scheme. The notion of a concept scheme is useful when dealing with data that describes two or more different knowledge organization systems. An Example:
-* the concept &lt;<https://ld.stadt-zuerich.ch/statistics/code/R00012>&gt; is in skos:inScheme &lt;<https://ld.stadt-zuerich.ch/statistics/scheme/Raum>&gt;
+* the concept &lt;https://ld.stadt-zuerich.ch/statistics/code/R00012&gt; is in skos:inScheme &lt;https://ld.stadt-zuerich.ch/statistics/scheme/Raum&gt;
 * note that "Raum" is not only used as a dimension but also as a concept!
 
 **skos:broader** and **skos:narrower**:<br>
 Are used to assert a direct hierarchical link between two skos:Concepts:
 * A triple &lt;A&gt; skos:broader &lt;B&gt; asserts that &lt;B&gt;, the object of the triple, is a broader concept than &lt;A&gt;, the subject of the triple. 
 * Similarly, a triple &lt;C&gt; skos:narrower &lt;D&gt; asserts that &lt;D&gt;, the object of the triple, is a narrower concept than &lt;C&gt;, the subject of the triple. 
-* &lt;<https://ld.stadt-zuerich.ch/statistics/code/R00012>&gt; for instance has skos:broader <R30000>
+* &lt;https://ld.stadt-zuerich.ch/statistics/code/R00012&gt; for instance has skos:broader <R30000>
 
 **owl:sameAs**:<br>
 The sameAs statement indicates that two URI resources actually refer to the same thing or represent the same concept. owl:sameAs statements are often used for mappings between ontologies. It is unrealistic to assume everyone will use the same name to refer to some resource or concept. Two concepts generally have different features and relations to other resources, despite being linked by sameAs! In this way, making a union between such ontologies or databases provides more complete data. The graph example in section <a href="#23">2&#46;3</a> had the following statement regarding the city district Alt-Wiedikon:
-* &lt;<https://ld.stadt-zuerich.ch/statistics/code/R00031>&gt; owl:sameAs &lt;<http://www.wikidata.org/entity/Q433012>&gt;
+* &lt;https://ld.stadt-zuerich.ch/statistics/code/R00031&gt; owl:sameAs &lt;http://www.wikidata.org/entity/Q433012&gt;
 
 This means, Wikidata's database entry - with its own location-/population information, images and references - is linked with  LOSD. As a result, Wikidata is able to use R00031 as a gateway to query and effectively incorporate the LOSData into its own database (and vice versa of course).
 
@@ -2109,7 +2113,7 @@ ORDER BY DESC(?property)
 ### 4.19.1 Explanation<a id="4191"></a>
 * Property Paths are specified [here](https://www.w3.org/TR/sparql11-query/#propertypaths) and explained in more detail [here](https://en.wikibooks.org/wiki/SPARQL/Property_paths)
 
-First a DataSet is selected, either randomly (switch the comments in the subselect) or a specific one, then the query tests the relationships originating from the cetral node https://ld.stadt-zuerich.ch/statistics/dataset/&lt;DataSet&gt;. The property path ```(:|!:)``` checks wheter there is a relation connecting two resources and ```?dataset ?pred ?property``` matches these relation. The following list gives an overview of the required regular expressions:
+First a DataSet is selected, either randomly (switch the comments in the subselect) or a specific one, then the query tests the relationships originating from the cetral node https://ld.stadt-zuerich.ch/statistics/dataset/<DataSet\>. The property path ```(:|!:)``` checks wheter there is a relation connecting two resources and ```?dataset ?pred ?property``` matches these relation. The following list gives an overview of the required regular expressions:
 * **(a|b)** means either path __a__ OR **b**
 * **!a** means negation, i.e. NOT **a**
 * **^a** means the inverse path of __a__ (graph is traversed in reverse direction)
@@ -2210,7 +2214,7 @@ ORDER BY ?property
 
 
 ### 4.20.1 Explanation<a id="4201"></a>
-First an Observation is selected, either randomly (switch the comments in the subselect) or a specific one, then the query tests the relationships originating from the cetral node https://ld.stadt-zuerich.ch/statistics/dataset/&lt;Observation&gt;. The property path **(:|!:)** checks wheter there is a relation connecting two resources and ```?dataset ?pred ?property``` matches these relations. For more detail see the <a href="#419">previous section</a>.
+First an Observation is selected, either randomly (switch the comments in the subselect) or a specific one, then the query tests the relationships originating from the cetral node https://ld.stadt-zuerich.ch/statistics/dataset/<Observation\>. The property path **(:|!:)** checks wheter there is a relation connecting two resources and ```?dataset ?pred ?property``` matches these relations. For more detail see the <a href="#419">previous section</a>.
 
 ## 4.21 Example Query: evolution of the plot area without forest<a id="421"></a>
 This query shall display the evolution of plot area, without forest, in Zurich over the years. We can extract the respective DataSet and code with the help of a FILTER REGEX(), for instance. The data is then plotted with the Google Chart feature of the SPARQL-Interface (a plot via notebook is not possible):
@@ -2419,8 +2423,8 @@ WHERE{
     #Raum = Zurich
     FILTER(?Raum = code:R30000)
   
-    #date2string for Google Chart
-    BIND(STR(?Zeit) AS ?year)
+    #date2year as string for Google Chart
+    BIND(SUBSTR(STR(?Zeit),1,4) AS ?year)
 }
 GROUP BY ?year
 ORDER BY ?year
@@ -2430,64 +2434,64 @@ ORDER BY ?year
 <div class="krn-spql"><table><tr class=hdr><th>year</th>
 <th>births</th>
 <th>deaths</th>
-<th>difference</th></tr><tr class=odd><td class=val>1980-12-31</td>
+<th>difference</th></tr><tr class=odd><td class=val>1980</td>
 <td class=val>2953.0</td>
 <td class=val>4482.0</td>
-<td class=val>-1529.0</td></tr><tr class=even><td class=val>1981-12-31</td>
+<td class=val>-1529.0</td></tr><tr class=even><td class=val>1981</td>
 <td class=val>2989.0</td>
 <td class=val>4480.0</td>
-<td class=val>-1491.0</td></tr><tr class=odd><td class=val>1982-12-31</td>
+<td class=val>-1491.0</td></tr><tr class=odd><td class=val>1982</td>
 <td class=val>3076.0</td>
 <td class=val>4453.0</td>
-<td class=val>-1377.0</td></tr><tr class=even><td class=val>1983-12-31</td>
+<td class=val>-1377.0</td></tr><tr class=even><td class=val>1983</td>
 <td class=val>2994.0</td>
 <td class=val>4540.0</td>
-<td class=val>-1546.0</td></tr><tr class=odd><td class=val>1984-12-31</td>
+<td class=val>-1546.0</td></tr><tr class=odd><td class=val>1984</td>
 <td class=val>2984.0</td>
 <td class=val>4328.0</td>
-<td class=val>-1344.0</td></tr><tr class=even><td class=val>1985-12-31</td>
+<td class=val>-1344.0</td></tr><tr class=even><td class=val>1985</td>
 <td class=val>2953.0</td>
 <td class=val>4448.0</td>
-<td class=val>-1495.0</td></tr><tr class=odd><td class=val>1986-12-31</td>
+<td class=val>-1495.0</td></tr><tr class=odd><td class=val>1986</td>
 <td class=val>2986.0</td>
 <td class=val>4489.0</td>
-<td class=val>-1503.0</td></tr><tr class=even><td class=val>1987-12-31</td>
+<td class=val>-1503.0</td></tr><tr class=even><td class=val>1987</td>
 <td class=val>2942.0</td>
 <td class=val>4281.0</td>
-<td class=val>-1339.0</td></tr><tr class=odd><td class=val>1988-12-31</td>
+<td class=val>-1339.0</td></tr><tr class=odd><td class=val>1988</td>
 <td class=val>3036.0</td>
 <td class=val>4241.0</td>
-<td class=val>-1205.0</td></tr><tr class=even><td class=val>1989-12-31</td>
+<td class=val>-1205.0</td></tr><tr class=even><td class=val>1989</td>
 <td class=val>3044.0</td>
 <td class=val>4228.0</td>
-<td class=val>-1184.0</td></tr><tr class=odd><td class=val>1990-12-31</td>
+<td class=val>-1184.0</td></tr><tr class=odd><td class=val>1990</td>
 <td class=val>3046.0</td>
 <td class=val>4330.0</td>
-<td class=val>-1284.0</td></tr><tr class=even><td class=val>1991-12-31</td>
+<td class=val>-1284.0</td></tr><tr class=even><td class=val>1991</td>
 <td class=val>3342.0</td>
 <td class=val>4248.0</td>
-<td class=val>-906.0</td></tr><tr class=odd><td class=val>1992-12-31</td>
+<td class=val>-906.0</td></tr><tr class=odd><td class=val>1992</td>
 <td class=val>3406.0</td>
 <td class=val>4148.0</td>
-<td class=val>-742.0</td></tr><tr class=even><td class=val>1993-12-31</td>
+<td class=val>-742.0</td></tr><tr class=even><td class=val>1993</td>
 <td class=val>3400.0</td>
 <td class=val>4048.0</td>
-<td class=val>-648.0</td></tr><tr class=odd><td class=val>1994-12-31</td>
+<td class=val>-648.0</td></tr><tr class=odd><td class=val>1994</td>
 <td class=val>3483.0</td>
 <td class=val>4187.0</td>
-<td class=val>-704.0</td></tr><tr class=even><td class=val>1995-12-31</td>
+<td class=val>-704.0</td></tr><tr class=even><td class=val>1995</td>
 <td class=val>3419.0</td>
 <td class=val>4168.0</td>
-<td class=val>-749.0</td></tr><tr class=odd><td class=val>1996-12-31</td>
+<td class=val>-749.0</td></tr><tr class=odd><td class=val>1996</td>
 <td class=val>3430.0</td>
 <td class=val>4105.0</td>
-<td class=val>-675.0</td></tr><tr class=even><td class=val>1997-12-31</td>
+<td class=val>-675.0</td></tr><tr class=even><td class=val>1997</td>
 <td class=val>3459.0</td>
 <td class=val>4046.0</td>
-<td class=val>-587.0</td></tr><tr class=odd><td class=val>1998-12-31</td>
+<td class=val>-587.0</td></tr><tr class=odd><td class=val>1998</td>
 <td class=val>3455.0</td>
 <td class=val>3972.0</td>
-<td class=val>-517.0</td></tr><tr class=even><td class=val>1999-12-31</td>
+<td class=val>-517.0</td></tr><tr class=even><td class=val>1999</td>
 <td class=val>3489.0</td>
 <td class=val>3948.0</td>
 <td class=val>-459.0</td></tr></table><div class="tinfo">Total: 38, Shown: 20</div></div>
@@ -2702,7 +2706,279 @@ The result is again visualized as a map with the Geo function:
 <img src="images/geosparql2.png" width="900px" style="float:none;margin-left:0">
 
 
-# 5 SSZVIS<a id="5"></a>
+# 6 SPARQL in R<a id="6"></a>
+The querying of LOSData in RStudio is made possible through the SPARQL package (has dependencies on the RCurl package). Its short documentation can be found [here](https://cran.r-project.org/web/packages/SPARQL/SPARQL.pdf). As a first example, we shall execute the query <a href="#42">all DataSets</a>. The main function is SPARQL() which, after receiving the endpoint, query and http auth credentials as input, fetches the results as a list. The do.call() method then converts this impractical list into a data.frame:
+
+
+```all-of-them
+>R
+install.packages("RCurl")
+install.packages("SPARQL")
+
+library(RCurl)
+library(SPARQL)
+
+endpoint <- 'https://lindas-data.ch:8443/lindas/query'
+query <- 'PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?dataset ?label 
+FROM <https://linked.opendata.swiss/graph/zh/statistics>
+WHERE{
+    ?dataset a qb:DataSet;
+        rdfs:label ?label.
+}
+LIMIT 10'
+
+rawResults <- SPARQL(endpoint,query,curl_args=c('userpwd'=paste('public',':','public',sep='')))
+results <- do.call(rbind.data.frame, results)
+View(results)
+```
+
+View(results):
+<br>
+
+<img src="images/Rresult.png" width="763px" style="float:none;margin-left:0">
+
+## 6.1 Plotting in R<a id="61"></a>
+The package ggplot2 allows us to plot data like we did with Google Chart in query <a href="#424">conjunction of Kennzahlen</a>, for example. For proper plotting we first we have to convert string values back to numeric values with the function as.numeric(). And for queries which select multiple y values for some x values (as it is the case in this particular example), we have to tell ggplot which column of the data.frame corresponds to the x values. This is done by the melt() function. Note that documentation of a method is displayed by ```??<function name>```. The following query executes and plots <a href="#424">conjunction of Kennzahlen</a> in RStudio:
+
+
+```all-of-them
+>R
+install.packages("reshape")
+install.packages("ggplot2")
+
+library(RCurl)
+library(SPARQL)
+library(reshape)
+library(ggplot2)
+
+endpoint <- 'https://lindas-data.ch:8443/lindas/query'
+query <- 'PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
+PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
+PREFIX property: <https://ld.stadt-zuerich.ch/statistics/property/>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+
+SELECT ?year (SUM(?births) AS ?births) (SUM(?deaths) AS ?deaths) (SUM(?difference) AS ?difference) 
+FROM <https://linked.opendata.swiss/graph/zh/statistics>
+WHERE{
+?observation a qb:Observation; 
+property:RAUM ?Raum;
+property:ZEIT ?Zeit.
+
+#extract births
+{
+  ?observation qb:dataSet dataset:GEB-RAUM-ZEIT;
+  measure:GEB ?births.
+  BIND(?births AS ?difference)
+}
+
+UNION
+
+#extract deaths
+{
+  ?observation qb:dataSet dataset:GES-RAUM-ZEIT;
+  measure:GES ?deaths.
+  BIND(?deaths*-1 AS ?difference)
+}
+
+#Raum = Zurich
+FILTER(?Raum = code:R30000)
+
+#date2string for Google Chart
+BIND(SUBSTR(STR(?Zeit),1,4) AS ?year)
+}
+GROUP BY ?year
+ORDER BY ?year'
+rawResults <- SPARQL(endpoint,query,curl_args=c('userpwd'=paste('public',':','public',sep='')))
+results <- do.call(rbind.data.frame, rawResults)
+View(results)
+
+results$year = as.numeric(as.character(results$year))
+results.melted <- melt(results, id = "year")
+p <- ggplot(data = results.melted, aes(x = year, y = value, color = variable, group = variable)) + geom_point() + 
+  geom_line() + scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) + labs(y = "count")
+plot(p)
+```
+
+View(results):
+<br>
+
+<img src="images/Rresult2.png" width="328px" style="float:none;margin-left:0">
+<br>
+
+plot(p):
+<br>
+
+<img src="images/Rplot.png" width="877px" style="float:none;margin-left:0">
+
+# 7 SPARQL in Python<a id="7"></a>
+To query the LOSData in Python, we need the library [SPARQLWrapper](https://github.com/RDFLib/sparqlwrapper). For visualization we use [Matplotlib](https://matplotlib.org/), which allows for simple MATLAB-like plotting. Other useful libraries for working with RDF and graph databases in general, include RDFLib and RDFLib-jsonld. The libraries can be installed with pip:<br>
+```pip install sparqlwrapper```<br>
+```pip install matplotlib```<br>
+```pip install rdflib```<br>
+```pip install rdflib-jsonld```<br>
+
+As a first example, we shall execute the query <a href="#42">all DataSets</a>. SPARQLWrapper first creates the sparql instance from the endpoint, then various [methods](https://rdflib.github.io/sparqlwrapper/doc/latest/SPARQLWrapper.Wrapper.SPARQLWrapper-class.html#setReturnFormat) are called to set the http auth credentials, potential http headers, the query and return format. The allowed parameters are best examined in the configuration tab of the [SPARQL interface](https://ld.stadt-zuerich.ch/sparql/) whereas the format of these parameters can be found on the [YASGUI github page](https://github.com/OpenTriply/YASGUI.YASQE/blob/fd5646e7ab15b040393c212f0a02efa51db55dfa/src/defaults.js). The main function is queryAndconvert() which, after receiving the endpoint, query and http auth credentials as input, fetches the results as a Python dictionary in json format:
+
+
+```all-of-them
+>Python3
+from SPARQLWrapper import SPARQLWrapper, JSON #XML, CSV etc.
+
+sparql = SPARQLWrapper("https://lindas-data.ch:8443/lindas/query")
+sparql.setHTTPAuth("BASIC")
+sparql.setCredentials("public","public")
+#sparql.addCustomHttpHeader("acceptHeaderSelect","application/sparql-results+xml")
+sparql.setQuery("""
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?dataset ?label 
+FROM <https://linked.opendata.swiss/graph/zh/statistics>
+WHERE{
+    ?dataset a qb:DataSet;
+        rdfs:label ?label.
+}
+LIMIT 10
+""")
+
+sparql.setReturnFormat(JSON)
+results = sparql.queryAndConvert()
+
+for result in results["results"]["bindings"]:
+    print('%s \t %s' % (result["dataset"]["value"], result["label"]["value"]))
+```
+
+    https://ld.stadt-zuerich.ch/statistics/dataset/AST-RAUM-ZEIT-BTA 	 Arbeitsstätten nach Betriebsart, Raum, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/BES-RAUM-ZEIT-BTA-SEX 	 Beschäftigte nach Betriebsart, Raum, Geschlecht, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/BES-RAUM-ZEIT-BTA 	 Beschäftigte nach Betriebsart, Raum, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/ZUS-RAUM-ZEIT-BTA-HEL 	 Zuschauer/innen, Besucher/innen nach Betriebsart, Heimatland, Raum, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/ZUS-RAUM-ZEIT-BTA-SEX 	 Zuschauer/innen, Besucher/innen nach Betriebsart, Raum, Geschlecht, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/ZUS-RAUM-ZEIT-BTA 	 Zuschauer/innen, Besucher/innen nach Betriebsart, Raum, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/SCH-RAUM-ZEIT-BTA-SST 	 Schüler/innen und Student/innen nach Betriebsart, Raum, Schulstufen und Fächer, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/SCH-RAUM-ZEIT-BTA 	 Schüler/innen und Student/innen nach Betriebsart, Raum, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/AST-RAUM-ZEIT-BEW-BTA 	 Arbeitsstätten nach Bewilligung, Betriebsart, Raum, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT 	 Wirtschaftliche Wohnbevölkerung nach Raum, Zeit
+    
+
+## 7.1 Plotting in Python<a id="71"></a>
+The execution and plotting of example query <a href="#424">conjunction of Kennzahlen</a> in Python is even simpler than R (with the exception of the legend). We have to convert the dictionary values to float() (remember that ?year was selected as string) and consider that ```label='births'``` would add a label in every loop iteration. We can avoid this by checking with ```get_legend_handles_labels()``` if the legend already includes a particular label.
+
+
+```all-of-them
+>Python3
+import matplotlib.pyplot as plt
+from SPARQLWrapper import SPARQLWrapper, JSON #XML, CSV etc.
+
+sparql = SPARQLWrapper("https://lindas-data.ch:8443/lindas/query")
+sparql.setHTTPAuth("BASIC")
+sparql.setCredentials("public","public")
+sparql.addCustomHttpHeader("acceptHeaderSelect","application/sparql-results+json")
+sparql.setQuery("""
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
+PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
+PREFIX property: <https://ld.stadt-zuerich.ch/statistics/property/>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+
+SELECT ?year (SUM(?births) AS ?births) (SUM(?deaths) AS ?deaths) (SUM(?difference) AS ?difference) 
+FROM <https://linked.opendata.swiss/graph/zh/statistics>
+WHERE{
+    ?observation a qb:Observation; 
+        property:RAUM ?Raum;
+        property:ZEIT ?Zeit.
+  
+    #extract births
+    {
+    ?observation qb:dataSet dataset:GEB-RAUM-ZEIT;
+    measure:GEB ?births.
+    BIND(?births AS ?difference)
+    }
+  
+    UNION
+  
+    #extract deaths
+    {
+    ?observation qb:dataSet dataset:GES-RAUM-ZEIT;
+    measure:GES ?deaths.
+    BIND(?deaths*-1 AS ?difference)
+    }
+    
+    #Raum = Zurich
+    FILTER(?Raum = code:R30000)
+  
+    #date2year as string for plotting
+    BIND(SUBSTR(STR(?Zeit),1,4) AS ?year)
+}
+GROUP BY ?year
+ORDER BY ?year
+""")
+sparql.setReturnFormat(JSON)
+results = sparql.queryAndConvert()
+
+for result in results["results"]["bindings"]:
+    print('%s \t %s \t %s \t %s' %(result["year"]["value"], result["births"]["value"], result["deaths"]["value"], result["difference"]["value"]))
+
+plt.xlabel('year')
+plt.ylabel('count')
+plt.grid(True)
+for result in results["results"]["bindings"]:
+    plt.plot(float(result["year"]["value"]), float(result["births"]["value"]),'bo', label='births' if 'births' not in plt.gca().get_legend_handles_labels()[1] else '')
+    plt.plot(float(result["year"]["value"]), float(result["deaths"]["value"]),'ro', label='deaths' if 'deaths' not in plt.gca().get_legend_handles_labels()[1] else '')
+    plt.plot(float(result["year"]["value"]), float(result["difference"]["value"]),'go', label='difference' if 'difference' not in plt.gca().get_legend_handles_labels()[1] else '')
+plt.legend()
+plt.show()
+```
+
+    1980 	 2953.0 	 4482.0 	 -1529.0
+    1981 	 2989.0 	 4480.0 	 -1491.0
+    1982 	 3076.0 	 4453.0 	 -1377.0
+    1983 	 2994.0 	 4540.0 	 -1546.0
+    1984 	 2984.0 	 4328.0 	 -1344.0
+    1985 	 2953.0 	 4448.0 	 -1495.0
+    1986 	 2986.0 	 4489.0 	 -1503.0
+    1987 	 2942.0 	 4281.0 	 -1339.0
+    1988 	 3036.0 	 4241.0 	 -1205.0
+    1989 	 3044.0 	 4228.0 	 -1184.0
+    1990 	 3046.0 	 4330.0 	 -1284.0
+    1991 	 3342.0 	 4248.0 	 -906.0
+    1992 	 3406.0 	 4148.0 	 -742.0
+    1993 	 3400.0 	 4048.0 	 -648.0
+    1994 	 3483.0 	 4187.0 	 -704.0
+    1995 	 3419.0 	 4168.0 	 -749.0
+    1996 	 3430.0 	 4105.0 	 -675.0
+    1997 	 3459.0 	 4046.0 	 -587.0
+    1998 	 3455.0 	 3972.0 	 -517.0
+    1999 	 3489.0 	 3948.0 	 -459.0
+    2000 	 3577.0 	 3996.0 	 -419.0
+    2001 	 3472.0 	 3943.0 	 -471.0
+    2002 	 3553.0 	 3726.0 	 -173.0
+    2003 	 3629.0 	 3809.0 	 -180.0
+    2004 	 3791.0 	 3568.0 	 223.0
+    2005 	 3895.0 	 3604.0 	 291.0
+    2006 	 4029.0 	 3438.0 	 591.0
+    2007 	 4119.0 	 3480.0 	 639.0
+    2008 	 4349.0 	 3448.0 	 901.0
+    2009 	 4639.0 	 3417.0 	 1222.0
+    2010 	 4588.0 	 3395.0 	 1193.0
+    2011 	 4760.0 	 3290.0 	 1470.0
+    2012 	 4678.0 	 3330.0 	 1348.0
+    2013 	 4920.0 	 3465.0 	 1455.0
+    2014 	 5145.0 	 3334.0 	 1811.0
+    2015 	 5191.0 	 3400.0 	 1791.0
+    2016 	 5176.0 	 3178.0 	 1998.0
+    2017 	 5240.0 	 3279.0 	 1961.0
+    
+
+
+![png](LOSD_Manual_of_Statistik_Stadt_Zurich_files/LOSD_Manual_of_Statistik_Stadt_Zurich_117_1.png)
+
+
+# 8 SSZVIS<a id="8"></a>
 
 SSZVIS is a visualization library of Statistik Stadt Zürich. The data model and the chart system is defined [here](https://sszvis-components.netlify.com/#/chart-system).
 
@@ -2719,7 +2995,7 @@ An example:
 <img src="images/SSZVIS_example.png" width="600px" style="float:none;margin-left:0">
 
 
-# 6 OpenSource and Repositories<a id="6"></a>
+# 9 OpenSource and Repositories<a id="9"></a>
 Statistik Stadt Zürich provides the code for LOSD under the BSD-3-Clause license. The code can freely be used but no support will be provided by Statistik Stadt Zürich.
 
 Relevant repositories:

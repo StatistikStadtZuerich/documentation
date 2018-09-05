@@ -63,6 +63,7 @@ WHERE
 ```
 
 Datasets can be listed **by topic**:
+
 [code link](http://yasgui.org/short/S1J_0GawQ)
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -84,6 +85,7 @@ WHERE
 <img src="images/1_topic.PNG" width="651.7" height="257.6"/>
 
 Sometimes it is helpful to search for **text patterns in dataset labels** (e.g. bev for Bevölkerung/population)
+
 [code link](http://yasgui.org/short/B1oYAM6vm)
 ```SPARQL
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

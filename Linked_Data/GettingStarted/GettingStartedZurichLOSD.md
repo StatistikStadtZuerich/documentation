@@ -32,6 +32,8 @@ The data analyses should be executed on the following webpage, called **SPARQL e
 
 # 2 Available datasets
 Which datasets are available on the linked data platform by the City of Zurich? This can be assessed with the following code; copy and paste the code below to the [SPARQL endpoint](https://ld.stadt-zuerich.ch/sparql/) and run the play button in the upper right corner. This query finds items that are of class *DataSet*. Prefixes are used to improve the readability of the code.
+
+[Code](http://yasgui.org/short/S17DpzTP7)
 ```SPARQL
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX qb: <http://purl.org/linked-data/cube#>

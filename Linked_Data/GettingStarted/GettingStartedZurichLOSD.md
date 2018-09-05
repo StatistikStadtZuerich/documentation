@@ -110,6 +110,7 @@ WHERE
 
 ## 3.1 Narrowing a query: example of population
 It is more helpful to assess data at **observation** than at dataset level. If we are interested in the development of the population in City of Zurich the dataset BEW-RAUM-ZEIT contains all information needed; this dataset could be found with searching by topic or text pattern. The following code selects items of class *observation* that belong to the **dataset BEW-RAUM-ZEIT**. The output is limited to 10 elements, as the dataset has numerous elements.
+
 [code link](http://yasgui.org/short/rkto0MpD7)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
@@ -126,6 +127,7 @@ LIMIT 10
 Analysis of linked data is intuitive: look at the output of the code to develop the further steps; simply follow your nose! With the 'follow your nose' approach the query can be narrowed down. For example you can click on this output element:
 [https://ld.stadt-zuerich.ch/statistics/observation/BEW/R00024/Z31122017](https://ld.stadt-zuerich.ch/statistics/observation/BEW/R00024/Z31122017). The components BEW, RAUM, ZEIT are of particular interest. By clicking on them, you see that BEW is of type **MeasureProperty**, RAUM and ZEIT are of type **DimensionProperty**.
 This information is used to define variables for population, time, and space. For the variable ?space labels are needed, since the variable's values are not self-explanatory.
+
 [code link](http://yasgui.org/short/HJC2Af6Dm)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
@@ -150,6 +152,7 @@ LIMIT 10
 
 ## 3.2 Spatial units in Zurich: filter on time
 To find out what spatial units are defined for Zurich, one has to **filter a particular point in time** (e.g. December 31, 2017). This provides an overview over **spatial units** available for December 31, 2017.
+
 [code link](http://yasgui.org/short/HJt00zaPX)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
@@ -176,6 +179,7 @@ ORDER BY ?space
 
 ## 3.3 Population over time: filter on space
 If you scroll down in the output of the previous query, you can find the observation relating to the [whole City of Zurich](https://ld.stadt-zuerich.ch/statistics/observation/BEW/R30000/Z31122017). The spatial dimension of the **entire City of Zurich is R30000**. In the code below the filter is set to the entire city to assess the **population over time**. For plotting, the variable ?time is converted to a string. The plot is created with the pivot tool below the output.
+
 [code link](http://yasgui.org/short/By7lkQ6D7)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
@@ -205,6 +209,7 @@ ORDER BY ?year
 
 # 4 Values of categorical variables: example of musical instruments
 In linked data analyis it is crucial to understand the data structure; this means that one has to know the occuring **values per variable**. This is demonstrated with an example about a music school (Musikschule Konservatorium Zürich MKZ) and the question how many students play the various musical instruments; and what trends exist over time? First, all variables of the dataset are listed; for some of them **specific values are selected**, here the music school and the space (entire City of Zurich). Second, the measures over the remaining variables are summarized; here the sum of the counts per combination of musical instrument and time is calculated.
+
 [code link](http://yasgui.org/short/H1sZ1mTwX)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
@@ -240,6 +245,7 @@ In this music school piano is the most popular instrument, followed by guitar an
 
 ## 5.1 Example of births and deaths
 Linked data analysis becomes particularly useful when different datasets are combined. In the following example births and deaths over time are combined, and natural change (births minus deaths) is calculated. Combining datasets is [different in SPARQL](http://www.cs.utexas.edu/~cannata/cs345/New%20Class%20Notes/15%20JoinsinSPARQL%20(3).pdf) compared to conventionally joining tables: the two datasets are **simply linked by additional triples**. 
+
 [code link](http://yasgui.org/short/SkFXk7pPX)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
@@ -273,6 +279,7 @@ ORDER BY ?year
 
 ## 5.2 Example of population density
 The combination of the two datasets **population** and **area** statistics allows the calculation of the **population density**. As in the birth and death example the dataset linkage is based on additional triples. Here, the population density is calculated as people per hectare; however only land without forest and waterbodies. Therefore, a land cover filter (BBA1000: land without forest, no water) should be considered when computing the density.
+
 [code link](http://yasgui.org/short/HJfr1XTPm)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>

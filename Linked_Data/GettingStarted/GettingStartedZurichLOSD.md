@@ -33,7 +33,7 @@ The data analyses should be executed on the following webpage, called **SPARQL e
 # 2 Available datasets
 Which datasets are available on the linked data platform by the City of Zurich? This can be assessed with the following code; copy and paste the code below to the [SPARQL endpoint](https://ld.stadt-zuerich.ch/sparql/) and run the play button in the upper right corner. This query finds items that are of class *DataSet*. Prefixes are used to improve the readability of the code.
 
-[Code](http://yasgui.org/short/S17DpzTP7)
+[code link](http://yasgui.org/short/S17DpzTP7)
 ```SPARQL
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX qb: <http://purl.org/linked-data/cube#>
@@ -46,6 +46,8 @@ WHERE
 ```
 
 The query can be narrowed down by **dataset measure**, for example limited to **datasets with people** (i.e. the dataset measure is people and not kilograms, workplaces, or cars):
+
+[code link](http://yasgui.org/short/S1dXCMaDX)
 ```SPARQL
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX qb: <http://purl.org/linked-data/cube#>
@@ -61,6 +63,7 @@ WHERE
 ```
 
 Datasets can be listed **by topic**:
+[code link](http://yasgui.org/short/S1J_0GawQ)
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -81,6 +84,7 @@ WHERE
 <img src="images/1_topic.PNG" width="651.7" height="257.6"/>
 
 Sometimes it is helpful to search for **text patterns in dataset labels** (e.g. bev for Bevölkerung/population)
+[code link](http://yasgui.org/short/B1oYAM6vm)
 ```SPARQL
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX qb: <http://purl.org/linked-data/cube#>
@@ -106,6 +110,7 @@ WHERE
 
 ## 3.1 Narrowing a query: example of population
 It is more helpful to assess data at **observation** than at dataset level. If we are interested in the development of the population in City of Zurich the dataset BEW-RAUM-ZEIT contains all information needed; this dataset could be found with searching by topic or text pattern. The following code selects items of class *observation* that belong to the **dataset BEW-RAUM-ZEIT**. The output is limited to 10 elements, as the dataset has numerous elements.
+[code link](http://yasgui.org/short/rkto0MpD7)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
@@ -121,6 +126,7 @@ LIMIT 10
 Analysis of linked data is intuitive: look at the output of the code to develop the further steps; simply follow your nose! With the 'follow your nose' approach the query can be narrowed down. For example you can click on this output element:
 [https://ld.stadt-zuerich.ch/statistics/observation/BEW/R00024/Z31122017](https://ld.stadt-zuerich.ch/statistics/observation/BEW/R00024/Z31122017). The components BEW, RAUM, ZEIT are of particular interest. By clicking on them, you see that BEW is of type **MeasureProperty**, RAUM and ZEIT are of type **DimensionProperty**.
 This information is used to define variables for population, time, and space. For the variable ?space labels are needed, since the variable's values are not self-explanatory.
+[code link](http://yasgui.org/short/HJC2Af6Dm)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -144,6 +150,7 @@ LIMIT 10
 
 ## 3.2 Spatial units in Zurich: filter on time
 To find out what spatial units are defined for Zurich, one has to **filter a particular point in time** (e.g. December 31, 2017). This provides an overview over **spatial units** available for December 31, 2017.
+[code link](http://yasgui.org/short/HJt00zaPX)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -169,6 +176,7 @@ ORDER BY ?space
 
 ## 3.3 Population over time: filter on space
 If you scroll down in the output of the previous query, you can find the observation relating to the [whole City of Zurich](https://ld.stadt-zuerich.ch/statistics/observation/BEW/R30000/Z31122017). The spatial dimension of the **entire City of Zurich is R30000**. In the code below the filter is set to the entire city to assess the **population over time**. For plotting, the variable ?time is converted to a string. The plot is created with the pivot tool below the output.
+[code link](http://yasgui.org/short/By7lkQ6D7)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -197,6 +205,7 @@ ORDER BY ?year
 
 # 4 Values of categorical variables: example of musical instruments
 In linked data analyis it is crucial to understand the data structure; this means that one has to know the occuring **values per variable**. This is demonstrated with an example about a music school (Musikschule Konservatorium Zürich MKZ) and the question how many students play the various musical instruments; and what trends exist over time? First, all variables of the dataset are listed; for some of them **specific values are selected**, here the music school and the space (entire City of Zurich). Second, the measures over the remaining variables are summarized; here the sum of the counts per combination of musical instrument and time is calculated.
+[code link](http://yasgui.org/short/H1sZ1mTwX)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -231,6 +240,7 @@ In this music school piano is the most popular instrument, followed by guitar an
 
 ## 5.1 Example of births and deaths
 Linked data analysis becomes particularly useful when different datasets are combined. In the following example births and deaths over time are combined, and natural change (births minus deaths) is calculated. Combining datasets is [different in SPARQL](http://www.cs.utexas.edu/~cannata/cs345/New%20Class%20Notes/15%20JoinsinSPARQL%20(3).pdf) compared to conventionally joining tables: the two datasets are **simply linked by additional triples**. 
+[code link](http://yasgui.org/short/SkFXk7pPX)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
@@ -263,6 +273,7 @@ ORDER BY ?year
 
 ## 5.2 Example of population density
 The combination of the two datasets **population** and **area** statistics allows the calculation of the **population density**. As in the birth and death example the dataset linkage is based on additional triples. Here, the population density is calculated as people per hectare; however only land without forest and waterbodies. Therefore, a land cover filter (BBA1000: land without forest, no water) should be considered when computing the density.
+[code link](http://yasgui.org/short/HJfr1XTPm)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -305,6 +316,7 @@ Some variables have **overlapping categories**. For example the age variable con
 
 <img src="images/6_ageLabels.PNG" width="539.7" height="435.4"/>
 
+[code link](http://yasgui.org/short/rysL1QTD7)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -345,6 +357,7 @@ ORDER BY ?spaceLabel ?year
 ## 6.2 Example of fertility
 How many children are born per women? The fertility rate is defined as births per thousand women (age 15 until 49) and year. Because of overlapping variable values, the age range has to be specified with the suitable variable values. 
 
+[code link](http://yasgui.org/short/Bkm_ympvm)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -386,6 +399,7 @@ Which city quarters are green quarters with parks, meadows, graveyards, or fores
 
 <img src="images/6_landuse.PNG" width="522.2" height="219.8"/>
 
+[code link](http://yasgui.org/short/S1AKyXaDX)
 ```SPARQL
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -465,6 +479,8 @@ WHERE{
 
 # 7 Map of city districts
 Perimeter geometries of administrative units of the City of Zurich (e.g. district/Stadtkreis) can be used to generate maps. By clicking on map symbols the district population is displayed.
+
+[code link](http://yasgui.org/short/HJEhyQpDX)
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -499,6 +515,8 @@ WHERE {GRAPH <https://linked.opendata.swiss/graph/zh/statistics> {
 
 ## 8.1 Zurich and Basel
 Until now different datasets from a single SPARQL endpoint have been combined. Moreover, with **federated queries** a combination of datasets from **different SPARQL endpoints** is possible. The code below has to be executed from the Basel SPARQL endpoint ([https://ld.data-bs.ch/sparql/](https://ld.data-bs.ch/sparql/)). The Zurich datasets are embedded by the SERCIVE statement.
+
+[code link](http://yasgui.org/short/B1bAJ7TPX)
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -548,6 +566,7 @@ WHERE {{
 ## 8.2 Fountain pictures from wikidata
 With a federated query to wikidata the **fountains of Zurich with a picture** are shown on a map.
 
+[code link](http://yasgui.org/short/rkjJgXTDQ)
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

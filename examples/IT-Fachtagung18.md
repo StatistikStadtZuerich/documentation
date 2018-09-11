@@ -30,3 +30,9 @@ IT-Fachtagung, 11. September 2018
 ## Konfiguration Pivot Table
 
 ![](chart-config.png)
+
+## Weitere Informationen & Links
+
+* [Linked Data Schulungsunterlagen](http://linked-data-training.zazuko.com/)
+* Einstieg der Dokumentation bei [SSZ](https://github.com/statistikstadtzuerich/documentation)
+

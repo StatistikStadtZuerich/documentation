@@ -21,6 +21,7 @@ IT-Fachtagung, 11. September 2018
 ## Fertige Beispiele
 
 * [Bevölkerung nach Raum, Zeit (Gebiet Stadt Zürich, R30000)](https://goo.gl/vvvbqh)
+* [Bevölkerung nach Raum, Zeit & Geschlecht (Gebiet Stadt Zürich, R3000)](https://goo.gl/61adgV)
 * [Einwohner pro Kreis auf Karte](https://goo.gl/wzVWQW) (31.12.2000)
 * [Abfragen der Stadt Basel und Stadt Zürich auf einer Karte](https://goo.gl/Jq5jCN)
   - Diese Abfrage ist über zwei SPARQL Endpunkte (siehe `SERVICE` Keyword)

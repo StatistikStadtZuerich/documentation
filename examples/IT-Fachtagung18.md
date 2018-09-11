@@ -29,3 +29,7 @@ IT-Fachtagung, 11. September 2018
   - Diese Abfrage ist über zwei SPARQL Endpunkte (siehe `SERVICE` Keyword)
   - Die Daten kommen aus unterschiedlichen Quellen, verwenden aber beide RDF Data Cube
   - Aktuell werden in Zürich Kreise dargestellt. Wie würde die Abfrage aussehen für das Stadtgebiet Stadt Zürich?
+
+## Konfiguration Pivot Table
+
+![](/Users/ktk/workspace/ssz/documentation/examples/chart-config.png)

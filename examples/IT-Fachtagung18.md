@@ -9,20 +9,14 @@ IT-Fachtagung, 11. September 2018
 * [Alle Datensätze mit Beschreibung](https://goo.gl/eyAZcq)
 * [Alle Messungen für Bevölkerung nach Raum, Zeit](https://goo.gl/vezCXK)
 
-
-
-### Referenzen
+### Referenzen
 
 * [RDF Data Cube Vokabular](https://www.w3.org/TR/vocab-data-cube/)
 
-
-
-### Fragestellung
+### Fragestellung
 
 * Bevölkerung nach Raum, Zeit, für den Raum Stadt Zürich (R30000)
 * Bevölkerung nach Raum, Zeit, Geschlecht für den Raum Stadt Zürich (R30000)
-
-
 
 ## Fertige Beispiele
 

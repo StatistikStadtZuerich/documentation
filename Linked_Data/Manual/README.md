@@ -33,14 +33,18 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#471">4&#46;7&#46;1 Explanation</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#48">4&#46;8 Example Query&#58; Groups and dimensions</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#481">4&#46;8&#46;1 Explanation</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#49">4&#46;9 Example Query&#58; DataSets of specific dimensions</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#49">4&#46;9 Example Query&#58; DataSets of specific dimensions or topics</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#491">4&#46;9&#46;1 Explanation</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#492">4&#46;9&#46;2 Specific topics</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#493">4&#46;9&#46;3 Explanation</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#410">4&#46;10 Example Query&#58; Metadata and attributes</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4101">4&#46;10&#46;1 Explanation</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#411">4&#46;11 Example Query&#58; Groupcodes</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4111">4&#46;11&#46;1 Explanation</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#412">4&#46;12 Example Query&#58; Hierarchy of Groupcodes</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4121">4&#46;12&#46;1 Explanation</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4122">4&#46;12&#46;2 Hierarchy of topics</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4123">4&#46;12&#46;3 Explanation</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#413">4&#46;13 Example Query&#58; spatial Hierarchies</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4131">4&#46;13&#46;1 Explanation</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#414">4&#46;14 Example Query&#58; links to other Databases</a><br>
@@ -67,9 +71,14 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4241">4&#46;24&#46;1 Explanation</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#425">4&#46;25 Example Query&#58; differences in population numbers</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4251">4&#46;25&#46;1 Explanation</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#426">4&#46;26 Example Query&#58; DataSet BEZUGSZEIT</a><br>
-<a href="#5">5 SSZVIS</a><br>
-<a href="#6">6 OpenSource and Repositories</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#426">4&#46;26 Example Query&#58; GeoSPARQL</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4261">4&#46;26&#46;1 Explanation</a><br>
+<a href="#6">6 SPARQL in R</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#61">6&#46;1 Plotting in R</a><br>
+<a href="#7">7 SPARQL in Python</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#71">7&#46;1 Plotting in Python</a><br>
+<a href="#8">8 SSZVIS</a><br>
+<a href="#9">9 OpenSource and Repositories</a><br>
 </p>
 
 # 1 Introduction<a id="1"></a>
@@ -84,10 +93,10 @@ The [project page](https://data.stadt-zuerich.ch/dataset/stadt_zuerich_losd) is 
 
 # 2 Linked Open Data<a id="2"></a>
 
-The data is provided in the form of Linked Open Statistical Data (LOSD), or more precisely, in the form of a RDF Data Cube (also called triplestore). The data is queried by means of the SPARQL Protocol And RDF Query Language (or SPARQL in short).
+The data is provided in the form of Linked Open Statistical Data (LOSD), or more precisely, in the form of a graph database - also called triplestore - with the underlying structure being a RDF Data Cube. The data is queried by means of the [SPARQL Query Language](https://www.w3.org/TR/sparql11-query/) (or SPARQL in short). If you want to get a first impression of querying RDF Data Cubes via SPARQL, check out this [screencast](https://youtu.be/IUyzwwwIJSk).
 
-* [This](http://www.linkeddatatools.com/semantic-web-basics) Linked Data crash course offers a short introduction for users new to graph databases and triplestores (in contrast to relational databases).
-* The RDF Data Cube model in particular, is introduced in section [3.3](#Concepts-of-the-RDF-Data-Cube-model).
+* [This Linked Data course](http://linked-data-training.zazuko.com/) offers an introduction for users new to graph databases and triplestores (in contrast to relational databases)
+* The RDF Data Cube model in particular, is introduced in section <a href="#33">3&#46;3</a>
 
 Linked data is a topic far too big to be completely covered here. Likewise, a complete SPARQL tutorial would go far beyond the scope of this document (and was already done plenty of times). However, the most important concepts shall be mentioned and linked with their specifications or other useful sources.
 
@@ -95,7 +104,7 @@ Linked data is a topic far too big to be completely covered here. Likewise, a co
 The Web started as a collection of documents published online, accessible at Web locations identified by a URL. These documents often contain data about real world resources which are mainly human readable and cannot be understood by machines.
 <br>
 
-The so called Semantic Web is about enabling the access to this data, by making it available in machine readable formats (XML, JSON etc.) and connecting it by using Uniform Resource Identifiers (URIs), thus enabling people and machines to  collect the data, and put it together to do all kinds of things with it (so far as the license permits it).
+The so called Semantic Web is about enabling the access to this data, by making it available in machine readable formats (JSON, Turtle, XML, etc.) and connecting it by using Uniform Resource Identifiers (URIs), thus enabling people and machines to  collect the data, and put it together to do all kinds of things with it (so far as the license permits it).
 
 ## 2.2 Open Data and Linked Data<a id="22"></a>
 * The European Commission provides a nice [presentation](https://joinup.ec.europa.eu/sites/default/files/document/2015-05/d2.1.2_training_module_1.2_introduction_to_linked_data_v1.00_en.pdf) on the topic
@@ -127,11 +136,12 @@ The quality of Linked Open Data can be assessed with the help of the [5-star sch
 > The Open Data projects of SSZ reached a solid three stars until now... <br> Linked Open Statistics Data (LOSD) will reach the top and earn its five stars!
 
 An example of the 5-star qualities is the link between LOSD and Wikipedia:
+<br>
 
 <img src="images/dataflow_wikidata.png" width="350" style="float:none;margin-left:0">
 
 
-Certain LOSData has a property &lt;sameAs&gt; - with a Wikidata entity as Resource URI - that  establishes a link to the Wikidata store (more on &lt;sameAs&gt; shortly).
+Certain LOSData has a property &lt;sameAs&gt; - with a Wikidata entity as Resource URI - that establishes a link to the Wikidata store (more on &lt;sameAs&gt; shortly).
 
 ## 2.3 Graph Database vs. Relational Database<a id="23"></a>
 * See [this section](http://www.linkeddatatools.com/introducing-rdf) of the Linked Data crash course
@@ -144,10 +154,11 @@ Data contained in the Semantic Web is stored in directed labelled graphs to  sho
 <img src="images/observation_graph.png" width="6964px" style="float:none;margin-left:0">
 
 
-For our purposes a graph has nodes - with either a resource URI or a literal value - and directed relationships. A resource URI represents a link or "address" to another node whereas a literal value is just a String value, for example. Even the relations are defined through URIs! If you are familiar with the concept of Namespaces, you will certainly understand why this is so important. [Section 2.5](#2.5-RDF-vocabulary) about Vocabularies and Ontologies will make it even clearer.
+For our purposes a graph has nodes - with either a resource URI or a literal value - and directed relationships. A resource URI represents a link or "address" to another node whereas a literal value is just a String value, for example. Even the relations are defined through URIs! If you are familiar with the concept of Namespaces, you will certainly understand why this is so important. <a href="#25">Section 2&#46;5</a> about Vocabularies and Ontologies will make it even clearer.
 
 
 In a graph there is no concept of roots or hierarchies. A graph consists of resources related to other resources, with no single resource having any particular intrinsic importance over another. So how do we express such a construct in de facto hierarchical form, let's say XML? Before we get to the answer (the Resource Description Framework or RDF), let's examine an enlarged section of the example above:
+<br>
 
 <img src="images/subgraph.png" width="500px" style="float:none;margin-left:0">
 
@@ -270,23 +281,23 @@ The vocabulary names are linked with the respective documentations.
 See section [4.25](#4.25-Example-Query:-differences-in-population-numbers) for a nice example query that incorporates Wikidata!
 
 ## 2.6 RDF Serialization<a id="26"></a>
-> RDF graphs can be expressed in a variety of formats other than RDF/XML!
+> RDF graphs can be expressed in a variety of formats!
 
-* [RDF/XML](https://www.w3.org/TR/rdf-syntax-grammar/): the original (W3C Recommendation) and most frequently used serialization format
 * [JSON](https://www.w3.org/TR/json-ld/) is a common format for data serialization and messaging
 * [TURTLE](https://www.w3.org/TR/turtle/) is especially useful because it conforms with the SPARQL syntax
 * [N-Triples](https://www.w3.org/TR/n-triples/): simple notation, easy-to-parse, line-based format that is not as compact as Turtle
+* [RDF/XML](https://www.w3.org/TR/rdf-syntax-grammar/): One of the first formats available. Due to its complexity we do not recommend to work with RDF/XML, unless you have a good reason to do so.
 
-to name the most common ones..
+to name the most common ones. Note that you can always translate any RDF serialization to another one without loosing any information.
 
 ## 2.7 RDF Data Cube model<a id="27"></a>
-* See section [3.3](#Concepts-of-the-RDF-Data-Cube) of this notebook and the [Specification](https://www.w3.org/TR/vocab-data-cube/)
+* See section <a href="#33">3&#46;3</a> of this notebook and the [Specification](https://www.w3.org/TR/vocab-data-cube/)
 
 ## 2.8 SPARQL and how to query Linked Data<a id="28"></a>
 * See the [Specification](https://www.w3.org/TR/sparql11-query/),
 * the [cheat-sheet](http://www.iro.umontreal.ca/~lapalme/ift6281/sparql-1_1-cheat-sheet.pdf) for a summary of the syntax
 * explore the [wikibook](https://en.wikibooks.org/wiki/SPARQL) for more examples
-* and most importantly, watch [Zazuko's video](https://www.youtube.com/watch?v=IUyzwwwIJSk&feature=youtu.be) on querying our RDF DataCube with SPARQL and the [Zazuko interface](https://ld.stadt-zuerich.ch/sparql/)
+* and most importantly, watch [Zazuko's video](https://www.youtube.com/watch?v=IUyzwwwIJSk&feature=youtu.be) on querying our RDF DataCube with SPARQL and the [YASGUI interface](https://ld.stadt-zuerich.ch/sparql/)
 
 > Learning by doing is our motto! 
 
@@ -301,6 +312,7 @@ Explore a variety of examples in the [SPARQL section](#SPARQL-Interface).
 The data provided SSZ conforms with the Statistical Data and Metadata (SDMX) standard. Check out [this](https://www.youtube.com/watch?v=fWFdG2VDVIk) video for a nice introduction of SDMX. The part starting at 5:42 is especially descriptive because it illustrates SDMX with the aid of a statistical table. Illustrations of the statistical tables in the yearbooks of SSZ shall be presented in the next section.
 
 The standard describes and universalizes the way to exchange statistical data, and provides standard formats for data and metadata, content guidelines as well as IT architecture for exchange of data and metadata. The specification with the definition of these terms is provided [here](https://sdmx.org/?page_id=5008). The following figure shows a high level schematic of the major artefacts in the SDMX Information Model. However, terms like Concept Scheme or Code List, which are of particular use to us, are explained in later sections in the context of our data model. 
+<br>
 
 <img src="images/sdmx.png" width="550px" style="float:none;margin-left:0">
 
@@ -388,7 +400,7 @@ KEN-RAUM-ZEIT-GR1-GR2-GR3-GR4-GR5
 where missing groups/dimensions ("XXX") are omitted in qb:DataSet notation.
 <br>
 
-* DataSets are accessed through the node https://ld.stadt-zuerich.ch/statistics/dataset/&lt;dataset>
+* DataSets are accessed through the node https://ld.stadt-zuerich.ch/statistics/dataset/ followed by their respective notation
 
 **qb:Observation**:<br>
 This is the actual data, the measured values. In a statistical table (as in the statistical yearbooks), the observations would be the values in the table cells.
@@ -397,32 +409,32 @@ This is the actual data, the measured values. In a statistical table (as in the 
 ZddmmyyyyRrrrrrKENGR10000GR20000GR30000GR40000GR50000 
 corresponds to the observation 
 KEN/Rrrrrr/Zddmmyyyy/GR10000/GR20000/GR30000/GR40000/GR50000 
-in DataCube notation
+in our DataCube notation
 ```
 where missing groups/dimensions ("XXX") are omitted in qb:Observation notation.
 <br>
  
-* Observations are accessed through the node https://ld.stadt-zuerich.ch/statistics/observation/&lt;observation>
+* Observations are accessed through the node https://ld.stadt-zuerich.ch/statistics/observation/ followed by their respective notation
 
 **qb:MeasureProperty**:<br>
 The measure components represent the observed phenomena.
 * Kennzahlen or measures of the historic data are mapped to MeasureProperty.
-* Measures are accessed through the node https://ld.stadt-zuerich.ch/statistics/measure/&lt;measure>
+* Measures are accessed through the node https://ld.stadt-zuerich.ch/statistics/measure/ followed by their respective notation
 
 **qb:DimensionProperty**:<br>
 The dimension components serve to identify the observations. A set of values for all the dimension components is sufficient to identify a single observation. Examples of dimensions include the time to which the observation applies, or a geographic region which the observation covers etc. 
 * Dimensions of the historic data are mapped to DimensionProperty.
-* Dimensions are accessed through the node https://ld.stadt-zuerich.ch/statistics/property/&lt;dimension>
+* Dimensions are accessed through the node https://ld.stadt-zuerich.ch/statistics/property/ followed by their respective notation
 
 **qb:AttributeProperty**:<br>
 The attribute components allow us to qualify and interpret the observed value(s). They enable specification of the units of measure, any scaling factors and metadata such as the status of the observation (e.g. estimated, provisional).
 * Only meta and system attributes of the historic data are mapped to AttributeProperty! 
-* Attributes are accessed through the node https://ld.stadt-zuerich.ch/statistics/attribute/&lt;attribute>
+* Attributes are accessed through the node https://ld.stadt-zuerich.ch/statistics/attribute/ followed by their respective notation
 * Units of the MeasureProperties, for instance, are mapped to an independent concept (see next section)
 
 **qb:Slice**:<br>
 A subset of observations within a DataSet. Produced by fixing one or more dimensions and refer to all observations with those dimension values as a single entity, a slice. In statistical applications it is common to work with slices in which a single dimension is left unspecified. In particular, to refer to such slices, in which the single free dimension is time, as "Time Series". Within the Data Cube vocabulary however, arbitrary dimensionality slices are allowed and particular types of slice are not denoted differently.
-* Slices of a specific &lt;DataSet&gt; and &lt;SliceKey&gt; are accessed through the nodes https://ld.stadt-zuerich.ch/statistics/dataset/&lt;DataSet&gt;/&lt;SliceKey&gt;/slice
+* Slices of a specific &lt;DataSet&gt; and &lt;SliceKey&gt; are accessed through the nodes https://ld.stadt-zuerich.ch/statistics/dataset/<DataSet\>/<SliceKey\>/slice
 <br>
 <br>
 
@@ -445,7 +457,7 @@ Shape expressions (written in RDF) are used to declare various  constraints for 
 
 More information on shapes can be found in the official [SHACL Documentation](https://www.w3.org/TR/shacl/).
 
-* Shapes of a specific &lt;DataSet&gt; are accessed through the nodes https://ld.stadt-zuerich.ch/statistics/dataset/&lt;DataSet&gt;/shape
+* Shapes of a specific &lt;DataSet&gt; are accessed through the nodes https://ld.stadt-zuerich.ch/statistics/dataset/<DataSet\>/shape
 
 **sdmx:unitMeasure** and **qudt:unit**:<br>
 The units of measurement of observations are mapped to these two concepts and accessed through the node https://ld.stadt-zuerich.ch/statistics/unit/. qudt:unit acts as the type and sdmx:unitMeasure as the relation of triples:<br>
@@ -454,30 +466,42 @@ The units of measurement of observations are mapped to these two concepts and ac
 
 **skos:Concept**:<br>
 Groupcodes of the historic data are mapped to skos:Concept and accessed through the node https://ld.stadt-zuerich.ch/statistics/code/. A skos:Concept can be viewed as an idea or notion. It is useful when describing the conceptual or intellectual structure of a knowledge organization system, and when referring to specific ideas or meanings established within a KOS. An Example:
-* &lt;<https://ld.stadt-zuerich.ch/statistics/code/R00012>&gt; is a skos:Concept representing institutions of higher education (label "Hochschulen") or, more precisely, the occupied area 
-* &lt;<https://ld.stadt-zuerich.ch/statistics/code/ABT6000>&gt; is a skos:Concept representing all apprentices (label "Lehrlinge")
+* &lt;https://ld.stadt-zuerich.ch/statistics/code/R00012&gt; is a skos:Concept representing institutions of higher education (label "Hochschulen") or, more precisely, the occupied area 
+* &lt;https://ld.stadt-zuerich.ch/statistics/code/ABT6000&gt; is a skos:Concept representing all apprentices (label "Lehrlinge")
 
 **skos:Notation**: Is a string of characters, such as "R00012" or "ABT6000", used to uniquely identify a skos:Concept within the scope of a given concept scheme. A notation is different from a lexical label in that a notation is not normally recognizable as a word or sequence of words in any natural language. An Example:
-* &lt;<https://ld.stadt-zuerich.ch/statistics/code/R00012>&gt; is a concept with skos:Notation "R00012"
+* &lt;https://ld.stadt-zuerich.ch/statistics/code/R00012&gt; is a concept with skos:Notation "R00012"
 
 **skos:inScheme**:<br>
 Tells us to which scheme a concept belongs. A skos:ConceptScheme can be viewed as an aggregation of one or more skos:Concepts. Semantic relationships (links) between those concepts may also be viewed as part of a concept scheme. The notion of a concept scheme is useful when dealing with data that describes two or more different knowledge organization systems. An Example:
-* the concept &lt;<https://ld.stadt-zuerich.ch/statistics/code/R00012>&gt; is in skos:inScheme &lt;<https://ld.stadt-zuerich.ch/statistics/scheme/Raum>&gt;
+* the concept &lt;https://ld.stadt-zuerich.ch/statistics/code/R00012&gt; is in skos:inScheme &lt;https://ld.stadt-zuerich.ch/statistics/scheme/Raum&gt;
 * note that "Raum" is not only used as a dimension but also as a concept!
 
 **skos:broader** and **skos:narrower**:<br>
 Are used to assert a direct hierarchical link between two skos:Concepts:
 * A triple &lt;A&gt; skos:broader &lt;B&gt; asserts that &lt;B&gt;, the object of the triple, is a broader concept than &lt;A&gt;, the subject of the triple. 
 * Similarly, a triple &lt;C&gt; skos:narrower &lt;D&gt; asserts that &lt;D&gt;, the object of the triple, is a narrower concept than &lt;C&gt;, the subject of the triple. 
-* &lt;<https://ld.stadt-zuerich.ch/statistics/code/R00012>&gt; for instance has skos:broader <R30000>
+* &lt;https://ld.stadt-zuerich.ch/statistics/code/R00012&gt; for instance has skos:broader <R30000>
 
 **owl:sameAs**:<br>
-The sameAs statement indicates that two URI resources actually refer to the same thing or represent the same concept. owl:sameAs statements are often used for mappings between ontologies. It is unrealistic to assume everyone will use the same name to refer to some resource or concept. Two concepts generally have different features and relations to other resources, despite being linked by sameAs! In this way, making a union between such ontologies or databases provides more complete data. The graph example in section [2.1.3](#Graph-Database-vs.-Relational-Database) had the following statement regarding the city district Alt-Wiedikon:
-* &lt;<https://ld.stadt-zuerich.ch/statistics/code/R00031>&gt; owl:sameAs &lt;<http://www.wikidata.org/entity/Q433012>&gt;
+The sameAs statement indicates that two URI resources actually refer to the same thing or represent the same concept. owl:sameAs statements are often used for mappings between ontologies. It is unrealistic to assume everyone will use the same name to refer to some resource or concept. Two concepts generally have different features and relations to other resources, despite being linked by sameAs! In this way, making a union between such ontologies or databases provides more complete data. The graph example in section <a href="#23">2&#46;3</a> had the following statement regarding the city district Alt-Wiedikon:
+* &lt;https://ld.stadt-zuerich.ch/statistics/code/R00031&gt; owl:sameAs &lt;http://www.wikidata.org/entity/Q433012&gt;
 
 This means, Wikidata's database entry - with its own location-/population information, images and references - is linked with  LOSD. As a result, Wikidata is able to use R00031 as a gateway to query and effectively incorporate the LOSData into its own database (and vice versa of course).
 
 The challenge with owl:sameAs is that when there are many mappings of nodes between graphs, and especially when big chains of sameAs appear, it becomes inefficient. owl:sameAs is defined as symmetric and transitive, so given that &lt;A&gt; sameAs &lt;B&gt; sameAs &lt;C&gt;, also the statements &lt;A&gt; sameAs &lt;A&gt;, &lt;A&gt; sameAs &lt;C&gt;, &lt;B&gt; sameAs &lt;A&gt; etc. will be produced.
+
+* See section <a href="#425">4&#46;25</a> for a nice example
+
+**Topics**:<br>
+The node <https://ld.stadt-zuerich.ch/schema/Category> contains the main categories of a topic tree. The following figure shows a simplified diagram:<br>
+
+<img src="images/topic_levels.png" width="500px" style="float:none;margin-left:0">
+<br>
+skos:narrower reveals a new topic level for each category and subtopic - and so on - until a DataSet is reached. Each topic  relates to a number of DataSets. 
+<br>
+
+* See section <a href="#492">4&#46;9&#46;2</a> and <a href="#4122">4&#46;12&#46;2</a> for examples on the topic hierarchy
 
 # 4 SPARQL<a id="4"></a>
 * The SPARQL interface is accessed through https://ld.stadt-zuerich.ch/sparql/
@@ -722,7 +746,7 @@ ORDER BY DESC(?observations)
 The example shows that you are ill advised to directly load the DataSet "AST-RAUM-ZEIT-BTA"..
 
 ## 4.6 Example Query: filter with regular expressions<a id="46"></a>
-To search for specific names, terms or patterns in labels or code values etc., SPARQL has a FILTER command and regular expressions. The following query searches for the term "Tier" in all available labels of the DataCube:
+To search for specific names, terms or patterns in labels or code values etc., SPARQL offers the FILTER command and regular expressions. The following query searches for the term "Tier" in all available labels of the DataCube:
 
 
 ```all-of-them
@@ -777,10 +801,10 @@ Regular expressions in FILTER are used as follows:
 
 ```FILTER REGEX( string, pattern )```
 
-where pattern is the actual regular expression. The asterisk denotes that the string may contain "Tier" more than once. More on regular expressions [here](https://en.wikibooks.org/wiki/SPARQL/Expressions_and_Functions#REGEX). See also section [4.20](#Example-Query:-relations-of-a-DataSet).
+where pattern is the actual regular expression. The asterisk denotes that the string may contain "Tier" more than once. More on regular expressions [here](https://en.wikibooks.org/wiki/SPARQL/Expressions_and_Functions#REGEX). See also section <a href="#4191">4&#46;19&#46;1</a>.
 
 ## 4.7 Example Query: Kennzahlen and measures<a id="47"></a>
-As explained in section [3.3](#Concepts-of-the-RDF-Data-Cube), the measures or Kennzahlen of the statistical data are mapped to qb:MeasureProperty. With this very intuitive query all those properties are extracted with their label, unit and additional comments or notes:
+As explained in section <a href="#33">3&#46;3</a>, the measures or Kennzahlen of the statistical data are mapped to qb:MeasureProperty. With this very intuitive query all those properties are extracted with their label, unit and additional comments or notes:
 
 
 ```all-of-them
@@ -894,14 +918,14 @@ keine Erwerbstätigkeit ausüben, sodass sie zu einem sofortigen Stellenantritt 
 ### 4.7.1 Explanation<a id="471"></a>
 Important to consider in this query is that not every measure defines a skos:scopeNote! As a result we have to use OPTIONAL or else only measures will be matched that have such a scopeNote (measures without one would be omitted in the results). OPTIONAL tells SELECT that if such a note exists, please match it or else proceed normally. 
 
-Note that the DataCube model also offers the relation **qb:measure** to access the MeasureProperties, but only with qb:SliceKey and qb:ComponentSpecification as the subject (see the diagram in section [3.3](#Concepts-of-the-RDF-Data-Cube)). To select specific Kennzahlen, one could do the following:
+Note that the DataCube model also offers the relation **qb:measure** to access the MeasureProperties, but only with qb:SliceKey and qb:ComponentSpecification as the subject (see the diagram in section <a href="#33">3&#46;3</a>). To select specific Kennzahlen, one could do the following:
 * use the absolute URI as relation:<br> 
 ```?sub <https://ld.stadt-zuerich.ch/statistics/measure/<measure>> ?measure```
 * use the relative URI as relation (with the respective PREFIX defined):<br> 
 ```?sub measure:<measure> ?measure```
 
 ## 4.8 Example Query: Groups and dimensions<a id="48"></a>
-As explained in section [3.3](#Concepts-of-the-RDF-Data-Cube), the groups or dimensions of the statistical data are mapped to qb:DimensionProperty. With this very intuitive query all those properties are extracted with their label:
+As explained in section <a href="#33">3&#46;3</a>, the groups or dimensions of the statistical data are mapped to qb:DimensionProperty. With this very intuitive query all those properties are extracted with their label:
 
 
 ```all-of-them
@@ -944,14 +968,14 @@ ORDER BY ?dimension
 
 
 ### 4.8.1 Explanation<a id="481"></a>
-Note that the DataCube model also offers the relation **qb:dimension** to access the DimensionProperties, but only with qb:SliceKey and qb:ComponentSpecification as the subject (see the diagram in section [3.3](#Concepts-of-the-RDF-Data-Cube)). To select specific dimensions, one could do the following (see also the next example):
+Note that the DataCube model also offers the relation **qb:dimension** to access the DimensionProperties, but only with qb:SliceKey and qb:ComponentSpecification as the subject (see the diagram in section <a href="#33">3&#46;3</a>). To select specific dimensions, one could do the following (see also the next example):
 * use the absolute URI as relation:<br> 
 ```?sub <https://ld.stadt-zuerich.ch/statistics/property/<dimension>> ?dimension```
 * use the relative URI as relation (with the respective PREFIX defined):<br> 
 ```?sub property:<dimension> ?dimension```
 
-## 4.9 Example Query: DataSets of specific dimensions<a id="49"></a>
-As explained in section [3.3](#Concepts-of-the-RDF-Data-Cube), groups or dimensions of the statistical data are accessed through the node https://ld.stadt-zuerich.ch/statistics/property/. If we want to query all DataSets of particular dimensions, we can do this by asking for the property relation as follows. An example is given with property:SEX where all observations of the resulting DataSets are counted:
+## 4.9 Example Query: DataSets of specific dimensions or topics<a id="49"></a>
+As explained in section <a href="#33">3&#46;3</a>, groups or dimensions of the statistical data are accessed through the node https://ld.stadt-zuerich.ch/statistics/property/. If we want to query all DataSets of particular dimensions, we can do this by asking for the property relation as follows. An example is given with property:SEX where all observations of the resulting DataSets are counted:
 
 
 ```all-of-them
@@ -991,8 +1015,115 @@ ORDER BY DESC(?observations)
 ### 4.9.1 Explanation<a id="491"></a>
 COUNT counts all the subjects that fulfill these statements where the last statement requires the subject to have a particular dimension SEX. GROUP BY is always necessary for COUNT.
 
+### 4.9.2 Specific topics<a id="492"></a>
+See section <a href="#34">3&#46;4</a> for an explanation on the topics. The following query selects for each topic all the related DataSets. To limit the number of matches, only topics up to topic level two  are selected. See also example <a href="#4122">4&#46;12&#46;2</a> for the hierarchies.
+
+
+```all-of-them
+>SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <https://ld.stadt-zuerich.ch/schema/>
+
+SELECT DISTINCT ?topicLevel ?topicLabel ?dataset ?datasetLabel
+FROM <https://linked.opendata.swiss/graph/zh/statistics>
+WHERE{
+    {
+    SELECT *
+    WHERE{
+        ?category a schema:Category. 
+        {?category skos:narrower ?topic. BIND("1" AS ?topicLevel)}
+        UNION
+        {?category skos:narrower/skos:narrower ?topic. BIND("2" AS ?topicLevel)}
+        UNION
+        {?topic a schema:Category. BIND("0" AS ?topicLevel)}
+    }
+    ORDER BY ?topic
+    }
+    ?dataset a qb:DataSet;
+        rdfs:label ?datasetLabel.
+  
+    ?topic rdfs:label ?topicLabel;
+          skos:narrower+ ?dataset.
+} 
+ORDER BY ?topicLabel ?dataset
+```
+
+
+<div class="krn-spql"><table><tr class=hdr><th>topicLevel</th>
+<th>topicLabel</th>
+<th>dataset</th>
+<th>datasetLabel</th></tr><tr class=odd><td class=val>2</td>
+<td class=val>Aktueller Bestand</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/ANT-RAUM-ZEIT-GGH-HEL" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/ANT-RAUM-ZEIT-GGH-HEL</a></td>
+<td class=val>Anteil nach Grundgesamtheit, Heimatland, Raum, Zeit</td></tr><tr class=even><td class=val>2</td>
+<td class=val>Aktueller Bestand</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT</a></td>
+<td class=val>Wirtschaftliche Wohnbevölkerung nach Raum, Zeit</td></tr><tr class=odd><td class=val>2</td>
+<td class=val>Aktueller Bestand</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT-ALT" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT-ALT</a></td>
+<td class=val>Wirtschaftliche Wohnbevölkerung nach Alter, Raum, Zeit</td></tr><tr class=even><td class=val>2</td>
+<td class=val>Aktueller Bestand</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT-ALT-HEL" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT-ALT-HEL</a></td>
+<td class=val>Wirtschaftliche Wohnbevölkerung nach Alter, Heimatland, Raum, Zeit</td></tr><tr class=odd><td class=val>2</td>
+<td class=val>Aktueller Bestand</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT-ALT-HEL-SEX" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT-ALT-HEL-SEX</a></td>
+<td class=val>Wirtschaftliche Wohnbevölkerung nach Alter, Heimatland, Raum, Geschlecht, Zeit</td></tr><tr class=even><td class=val>2</td>
+<td class=val>Aktueller Bestand</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT-ALT-SEX" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT-ALT-SEX</a></td>
+<td class=val>Wirtschaftliche Wohnbevölkerung nach Alter, Raum, Geschlecht, Zeit</td></tr><tr class=odd><td class=val>2</td>
+<td class=val>Aktueller Bestand</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT-AUA-HEL" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT-AUA-HEL</a></td>
+<td class=val>Wirtschaftliche Wohnbevölkerung nach Aufenthaltsart, Heimatland, Raum, Zeit</td></tr><tr class=even><td class=val>2</td>
+<td class=val>Aktueller Bestand</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT-HEL" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT-HEL</a></td>
+<td class=val>Wirtschaftliche Wohnbevölkerung nach Heimatland, Raum, Zeit</td></tr><tr class=odd><td class=val>2</td>
+<td class=val>Aktueller Bestand</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT-HEL-SEX" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT-HEL-SEX</a></td>
+<td class=val>Wirtschaftliche Wohnbevölkerung nach Heimatland, Raum, Geschlecht, Zeit</td></tr><tr class=even><td class=val>2</td>
+<td class=val>Aktueller Bestand</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT-SEX" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT-SEX</a></td>
+<td class=val>Wirtschaftliche Wohnbevölkerung nach Raum, Geschlecht, Zeit</td></tr><tr class=odd><td class=val>2</td>
+<td class=val>Aktueller Bestand</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/GEB-RAUM-ZEIT" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/GEB-RAUM-ZEIT</a></td>
+<td class=val>Geborene (wirtschaftlich) nach Raum, Zeit</td></tr><tr class=even><td class=val>2</td>
+<td class=val>Aktueller Bestand</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/GES-RAUM-ZEIT" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/GES-RAUM-ZEIT</a></td>
+<td class=val>Sterbefälle (wirtschaftlich) nach Raum, Zeit</td></tr><tr class=odd><td class=val>2</td>
+<td class=val>Aktueller Bestand</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/SAB-RAUM-ZEIT" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/SAB-RAUM-ZEIT</a></td>
+<td class=val>Saldo aller Bevölkerungsbewegungen (wirtschaftlich) nach Raum, Zeit</td></tr><tr class=even><td class=val>2</td>
+<td class=val>Aktueller Bestand</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/SNB-RAUM-ZEIT" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/SNB-RAUM-ZEIT</a></td>
+<td class=val>Saldo der natürlichen Bevölkerungsbewegungen (wirtschaftlich) nach Raum, Zeit</td></tr><tr class=odd><td class=val>2</td>
+<td class=val>Aktueller Bestand</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/SUB-RAUM-ZEIT" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/SUB-RAUM-ZEIT</a></td>
+<td class=val>Saldo von Umzügen (Personen, wirtschaftlich) nach Raum, Zeit</td></tr><tr class=even><td class=val>2</td>
+<td class=val>Aktueller Bestand</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/SWB-RAUM-ZEIT" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/SWB-RAUM-ZEIT</a></td>
+<td class=val>Saldo der Wanderungsbewegungen (Personen, wirtschaftlich) nach Raum, Zeit</td></tr><tr class=odd><td class=val>2</td>
+<td class=val>Alter</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/AVA-RAUM-ZEIT" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/AVA-RAUM-ZEIT</a></td>
+<td class=val>Altersdurchschnitt nach Raum, Zeit</td></tr><tr class=even><td class=val>2</td>
+<td class=val>Alter</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/AVA-RAUM-ZEIT-GGH-HEL" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/AVA-RAUM-ZEIT-GGH-HEL</a></td>
+<td class=val>Altersdurchschnitt nach Grundgesamtheit, Heimatland, Raum, Zeit</td></tr><tr class=odd><td class=val>2</td>
+<td class=val>Alter</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/AVA-RAUM-ZEIT-GGH-HEL-SEX" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/AVA-RAUM-ZEIT-GGH-HEL-SEX</a></td>
+<td class=val>Altersdurchschnitt nach Grundgesamtheit, Heimatland, Raum, Geschlecht, Zeit</td></tr><tr class=even><td class=val>2</td>
+<td class=val>Alter</td>
+<td class=val><a href="https://ld.stadt-zuerich.ch/statistics/dataset/AVA-RAUM-ZEIT-GGH-SEX" target="_other">https://ld.stadt-zuerich.ch/statistics/dataset/AVA-RAUM-ZEIT-GGH-SEX</a></td>
+<td class=val>Altersdurchschnitt nach Grundgesamtheit, Raum, Geschlecht, Zeit</td></tr></table><div class="tinfo">Total: 412, Shown: 20</div></div>
+
+
+### 4.9.4 Explanation<a id="494"></a>
+The sub SELECT matches all topics up to topic level two by narrowing of the main categories "Bevölkerung" and "Bildung, Kultur & Sport". After the subquery, we make use of the fact that all topics lead to a DataSet sooner or later. The property path skos:narrower+ is traversed as many times as it takes to reach a DataSet (but at least once, because zero times would mean that the topic already is a DataSet).
+
 ## 4.10 Example Query: Metadata and attributes<a id="410"></a>
-As explained in section [3.3](#Concepts-of-the-RDF-Data-Cube), the primary metadata of the statistical data is mapped to qb:AttributeProperty. With this very intuitive query all those properties are extracted with their label:
+As explained in section <a href="#33">3&#46;3</a>, the primary metadata of the statistical data is mapped to qb:AttributeProperty. With this very intuitive query all those properties are extracted with their label:
 
 
 ```all-of-them
@@ -1025,16 +1156,16 @@ ORDER BY ?attribute
 
 
 ### 4.10.1 Explanation<a id="4101"></a>
-Note that the DataCube model also offers the relation **qb:attribute** to access the AttributeProperties, but only with qb:SliceKey and qb:ComponentSpecification as the subject (see the diagram in section [3.3](#Concepts-of-the-RDF-Data-Cube)). To select specific attributes, one could do the following:
+Note that the DataCube model also offers the relation **qb:attribute** to access the AttributeProperties, but only with qb:SliceKey and qb:ComponentSpecification as the subject (see the diagram in section <a href="#33">3&#46;3</a>). To select specific attributes, one could do the following:
 * use the absolute URI as relation:<br> 
 ```?sub <https://ld.stadt-zuerich.ch/statistics/attribute/<attribute>> ?attribute```
 * use the relative URI as relation (with the respective PREFIX defined):<br> 
 ```?sub attribute:<attribute> ?attribute```
 
-See section [4.19](#-Example-Query:-Metadata) and [4.20](#-Example-Query:-more-Metadata) for more examples on metadata.
+See section <a href="#417">4&#46;17</a> and <a href="#418">4&#46;18</a> for more examples on metadata.
 
 ## 4.11 Example Query: Groupcodes<a id="411"></a>
-As explained in section [3.3](#Concepts-of-the-RDF-Data-Cube) and [3.4](#Other-important-concepts), the Groupcodes of the statistical data are mapped to skos:Concept. With this very intuitive query all those codes are extracted with their label:
+As explained in section <a href="#33">3&#46;3</a> and <a href="#34">3&#46;4</a>, the Groupcodes of the statistical data are mapped to skos:Concept. With this very intuitive query all those codes are extracted with their label:
 
 
 ```all-of-them
@@ -1078,10 +1209,10 @@ ORDER BY ?code
 
 
 ### 4.11.1 Explanation<a id="4111"></a>
-skos:Concept is explained in section [3.4](#3.4-Other-important-concepts)!
+skos:Concept is explained in section <a href="#34">3&#46;4</a>!
 
-## 4.12 Example Query: Hierarchy of Groupcodes<a id="412"></a>
-Most codes have hierarchies as explained in section [3.4](#Other-important-concepts). We have to consider that there are two types of hierarchies: skos:broader and skos:narrower. To extract all of them, our query requires a UNION of subqueries - one for each type of hierarchy - to match both to the same variable ?hierarchy:
+## 4.12 Example Query: Hierarchy of Groupcodes and topics<a id="412"></a>
+Most codes have hierarchies as explained in section <a href="#34">3&#46;4</a>. We have to consider that there are two types of hierarchies: skos:broader and skos:narrower. To extract all of them, our query requires a UNION of subqueries - one for each type of hierarchy - to match both to the same variable ?hierarchy:
 
 
 ```all-of-them
@@ -1090,26 +1221,26 @@ PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>                                                              
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>                   
 
-SELECT ?code ?labelcode ?pred ?hierarchy ?labelhierarchy
+SELECT ?code ?codelabel ?pred ?hierarchy ?hierarchylabel
 FROM <https://linked.opendata.swiss/graph/zh/statistics>
 WHERE{
     {
     ?code a skos:Concept;
-        rdfs:label ?labelcode.
+        rdfs:label ?codelabel.
     }    
-    {?code skos:broader ?hierarchy. ?code ?pred ?hierarchy. ?hierarchy rdfs:label ?labelhierarchy.}
+    {?code skos:broader ?hierarchy. ?code ?pred ?hierarchy. ?hierarchy rdfs:label ?hierarchylabel.}
     UNION
-    {?code skos:narrower ?hierarchy. ?code ?pred ?hierarchy. ?hierarchy rdfs:label ?labelhierarchy.}
+    {?code skos:narrower ?hierarchy. ?code ?pred ?hierarchy. ?hierarchy rdfs:label ?hierarchylabel.}
 }
 ORDER BY ?code
 ```
 
 
 <div class="krn-spql"><table><tr class=hdr><th>code</th>
-<th>labelcode</th>
+<th>codelabel</th>
 <th>pred</th>
 <th>hierarchy</th>
-<th>labelhierarchy</th></tr><tr class=odd><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/%20Ausserhalb%20von%20Agglomeration" target="_other">https://ld.stadt-zuerich.ch/statistics/code/%20Ausserhalb%20von%20Agglomeration</a></td>
+<th>hierarchylabel</th></tr><tr class=odd><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/%20Ausserhalb%20von%20Agglomeration" target="_other">https://ld.stadt-zuerich.ch/statistics/code/%20Ausserhalb%20von%20Agglomeration</a></td>
 <td class=val> Ausserhalb von Agglomeration</td>
 <td class=val><a href="http://www.w3.org/2004/02/skos/core#broader" target="_other">http://www.w3.org/2004/02/skos/core#broader</a></td>
 <td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/Land" target="_other">https://ld.stadt-zuerich.ch/statistics/code/Land</a></td>
@@ -1198,6 +1329,203 @@ The first part of the query simply SELECTS all the codes and labels them. The tw
 * ```?code ?pred ?hierarchy.``` matches the respective relation to ?pred (without it ?pred would be empty)
 
 The hierarchies are also labeled for the sake of clarity.
+
+### 4.12.2 Hierarchy of topics<a id="4122"></a>
+If we want to reveal the absolute hierarchies of the topic tree, we can use the following query. Starting with the main categories "Bevölkerung" and "Bildung, Kultur & Sport", we traverse the graph by using skos:narrower up to topic level three (where already many of the topics reach a DataSet). UNION is used to merge the matches of the different topic levels, and MINUS to account for the cases where skos:narrower already reached a DataSet (and we do no longer have a topic):
+
+
+```all-of-them
+>SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX schema: <https://ld.stadt-zuerich.ch/schema/>
+
+SELECT DISTINCT ?categoryLabel ?topic ?topicLabel ?topicLevel
+FROM <https://linked.opendata.swiss/graph/zh/statistics>
+WHERE{
+    ?category a schema:Category; rdfs:label ?categoryLabel. 
+    {?category skos:narrower ?topic. BIND("1" AS ?topicLevel)}
+    UNION
+    {?category skos:narrower/skos:narrower ?topic. BIND("2" AS ?topicLevel)}
+    UNION
+    {?category skos:narrower/skos:narrower/skos:narrower ?topic. BIND("3" AS ?topicLevel)}
+    MINUS{?topic a qb:DataSet}.
+    ?topic rdfs:label ?topicLabel.
+}
+ORDER BY ?topicLabel
+```
+
+
+<div class="krn-spql"><table><tr class=hdr><th>categoryLabel</th>
+<th>topic</th>
+<th>topicLabel</th>
+<th>topicLevel</th></tr><tr class=odd><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/aktuellerbestand" target="_other">https://stat.stadt-zuerich.ch/code/aktuellerbestand</a></td>
+<td class=val>Aktueller Bestand</td>
+<td class=val>2</td></tr><tr class=even><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/alter" target="_other">https://stat.stadt-zuerich.ch/code/alter</a></td>
+<td class=val>Alter</td>
+<td class=val>2</td></tr><tr class=odd><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/altergeschlecht" target="_other">https://stat.stadt-zuerich.ch/code/altergeschlecht</a></td>
+<td class=val>Alter &amp; Geschlecht</td>
+<td class=val>1</td></tr><tr class=even><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV028" target="_other">https://stat.stadt-zuerich.ch/topic/BEV028</a></td>
+<td class=val>Altersklasse der Mutter bei der Geburt</td>
+<td class=val>3</td></tr><tr class=odd><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/anteilauslaendischewohnbevoelkerung" target="_other">https://stat.stadt-zuerich.ch/code/anteilauslaendischewohnbevoelkerung</a></td>
+<td class=val>Anteil ausländische Wohnbevölkerung</td>
+<td class=val>2</td></tr><tr class=even><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/aufenthaltsart" target="_other">https://stat.stadt-zuerich.ch/code/aufenthaltsart</a></td>
+<td class=val>Aufenthaltsart</td>
+<td class=val>2</td></tr><tr class=odd><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/aufenthaltsdauer" target="_other">https://stat.stadt-zuerich.ch/code/aufenthaltsdauer</a></td>
+<td class=val>Aufenthaltsdauer</td>
+<td class=val>2</td></tr><tr class=even><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV011" target="_other">https://stat.stadt-zuerich.ch/topic/BEV011</a></td>
+<td class=val>Ausländische Wohnbevölkerung nach Geschlecht, Altersklasse und Heimat</td>
+<td class=val>3</td></tr><tr class=odd><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV012" target="_other">https://stat.stadt-zuerich.ch/topic/BEV012</a></td>
+<td class=val>Ausländische Wohnbevölkerung nach Geschlecht, Aufenthaltsart und Heimat</td>
+<td class=val>3</td></tr><tr class=even><td class=val>Bildung, Kultur &amp; Sport</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/KUL020" target="_other">https://stat.stadt-zuerich.ch/topic/KUL020</a></td>
+<td class=val>Bade- und Schulschwimmanlagen</td>
+<td class=val>2</td></tr><tr class=odd><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/bestand" target="_other">https://stat.stadt-zuerich.ch/code/bestand</a></td>
+<td class=val>Bestand</td>
+<td class=val>1</td></tr><tr class=even><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/bestandnachdefinition" target="_other">https://stat.stadt-zuerich.ch/code/bestandnachdefinition</a></td>
+<td class=val>Bestand nach Definition</td>
+<td class=val>2</td></tr><tr class=odd><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV057" target="_other">https://stat.stadt-zuerich.ch/topic/BEV057</a></td>
+<td class=val>Bevölkerungsbilanz nach Stadtquartier</td>
+<td class=val>3</td></tr><tr class=even><td class=val>Bildung, Kultur &amp; Sport</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/KUL022" target="_other">https://stat.stadt-zuerich.ch/topic/KUL022</a></td>
+<td class=val>Bibliotheken</td>
+<td class=val>2</td></tr><tr class=odd><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/buergerrechtderstadtzuerich" target="_other">https://stat.stadt-zuerich.ch/code/buergerrechtderstadtzuerich</a></td>
+<td class=val>Bürgerrecht der Stadt Zürich</td>
+<td class=val>2</td></tr><tr class=even><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/dauerderehe" target="_other">https://stat.stadt-zuerich.ch/code/dauerderehe</a></td>
+<td class=val>Dauer der Ehe</td>
+<td class=val>2</td></tr><tr class=odd><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV022" target="_other">https://stat.stadt-zuerich.ch/topic/BEV022</a></td>
+<td class=val>Durchschnittsalter der Eheschliessenden</td>
+<td class=val>3</td></tr><tr class=even><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV027" target="_other">https://stat.stadt-zuerich.ch/topic/BEV027</a></td>
+<td class=val>Durchschnittsalter der Mutter bei der Geburt</td>
+<td class=val>3</td></tr><tr class=odd><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV009" target="_other">https://stat.stadt-zuerich.ch/topic/BEV009</a></td>
+<td class=val>Durchschnittsalter der Wohnbevölkerung</td>
+<td class=val>3</td></tr><tr class=even><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV025" target="_other">https://stat.stadt-zuerich.ch/topic/BEV025</a></td>
+<td class=val>Ehescheidungen nach Altersklassen Anteile</td>
+<td class=val>3</td></tr></table><div class="tinfo">Total: 130, Shown: 20</div></div>
+
+
+> If we change the query slightly, we can reveal the relative parent topics:
+
+
+```all-of-them
+>SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX schema: <https://ld.stadt-zuerich.ch/schema/>
+
+SELECT DISTINCT ?parentTopic ?topic ?topicLabel ?topicLevel
+FROM <https://linked.opendata.swiss/graph/zh/statistics>
+WHERE{
+    ?category0 a schema:Category. 
+    {?category0 rdfs:label ?parentTopic; skos:narrower ?topic. BIND("1" AS ?topicLevel)}
+    UNION
+    {?category0 skos:narrower [rdfs:label ?parentTopic; skos:narrower ?topic]. BIND("2" AS ?topicLevel)}
+    UNION
+    {?category0 skos:narrower/skos:narrower [rdfs:label ?parentTopic; skos:narrower ?topic]. BIND("3" AS ?topicLevel)}
+    MINUS{?topic a qb:DataSet}.
+    ?topic rdfs:label ?topicLabel.
+}
+ORDER BY ?topicLabel
+```
+
+
+<div class="krn-spql"><table><tr class=hdr><th>parentTopic</th>
+<th>topic</th>
+<th>topicLabel</th>
+<th>topicLevel</th></tr><tr class=odd><td class=val>Bestand</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/aktuellerbestand" target="_other">https://stat.stadt-zuerich.ch/code/aktuellerbestand</a></td>
+<td class=val>Aktueller Bestand</td>
+<td class=val>2</td></tr><tr class=even><td class=val>Alter &amp; Geschlecht</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/alter" target="_other">https://stat.stadt-zuerich.ch/code/alter</a></td>
+<td class=val>Alter</td>
+<td class=val>2</td></tr><tr class=odd><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/altergeschlecht" target="_other">https://stat.stadt-zuerich.ch/code/altergeschlecht</a></td>
+<td class=val>Alter &amp; Geschlecht</td>
+<td class=val>1</td></tr><tr class=even><td class=val>Geburten</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV028" target="_other">https://stat.stadt-zuerich.ch/topic/BEV028</a></td>
+<td class=val>Altersklasse der Mutter bei der Geburt</td>
+<td class=val>3</td></tr><tr class=odd><td class=val>Alter</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV028" target="_other">https://stat.stadt-zuerich.ch/topic/BEV028</a></td>
+<td class=val>Altersklasse der Mutter bei der Geburt</td>
+<td class=val>3</td></tr><tr class=even><td class=val>Geschlecht</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV028" target="_other">https://stat.stadt-zuerich.ch/topic/BEV028</a></td>
+<td class=val>Altersklasse der Mutter bei der Geburt</td>
+<td class=val>3</td></tr><tr class=odd><td class=val>Nationalität, Einbürgerung, Sprache</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/anteilauslaendischewohnbevoelkerung" target="_other">https://stat.stadt-zuerich.ch/code/anteilauslaendischewohnbevoelkerung</a></td>
+<td class=val>Anteil ausländische Wohnbevölkerung</td>
+<td class=val>2</td></tr><tr class=even><td class=val>Nationalität, Einbürgerung, Sprache</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/aufenthaltsart" target="_other">https://stat.stadt-zuerich.ch/code/aufenthaltsart</a></td>
+<td class=val>Aufenthaltsart</td>
+<td class=val>2</td></tr><tr class=odd><td class=val>Zuzug, Wegzug, Umzug</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/aufenthaltsdauer" target="_other">https://stat.stadt-zuerich.ch/code/aufenthaltsdauer</a></td>
+<td class=val>Aufenthaltsdauer</td>
+<td class=val>2</td></tr><tr class=even><td class=val>Herkunft</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV011" target="_other">https://stat.stadt-zuerich.ch/topic/BEV011</a></td>
+<td class=val>Ausländische Wohnbevölkerung nach Geschlecht, Altersklasse und Heimat</td>
+<td class=val>3</td></tr><tr class=odd><td class=val>Nationalität, Heimat</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV011" target="_other">https://stat.stadt-zuerich.ch/topic/BEV011</a></td>
+<td class=val>Ausländische Wohnbevölkerung nach Geschlecht, Altersklasse und Heimat</td>
+<td class=val>3</td></tr><tr class=even><td class=val>Geschlecht</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV011" target="_other">https://stat.stadt-zuerich.ch/topic/BEV011</a></td>
+<td class=val>Ausländische Wohnbevölkerung nach Geschlecht, Altersklasse und Heimat</td>
+<td class=val>3</td></tr><tr class=odd><td class=val>Alter</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV011" target="_other">https://stat.stadt-zuerich.ch/topic/BEV011</a></td>
+<td class=val>Ausländische Wohnbevölkerung nach Geschlecht, Altersklasse und Heimat</td>
+<td class=val>3</td></tr><tr class=even><td class=val>Herkunft</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV012" target="_other">https://stat.stadt-zuerich.ch/topic/BEV012</a></td>
+<td class=val>Ausländische Wohnbevölkerung nach Geschlecht, Aufenthaltsart und Heimat</td>
+<td class=val>3</td></tr><tr class=odd><td class=val>Aufenthaltsart</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV012" target="_other">https://stat.stadt-zuerich.ch/topic/BEV012</a></td>
+<td class=val>Ausländische Wohnbevölkerung nach Geschlecht, Aufenthaltsart und Heimat</td>
+<td class=val>3</td></tr><tr class=even><td class=val>Geschlecht</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV012" target="_other">https://stat.stadt-zuerich.ch/topic/BEV012</a></td>
+<td class=val>Ausländische Wohnbevölkerung nach Geschlecht, Aufenthaltsart und Heimat</td>
+<td class=val>3</td></tr><tr class=odd><td class=val>Nationalität, Heimat</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/BEV012" target="_other">https://stat.stadt-zuerich.ch/topic/BEV012</a></td>
+<td class=val>Ausländische Wohnbevölkerung nach Geschlecht, Aufenthaltsart und Heimat</td>
+<td class=val>3</td></tr><tr class=even><td class=val>Sport</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/topic/KUL020" target="_other">https://stat.stadt-zuerich.ch/topic/KUL020</a></td>
+<td class=val>Bade- und Schulschwimmanlagen</td>
+<td class=val>2</td></tr><tr class=odd><td class=val>Bevölkerung</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/bestand" target="_other">https://stat.stadt-zuerich.ch/code/bestand</a></td>
+<td class=val>Bestand</td>
+<td class=val>1</td></tr><tr class=even><td class=val>Bestand</td>
+<td class=val><a href="https://stat.stadt-zuerich.ch/code/bestandnachdefinition" target="_other">https://stat.stadt-zuerich.ch/code/bestandnachdefinition</a></td>
+<td class=val>Bestand nach Definition</td>
+<td class=val>2</td></tr></table><div class="tinfo">Total: 236, Shown: 20</div></div>
+
+
+### 4.12.3 Explanation<a id="4123"></a>
+```?category0 skos:narrower [rdfs:label ?parentTopic; skos:narrower ?topic]```<br>
+
+is the short form for the following two statements:<br>
+
+```?category0 skos:narrower/rdfs:label ?parentTopic;```<br> 
+```?category0 skos:narrower/skos:narrower ?topic.```<br>
+
+We also match the parent topic in each UNION, and omit cases for which the path ```skos:narrower/skos:narrower/skos:narrower``` already matches a DataSet (and we no longer have topics). This is achieved by ```MINUS{?topic a qb:DataSet}``` which simply excludes everything matching the statement in brackets.
 
 ## 4.13 Example Query: spatial Hierarchies<a id="413"></a>
 The codes are categorized according to their Scheme. To get an overview of all the spatial hierarchies, we have to SELECT those codes with skos:inScheme https://ld.stadt-zuerich.ch/statistics/scheme/Raum. We also have to consider that there are two types of hierarchies: skos:broader and skos:narrower. To extract all of them, our query requires a UNION of subqueries - one for each type of hierarchy - to match both to the same variable ?hierarchy:
@@ -1319,7 +1647,7 @@ The spatial hierarchy of Raum (area) is complex. A Raum code typically has multi
 * R20000: City after 1. incorporation in 1893 has skos:broader https://ld.stadt-zuerich.ch/statistics/code/R00081 (Seefeld)
 * R30000: Zurich City since 1934 has skos:broader https://ld.stadt-zuerich.ch/statistics/code/Gemeinde
 
-to name a few examples. See also the graph visualization in section [3.1.3](#Graph-Database-vs.-Relational-Database).
+to name a few examples. See also the graph visualization in section <a href="#23">2&#46;3</a>.
 
 The first part of the query simply SELECTS all the Raum codes and labels them. The two subqueries then match each type of the hierarchy to the same variable:
 * ```?code skos:broader(narrower) ?hierarchy.``` matches the hierarchies to the variable ?hierarchy
@@ -1328,7 +1656,7 @@ The first part of the query simply SELECTS all the Raum codes and labels them. T
 The hierarchies are also labeled for the sake of clarity.
 
 ## 4.14 Example Query: links to other Databases<a id="414"></a>
-In addition to the example in section [2.3](#Open-Data-and-Linked-Data), other sameAs relations shall be given here:
+In addition to the example in section <a href="#34">3&#46;4</a>, other sameAs relations shall be given here:
 
 
 ```all-of-them
@@ -1415,7 +1743,7 @@ WHERE{
 
 
 ### 4.15.1 Explanation<a id="4151"></a>
-The URI of a Slice already reveals which dimension is fixed. The Slice "BEWSEX0002" for example, fixes the sex and reduces the DataSet "population as a function of area, sex, date" to "female population as a function of area, date". See [3.3](#Concepts-of-the-RDF-Data-Cube) for more details on Slices.
+The URI of a Slice already reveals which dimension is fixed. The Slice "BEWSEX0002" for example, fixes the sex and reduces the DataSet "population as a function of area, sex, date" to "female population as a function of area, date". See <a href="#33">3&#46;3</a> for more details on Slices.
 
 ## 4.16 Example Query: Shapes<a id="416"></a>
 Select all Shapes of the DataCube:
@@ -1439,7 +1767,7 @@ WHERE{
 
 
 ### 4.16.1 Explanation<a id="4161"></a>
-See section [3.4](#Other-important-concepts) for details on shapes.
+See section <a href="#34">3&#46;4</a> for details on shapes.
 
 ## 4.17 Example Query: Metadata of Observations<a id="417"></a>
 Metadata is extracted from five randomly selected observations of a random DataSet:
@@ -1785,7 +2113,7 @@ ORDER BY DESC(?property)
 ### 4.19.1 Explanation<a id="4191"></a>
 * Property Paths are specified [here](https://www.w3.org/TR/sparql11-query/#propertypaths) and explained in more detail [here](https://en.wikibooks.org/wiki/SPARQL/Property_paths)
 
-First a DataSet is selected, either randomly (switch the comments in the subselect) or a specific one, then the query tests the relationships originating from the cetral node https://ld.stadt-zuerich.ch/statistics/dataset/&lt;DataSet&gt;. The property path ```(:|!:)``` checks wheter there is a relation connecting two resources and ```?dataset ?pred ?property``` matches these relation. The following list gives an overview of the required regular expressions:
+First a DataSet is selected, either randomly (switch the comments in the subselect) or a specific one, then the query tests the relationships originating from the cetral node https://ld.stadt-zuerich.ch/statistics/dataset/<DataSet\>. The property path ```(:|!:)``` checks wheter there is a relation connecting two resources and ```?dataset ?pred ?property``` matches these relation. The following list gives an overview of the required regular expressions:
 * **(a|b)** means either path __a__ OR **b**
 * **!a** means negation, i.e. NOT **a**
 * **^a** means the inverse path of __a__ (graph is traversed in reverse direction)
@@ -1886,7 +2214,7 @@ ORDER BY ?property
 
 
 ### 4.20.1 Explanation<a id="4201"></a>
-First an Observation is selected, either randomly (switch the comments in the subselect) or a specific one, then the query tests the relationships originating from the cetral node https://ld.stadt-zuerich.ch/statistics/dataset/&lt;Observation&gt;. The property path **(:|!:)** checks wheter there is a relation connecting two resources and ```?dataset ?pred ?property``` matches these relations. For more detail see the [previous section](#Example-Query:-relations-of-a-DataSet).
+First an Observation is selected, either randomly (switch the comments in the subselect) or a specific one, then the query tests the relationships originating from the cetral node https://ld.stadt-zuerich.ch/statistics/dataset/<Observation\>. The property path **(:|!:)** checks wheter there is a relation connecting two resources and ```?dataset ?pred ?property``` matches these relations. For more detail see the <a href="#419">previous section</a>.
 
 ## 4.21 Example Query: evolution of the plot area without forest<a id="421"></a>
 This query shall display the evolution of plot area, without forest, in Zurich over the years. We can extract the respective DataSet and code with the help of a FILTER REGEX(), for instance. The data is then plotted with the Google Chart feature of the SPARQL-Interface (a plot via notebook is not possible):
@@ -1960,7 +2288,7 @@ This query uses the Google Chart feature of the [SPARQL interface](https://ld.st
 
 
 ## 4.22 Example Query: females of swiss origin in 2016<a id="422"></a>
-This query corresponds to the year book excerpt in section [3.2](#Concepts-of-the-Historic-Data). A single measurement of the residential population in dependance of homeland, sex and urban district in the year 2016 shall be given for the district "Rathaus":
+This query corresponds to the year book excerpt in section <a href="#32">3&#46;2</a>. A single measurement of the residential population in dependance of homeland, sex and urban district in the year 2016 shall be given for the district "Rathaus":
 
 
 ```all-of-them
@@ -2095,8 +2423,8 @@ WHERE{
     #Raum = Zurich
     FILTER(?Raum = code:R30000)
   
-    #date2string for Google Chart
-    BIND(STR(?Zeit) AS ?year)
+    #date2year as string for Google Chart
+    BIND(SUBSTR(STR(?Zeit),1,4) AS ?year)
 }
 GROUP BY ?year
 ORDER BY ?year
@@ -2106,64 +2434,64 @@ ORDER BY ?year
 <div class="krn-spql"><table><tr class=hdr><th>year</th>
 <th>births</th>
 <th>deaths</th>
-<th>difference</th></tr><tr class=odd><td class=val>1980-12-31</td>
+<th>difference</th></tr><tr class=odd><td class=val>1980</td>
 <td class=val>2953.0</td>
 <td class=val>4482.0</td>
-<td class=val>-1529.0</td></tr><tr class=even><td class=val>1981-12-31</td>
+<td class=val>-1529.0</td></tr><tr class=even><td class=val>1981</td>
 <td class=val>2989.0</td>
 <td class=val>4480.0</td>
-<td class=val>-1491.0</td></tr><tr class=odd><td class=val>1982-12-31</td>
+<td class=val>-1491.0</td></tr><tr class=odd><td class=val>1982</td>
 <td class=val>3076.0</td>
 <td class=val>4453.0</td>
-<td class=val>-1377.0</td></tr><tr class=even><td class=val>1983-12-31</td>
+<td class=val>-1377.0</td></tr><tr class=even><td class=val>1983</td>
 <td class=val>2994.0</td>
 <td class=val>4540.0</td>
-<td class=val>-1546.0</td></tr><tr class=odd><td class=val>1984-12-31</td>
+<td class=val>-1546.0</td></tr><tr class=odd><td class=val>1984</td>
 <td class=val>2984.0</td>
 <td class=val>4328.0</td>
-<td class=val>-1344.0</td></tr><tr class=even><td class=val>1985-12-31</td>
+<td class=val>-1344.0</td></tr><tr class=even><td class=val>1985</td>
 <td class=val>2953.0</td>
 <td class=val>4448.0</td>
-<td class=val>-1495.0</td></tr><tr class=odd><td class=val>1986-12-31</td>
+<td class=val>-1495.0</td></tr><tr class=odd><td class=val>1986</td>
 <td class=val>2986.0</td>
 <td class=val>4489.0</td>
-<td class=val>-1503.0</td></tr><tr class=even><td class=val>1987-12-31</td>
+<td class=val>-1503.0</td></tr><tr class=even><td class=val>1987</td>
 <td class=val>2942.0</td>
 <td class=val>4281.0</td>
-<td class=val>-1339.0</td></tr><tr class=odd><td class=val>1988-12-31</td>
+<td class=val>-1339.0</td></tr><tr class=odd><td class=val>1988</td>
 <td class=val>3036.0</td>
 <td class=val>4241.0</td>
-<td class=val>-1205.0</td></tr><tr class=even><td class=val>1989-12-31</td>
+<td class=val>-1205.0</td></tr><tr class=even><td class=val>1989</td>
 <td class=val>3044.0</td>
 <td class=val>4228.0</td>
-<td class=val>-1184.0</td></tr><tr class=odd><td class=val>1990-12-31</td>
+<td class=val>-1184.0</td></tr><tr class=odd><td class=val>1990</td>
 <td class=val>3046.0</td>
 <td class=val>4330.0</td>
-<td class=val>-1284.0</td></tr><tr class=even><td class=val>1991-12-31</td>
+<td class=val>-1284.0</td></tr><tr class=even><td class=val>1991</td>
 <td class=val>3342.0</td>
 <td class=val>4248.0</td>
-<td class=val>-906.0</td></tr><tr class=odd><td class=val>1992-12-31</td>
+<td class=val>-906.0</td></tr><tr class=odd><td class=val>1992</td>
 <td class=val>3406.0</td>
 <td class=val>4148.0</td>
-<td class=val>-742.0</td></tr><tr class=even><td class=val>1993-12-31</td>
+<td class=val>-742.0</td></tr><tr class=even><td class=val>1993</td>
 <td class=val>3400.0</td>
 <td class=val>4048.0</td>
-<td class=val>-648.0</td></tr><tr class=odd><td class=val>1994-12-31</td>
+<td class=val>-648.0</td></tr><tr class=odd><td class=val>1994</td>
 <td class=val>3483.0</td>
 <td class=val>4187.0</td>
-<td class=val>-704.0</td></tr><tr class=even><td class=val>1995-12-31</td>
+<td class=val>-704.0</td></tr><tr class=even><td class=val>1995</td>
 <td class=val>3419.0</td>
 <td class=val>4168.0</td>
-<td class=val>-749.0</td></tr><tr class=odd><td class=val>1996-12-31</td>
+<td class=val>-749.0</td></tr><tr class=odd><td class=val>1996</td>
 <td class=val>3430.0</td>
 <td class=val>4105.0</td>
-<td class=val>-675.0</td></tr><tr class=even><td class=val>1997-12-31</td>
+<td class=val>-675.0</td></tr><tr class=even><td class=val>1997</td>
 <td class=val>3459.0</td>
 <td class=val>4046.0</td>
-<td class=val>-587.0</td></tr><tr class=odd><td class=val>1998-12-31</td>
+<td class=val>-587.0</td></tr><tr class=odd><td class=val>1998</td>
 <td class=val>3455.0</td>
 <td class=val>3972.0</td>
-<td class=val>-517.0</td></tr><tr class=even><td class=val>1999-12-31</td>
+<td class=val>-517.0</td></tr><tr class=even><td class=val>1999</td>
 <td class=val>3489.0</td>
 <td class=val>3948.0</td>
 <td class=val>-459.0</td></tr></table><div class="tinfo">Total: 38, Shown: 20</div></div>
@@ -2176,7 +2504,7 @@ ORDER BY ?year
 This query uses the Google Chart feature of the [SPARQL interface](https://ld.stadt-zuerich.ch/sparql/) and is not displayable by the notebook. Google Chart offers various chart types along with font, color, axis and other customization options. The BIND command merges the births AND the -deaths value (of every year) into ?difference thanks to the UNION of both subqueries (without UNION, BIND would overwrite ?difference). COUNT then adds or subtracts them respectively.
 
 # 4.25 Example Query: differences in population numbers<a id="425"></a>
-The following query is a bit more difficult and its objective is to show the differences in population numbers between SSZ and Wikidata. Only those entries are matched, for which the SSZ and Wikidata numbers are different. This example is a particular nice illustration of the benefits and significance of Linked Data. Without it and SPARQL, this comparison would have been possible only with multiple tools and a tremendous amount of work!
+The following query is a bit more difficult because it relies on Wikidata vocabulary. Its objective is to show the differences in population numbers between SSZ and Wikidata. Only those entries are matched, for which the SSZ and Wikidata population numbers are different and the measurement happened in the same year. This example is a particular nice illustration of the benefits and significance of Linked Data. Without it and SPARQL, this comparison would have been possible only with multiple tools and a tremendous amount of work!
 
 
 ```all-of-them
@@ -2198,7 +2526,8 @@ PREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>
 PREFIX attribute: <https://ld.stadt-zuerich.ch/statistics/attribute/>
 PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
 
-SELECT ?Raum ?RaumLabel ?ZeitSSZ ?WikiTime ?WikidataUID ?BevSSZ ?BevWiki ?Rank
+SELECT DISTINCT ?Raum ?RaumLabel ?ZeitSSZ ?WikiDate ?WikidataUID ?BevSSZ ?BevWiki ?Rank
+FROM <https://linked.opendata.swiss/graph/zh/statistics>
 WHERE{
     ?sub a qb:Observation;
         qb:dataSet dataset:BEW-RAUM-ZEIT;
@@ -2211,103 +2540,90 @@ WHERE{
         rdfs:label ?RaumLabel.
 
     BIND(xsd:decimal(?Bevoelkerung) AS ?BevSSZ)
-    
+    BIND(xsd:dateTime(CONCAT(SUBSTR(STR(?ZeitSSZ),1,4),"-01-01T00:00:00Z")) AS ?WikiDate)
+
     SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql>{
-    SELECT ?BevWiki ?WikiTime ?WikidataUID ?Rank 
+    SELECT ?BevWiki ?WikiDate ?WikidataUID ?Rank 
     WHERE{
         ?WikidataUID wdt:P31 wd:Q19644586;
             p:P1082 ?EinwohnerProperty.
     
         ?EinwohnerProperty ps:P1082 ?BevWiki;
-            pq:P585 ?WikiTime;
+            pq:P585 ?WikiDate;
             wikibase:rank ?Rank.
         }
     }
 }
 HAVING (?BevSSZ != ?BevWiki)
 ORDER BY DESC(?ZeitSSZ)
-LIMIT 10
+LIMIT 100
 ```
 
 
 <div class="krn-spql"><table><tr class=hdr><th>Raum</th>
 <th>RaumLabel</th>
 <th>ZeitSSZ</th>
-<th>WikiTime</th>
+<th>WikiDate</th>
 <th>WikidataUID</th>
 <th>BevSSZ</th>
 <th>BevWiki</th>
-<th>Rank</th></tr><tr class=odd><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00013" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00013</a></td>
-<td class=val>Lindenhof</td>
-<td class=val>2017-12-31</td>
-<td class=val>2016-01-01T00:00:00Z</td>
-<td class=val><a href="http://www.wikidata.org/entity/Q10987378" target="_other">http://www.wikidata.org/entity/Q10987378</a></td>
-<td class=val>955</td>
-<td class=val>972</td>
+<th>Rank</th></tr><tr class=odd><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00061" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00061</a></td>
+<td class=val>Unterstrass</td>
+<td class=val>2013-12-31</td>
+<td class=val>2013-01-01T00:00:00Z</td>
+<td class=val><a href="http://www.wikidata.org/entity/Q656446" target="_other">http://www.wikidata.org/entity/Q656446</a></td>
+<td class=val>21876</td>
+<td class=val>21875</td>
+<td class=val><a href="http://wikiba.se/ontology#PreferredRank" target="_other">http://wikiba.se/ontology#PreferredRank</a></td></tr><tr class=even><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00092" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00092</a></td>
+<td class=val>Altstetten</td>
+<td class=val>2013-12-31</td>
+<td class=val>2013-01-01T00:00:00Z</td>
+<td class=val><a href="http://www.wikidata.org/entity/Q445711" target="_other">http://www.wikidata.org/entity/Q445711</a></td>
+<td class=val>31115</td>
+<td class=val>31116</td>
+<td class=val><a href="http://wikiba.se/ontology#PreferredRank" target="_other">http://wikiba.se/ontology#PreferredRank</a></td></tr><tr class=odd><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00091" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00091</a></td>
+<td class=val>Albisrieden</td>
+<td class=val>2013-12-31</td>
+<td class=val>2013-01-01T00:00:00Z</td>
+<td class=val><a href="http://www.wikidata.org/entity/Q80797" target="_other">http://www.wikidata.org/entity/Q80797</a></td>
+<td class=val>19146</td>
+<td class=val>19145</td>
+<td class=val><a href="http://wikiba.se/ontology#NormalRank" target="_other">http://wikiba.se/ontology#NormalRank</a></td></tr><tr class=even><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00024" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00024</a></td>
+<td class=val>Enge</td>
+<td class=val>2012-12-31</td>
+<td class=val>2012-01-01T00:00:00Z</td>
+<td class=val><a href="http://www.wikidata.org/entity/Q648218" target="_other">http://www.wikidata.org/entity/Q648218</a></td>
+<td class=val>8702</td>
+<td class=val>8699</td>
+<td class=val><a href="http://wikiba.se/ontology#NormalRank" target="_other">http://wikiba.se/ontology#NormalRank</a></td></tr><tr class=odd><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00122" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00122</a></td>
+<td class=val>Schwamendingen-Mitte</td>
+<td class=val>2012-12-31</td>
+<td class=val>2012-01-01T00:00:00Z</td>
+<td class=val><a href="http://www.wikidata.org/entity/Q692728" target="_other">http://www.wikidata.org/entity/Q692728</a></td>
+<td class=val>10934</td>
+<td class=val>10920</td>
 <td class=val><a href="http://wikiba.se/ontology#NormalRank" target="_other">http://wikiba.se/ontology#NormalRank</a></td></tr><tr class=even><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00013" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00013</a></td>
 <td class=val>Lindenhof</td>
-<td class=val>2017-12-31</td>
-<td class=val>2015-01-01T00:00:00Z</td>
+<td class=val>2001-12-31</td>
+<td class=val>2001-01-01T00:00:00Z</td>
 <td class=val><a href="http://www.wikidata.org/entity/Q10987378" target="_other">http://www.wikidata.org/entity/Q10987378</a></td>
-<td class=val>955</td>
-<td class=val>974</td>
-<td class=val><a href="http://wikiba.se/ontology#NormalRank" target="_other">http://wikiba.se/ontology#NormalRank</a></td></tr><tr class=odd><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00013" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00013</a></td>
-<td class=val>Lindenhof</td>
-<td class=val>2017-12-31</td>
-<td class=val>1978-01-01T00:00:00Z</td>
-<td class=val><a href="http://www.wikidata.org/entity/Q10987378" target="_other">http://www.wikidata.org/entity/Q10987378</a></td>
-<td class=val>955</td>
-<td class=val>1490</td>
-<td class=val><a href="http://wikiba.se/ontology#NormalRank" target="_other">http://wikiba.se/ontology#NormalRank</a></td></tr><tr class=even><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00013" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00013</a></td>
-<td class=val>Lindenhof</td>
-<td class=val>2017-12-31</td>
-<td class=val>1983-01-01T00:00:00Z</td>
-<td class=val><a href="http://www.wikidata.org/entity/Q10987378" target="_other">http://www.wikidata.org/entity/Q10987378</a></td>
-<td class=val>955</td>
-<td class=val>1178</td>
-<td class=val><a href="http://wikiba.se/ontology#NormalRank" target="_other">http://wikiba.se/ontology#NormalRank</a></td></tr><tr class=odd><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00013" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00013</a></td>
-<td class=val>Lindenhof</td>
-<td class=val>2017-12-31</td>
-<td class=val>2000-01-01T00:00:00Z</td>
-<td class=val><a href="http://www.wikidata.org/entity/Q10987378" target="_other">http://www.wikidata.org/entity/Q10987378</a></td>
-<td class=val>955</td>
-<td class=val>989</td>
-<td class=val><a href="http://wikiba.se/ontology#NormalRank" target="_other">http://wikiba.se/ontology#NormalRank</a></td></tr><tr class=even><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00013" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00013</a></td>
-<td class=val>Lindenhof</td>
-<td class=val>2017-12-31</td>
-<td class=val>1981-01-01T00:00:00Z</td>
-<td class=val><a href="http://www.wikidata.org/entity/Q10987378" target="_other">http://www.wikidata.org/entity/Q10987378</a></td>
-<td class=val>955</td>
-<td class=val>1304</td>
-<td class=val><a href="http://wikiba.se/ontology#NormalRank" target="_other">http://wikiba.se/ontology#NormalRank</a></td></tr><tr class=odd><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00013" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00013</a></td>
-<td class=val>Lindenhof</td>
-<td class=val>2017-12-31</td>
-<td class=val>1974-01-01T00:00:00Z</td>
-<td class=val><a href="http://www.wikidata.org/entity/Q10987378" target="_other">http://www.wikidata.org/entity/Q10987378</a></td>
-<td class=val>955</td>
-<td class=val>1679</td>
-<td class=val><a href="http://wikiba.se/ontology#NormalRank" target="_other">http://wikiba.se/ontology#NormalRank</a></td></tr><tr class=even><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00013" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00013</a></td>
-<td class=val>Lindenhof</td>
-<td class=val>2017-12-31</td>
-<td class=val>1976-01-01T00:00:00Z</td>
-<td class=val><a href="http://www.wikidata.org/entity/Q10987378" target="_other">http://www.wikidata.org/entity/Q10987378</a></td>
-<td class=val>955</td>
-<td class=val>1463</td>
-<td class=val><a href="http://wikiba.se/ontology#NormalRank" target="_other">http://wikiba.se/ontology#NormalRank</a></td></tr><tr class=odd><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00013" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00013</a></td>
-<td class=val>Lindenhof</td>
-<td class=val>2017-12-31</td>
-<td class=val>1985-01-01T00:00:00Z</td>
-<td class=val><a href="http://www.wikidata.org/entity/Q10987378" target="_other">http://www.wikidata.org/entity/Q10987378</a></td>
-<td class=val>955</td>
-<td class=val>1084</td>
-<td class=val><a href="http://wikiba.se/ontology#NormalRank" target="_other">http://wikiba.se/ontology#NormalRank</a></td></tr><tr class=even><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00013" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00013</a></td>
-<td class=val>Lindenhof</td>
-<td class=val>2017-12-31</td>
-<td class=val>1971-01-01T00:00:00Z</td>
-<td class=val><a href="http://www.wikidata.org/entity/Q10987378" target="_other">http://www.wikidata.org/entity/Q10987378</a></td>
-<td class=val>955</td>
-<td class=val>1956</td>
-<td class=val><a href="http://wikiba.se/ontology#NormalRank" target="_other">http://wikiba.se/ontology#NormalRank</a></td></tr></table><div class="tinfo">Total: 10, Shown: 10</div></div>
+<td class=val>948</td>
+<td class=val>984</td>
+<td class=val><a href="http://wikiba.se/ontology#NormalRank" target="_other">http://wikiba.se/ontology#NormalRank</a></td></tr><tr class=odd><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00071" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00071</a></td>
+<td class=val>Fluntern</td>
+<td class=val>1989-12-31</td>
+<td class=val>1989-01-01T00:00:00Z</td>
+<td class=val><a href="http://www.wikidata.org/entity/Q693269" target="_other">http://www.wikidata.org/entity/Q693269</a></td>
+<td class=val>7272</td>
+<td class=val>7270</td>
+<td class=val><a href="http://wikiba.se/ontology#NormalRank" target="_other">http://wikiba.se/ontology#NormalRank</a></td></tr><tr class=even><td class=val><a href="https://ld.stadt-zuerich.ch/statistics/code/R00024" target="_other">https://ld.stadt-zuerich.ch/statistics/code/R00024</a></td>
+<td class=val>Enge</td>
+<td class=val>1989-12-31</td>
+<td class=val>1989-01-01T00:00:00Z</td>
+<td class=val><a href="http://www.wikidata.org/entity/Q648218" target="_other">http://www.wikidata.org/entity/Q648218</a></td>
+<td class=val>8169</td>
+<td class=val>8171</td>
+<td class=val><a href="http://wikiba.se/ontology#NormalRank" target="_other">http://wikiba.se/ontology#NormalRank</a></td></tr></table><div class="tinfo">Total: 8, Shown: 8</div></div>
 
 
 ### 4.25.1 Explanation<a id="4251"></a>
@@ -2315,18 +2631,352 @@ LIMIT 10
 * [Here](https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/queries#Working_with_qualifiers) is the Wikidata introduction to SPARQL queries
 
 Except for the Wikidata vocabulary, the query is not that difficult:
-* BIND to display the SSZ population (double) in the same format as Wikidata (decimal)
+* BIND to display the SSZ population (double) in the same format as Wikidata (decimal) as well as extending the SSZ Zeit (xsd:date) to the WikidataDate (xsd:dateTime) with  matching years
 * SERVICE to give the Wikidata SELECT access to the Wikidata SPARQL endpoint
 * HAVING to select only those matches for which the population numbers are different
 
-## 4.26 Example Query: DataSet BEZUGSZEIT<a id="426"></a>
-There exist monthly and annual DataSets. They are distinguished by the attribute BEZUGSZEIT which is a string value that states in what intervals the data is acquired, e.g. "Tag;Monat", "Periode;Jahr", "Tag;Tag;Monat;Quartal;Trimester;Semester;Jahr" etc.
+## 4.26 Example Query: GeoSPARQL<a id="426"></a>
+The GeoSPARQL ontology in conjunction with the SPARQL interface enable us to query and visualize area maps. The following query extracts the "Kreis" districts of Zurich in the form of coordinate shapes (magic is deliberately false for proper display in markdown):
 
-A few examples shall be given here..
 
-<span class="mark">LATER</span>
+```all-of-them
+SPARQLx
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
 
-# 5 SSZVIS<a id="5"></a>
+SELECT * 
+FROM <https://linked.opendata.swiss/graph/zh/statistics>
+WHERE{
+    ?raum rdfs:label ?raumLabel;
+        skos:broader code:Kreis;
+        geo:hasGeometry/geo:asWKT ?shape.
+} 
+```
+
+### 4.26.1 Explanation<a id="4261"></a>
+* ```?raum skos:broader code:Kreis``` matchtes all the "Kreis" districts of Zurich
+* ```geo:hasGeometry``` connects ?raum to its geometries
+* ```geo:asWKT``` links the geometry entities to the geometry literal representations. Values for these properties use the geo-sf:WKTLiteral data type.
+
+> See the GeoSPARQL [documentation](http://www.semantic-web-journal.net/sites/default/files/swj176_1.pdf) for further explanations.
+
+The result can then be visualized as a map with the Geo function of the SPARQL interface:
+<br>
+
+<img src="images/geosparql1.png" width="900px" style="float:none;margin-left:0">
+
+If we now incorporate the dataset "BEW-RAUM-ZEIT", for example, we are able to display the population measurements depending on the "Kreis" district for a given date (magic is deliberately false for proper display in markdown):
+
+
+```all-of-them
+SPARQLx
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
+PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
+PREFIX property: <https://ld.stadt-zuerich.ch/statistics/property/>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+
+SELECT * 
+FROM <https://linked.opendata.swiss/graph/zh/statistics>
+WHERE{
+    ?obs a qb:Observation;
+        qb:dataSet dataset:BEW-RAUM-ZEIT;
+        measure:BEW ?bew;
+        property:RAUM ?raum;
+        property:ZEIT "2000-12-31"^^xsd:date.
+        
+    ?raum rdfs:label ?raumLabel;
+        skos:broader code:Kreis;
+        geo:hasGeometry/geo:asWKT ?shape.
+    
+    BIND(CONCAT(STR(?raumLabel), ": ", STR(?bew)) AS ?shapeLabel)
+} 
+```
+
+The result is again visualized as a map with the Geo function:
+<br>
+
+<img src="images/geosparql2.png" width="900px" style="float:none;margin-left:0">
+
+
+# 6 SPARQL in R<a id="6"></a>
+The querying of LOSData in RStudio is made possible through the SPARQL package (has dependencies on the RCurl package). Its short documentation can be found [here](https://cran.r-project.org/web/packages/SPARQL/SPARQL.pdf). As a first example, we shall execute the query <a href="#42">all DataSets</a>. The main function is SPARQL() which, after receiving the endpoint, query and http auth credentials as input, fetches the results as a list. The do.call() method then converts this impractical list into a data.frame:
+
+
+```all-of-them
+>R
+install.packages("RCurl")
+install.packages("SPARQL")
+
+library(RCurl)
+library(SPARQL)
+
+endpoint <- 'https://lindas-data.ch:8443/lindas/query'
+query <- 'PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?dataset ?label 
+FROM <https://linked.opendata.swiss/graph/zh/statistics>
+WHERE{
+    ?dataset a qb:DataSet;
+        rdfs:label ?label.
+}
+LIMIT 10'
+
+rawResults <- SPARQL(endpoint,query,curl_args=c('userpwd'=paste('public',':','public',sep='')))
+results <- do.call(rbind.data.frame, results)
+View(results)
+```
+
+View(results):
+<br>
+
+<img src="images/Rresult.png" width="763px" style="float:none;margin-left:0">
+
+## 6.1 Plotting in R<a id="61"></a>
+The package ggplot2 allows us to plot data like we did with Google Chart in query <a href="#424">conjunction of Kennzahlen</a>, for example. For proper plotting we first we have to convert string values back to numeric values with the function as.numeric(). And for queries which select multiple y values for some x values (as it is the case in this particular example), we have to tell ggplot which column of the data.frame corresponds to the x values. This is done by the melt() function. Note that documentation of a method is displayed by ```??<function name>```. The following query executes and plots <a href="#424">conjunction of Kennzahlen</a> in RStudio:
+
+
+```all-of-them
+>R
+install.packages("reshape")
+install.packages("ggplot2")
+
+library(RCurl)
+library(SPARQL)
+library(reshape)
+library(ggplot2)
+
+endpoint <- 'https://lindas-data.ch:8443/lindas/query'
+query <- 'PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
+PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
+PREFIX property: <https://ld.stadt-zuerich.ch/statistics/property/>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+
+SELECT ?year (SUM(?births) AS ?births) (SUM(?deaths) AS ?deaths) (SUM(?difference) AS ?difference) 
+FROM <https://linked.opendata.swiss/graph/zh/statistics>
+WHERE{
+?observation a qb:Observation; 
+property:RAUM ?Raum;
+property:ZEIT ?Zeit.
+
+#extract births
+{
+  ?observation qb:dataSet dataset:GEB-RAUM-ZEIT;
+  measure:GEB ?births.
+  BIND(?births AS ?difference)
+}
+
+UNION
+
+#extract deaths
+{
+  ?observation qb:dataSet dataset:GES-RAUM-ZEIT;
+  measure:GES ?deaths.
+  BIND(?deaths*-1 AS ?difference)
+}
+
+#Raum = Zurich
+FILTER(?Raum = code:R30000)
+
+#date2string for Google Chart
+BIND(SUBSTR(STR(?Zeit),1,4) AS ?year)
+}
+GROUP BY ?year
+ORDER BY ?year'
+rawResults <- SPARQL(endpoint,query,curl_args=c('userpwd'=paste('public',':','public',sep='')))
+results <- do.call(rbind.data.frame, rawResults)
+View(results)
+
+results$year = as.numeric(as.character(results$year))
+results.melted <- melt(results, id = "year")
+p <- ggplot(data = results.melted, aes(x = year, y = value, color = variable, group = variable)) + geom_point() + 
+  geom_line() + scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) + labs(y = "count")
+plot(p)
+```
+
+View(results):
+<br>
+
+<img src="images/Rresult2.png" width="328px" style="float:none;margin-left:0">
+<br>
+
+plot(p):
+<br>
+
+<img src="images/Rplot.png" width="877px" style="float:none;margin-left:0">
+
+# 7 SPARQL in Python<a id="7"></a>
+To query the LOSData in Python, we need the library [SPARQLWrapper](https://github.com/RDFLib/sparqlwrapper). For visualization we use [Matplotlib](https://matplotlib.org/), which allows for simple MATLAB-like plotting. Other useful libraries for working with RDF and graph databases in general, include RDFLib and RDFLib-jsonld. The libraries can be installed with pip:<br>
+```pip install sparqlwrapper```<br>
+```pip install matplotlib```<br>
+```pip install rdflib```<br>
+```pip install rdflib-jsonld```<br>
+
+As a first example, we shall execute the query <a href="#42">all DataSets</a>. SPARQLWrapper first creates the sparql instance from the endpoint, then various [methods](https://rdflib.github.io/sparqlwrapper/doc/latest/SPARQLWrapper.Wrapper.SPARQLWrapper-class.html#setReturnFormat) are called to set the http auth credentials, potential http headers, the query and return format. The allowed parameters are best examined in the configuration tab of the [SPARQL interface](https://ld.stadt-zuerich.ch/sparql/) whereas the format of these parameters can be found on the [YASGUI github page](https://github.com/OpenTriply/YASGUI.YASQE/blob/fd5646e7ab15b040393c212f0a02efa51db55dfa/src/defaults.js). The main function is queryAndconvert() which, after receiving the endpoint, query and http auth credentials as input, fetches the results as a Python dictionary in json format:
+
+
+```all-of-them
+>Python3
+from SPARQLWrapper import SPARQLWrapper, JSON #XML, CSV etc.
+
+sparql = SPARQLWrapper("https://lindas-data.ch:8443/lindas/query")
+sparql.setHTTPAuth("BASIC")
+sparql.setCredentials("public","public")
+#sparql.addCustomHttpHeader("acceptHeaderSelect","application/sparql-results+xml")
+sparql.setQuery("""
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?dataset ?label 
+FROM <https://linked.opendata.swiss/graph/zh/statistics>
+WHERE{
+    ?dataset a qb:DataSet;
+        rdfs:label ?label.
+}
+LIMIT 10
+""")
+
+sparql.setReturnFormat(JSON)
+results = sparql.queryAndConvert()
+
+for result in results["results"]["bindings"]:
+    print('%s \t %s' % (result["dataset"]["value"], result["label"]["value"]))
+```
+
+    https://ld.stadt-zuerich.ch/statistics/dataset/AST-RAUM-ZEIT-BTA 	 Arbeitsstätten nach Betriebsart, Raum, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/BES-RAUM-ZEIT-BTA-SEX 	 Beschäftigte nach Betriebsart, Raum, Geschlecht, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/BES-RAUM-ZEIT-BTA 	 Beschäftigte nach Betriebsart, Raum, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/ZUS-RAUM-ZEIT-BTA-HEL 	 Zuschauer/innen, Besucher/innen nach Betriebsart, Heimatland, Raum, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/ZUS-RAUM-ZEIT-BTA-SEX 	 Zuschauer/innen, Besucher/innen nach Betriebsart, Raum, Geschlecht, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/ZUS-RAUM-ZEIT-BTA 	 Zuschauer/innen, Besucher/innen nach Betriebsart, Raum, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/SCH-RAUM-ZEIT-BTA-SST 	 Schüler/innen und Student/innen nach Betriebsart, Raum, Schulstufen und Fächer, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/SCH-RAUM-ZEIT-BTA 	 Schüler/innen und Student/innen nach Betriebsart, Raum, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/AST-RAUM-ZEIT-BEW-BTA 	 Arbeitsstätten nach Bewilligung, Betriebsart, Raum, Zeit
+    https://ld.stadt-zuerich.ch/statistics/dataset/BEW-RAUM-ZEIT 	 Wirtschaftliche Wohnbevölkerung nach Raum, Zeit
+    
+
+## 7.1 Plotting in Python<a id="71"></a>
+The execution and plotting of example query <a href="#424">conjunction of Kennzahlen</a> in Python is even simpler than R (with the exception of the legend). We have to convert the dictionary values to float() (remember that ?year was selected as string) and consider that ```label='births'``` would add a label in every loop iteration. We can avoid this by checking with ```get_legend_handles_labels()``` if the legend already includes a particular label.
+
+
+```all-of-them
+>Python3
+import matplotlib.pyplot as plt
+from SPARQLWrapper import SPARQLWrapper, JSON #XML, CSV etc.
+
+sparql = SPARQLWrapper("https://lindas-data.ch:8443/lindas/query")
+sparql.setHTTPAuth("BASIC")
+sparql.setCredentials("public","public")
+sparql.addCustomHttpHeader("acceptHeaderSelect","application/sparql-results+json")
+sparql.setQuery("""
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
+PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
+PREFIX property: <https://ld.stadt-zuerich.ch/statistics/property/>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+
+SELECT ?year (SUM(?births) AS ?births) (SUM(?deaths) AS ?deaths) (SUM(?difference) AS ?difference) 
+FROM <https://linked.opendata.swiss/graph/zh/statistics>
+WHERE{
+    ?observation a qb:Observation; 
+        property:RAUM ?Raum;
+        property:ZEIT ?Zeit.
+  
+    #extract births
+    {
+    ?observation qb:dataSet dataset:GEB-RAUM-ZEIT;
+    measure:GEB ?births.
+    BIND(?births AS ?difference)
+    }
+  
+    UNION
+  
+    #extract deaths
+    {
+    ?observation qb:dataSet dataset:GES-RAUM-ZEIT;
+    measure:GES ?deaths.
+    BIND(?deaths*-1 AS ?difference)
+    }
+    
+    #Raum = Zurich
+    FILTER(?Raum = code:R30000)
+  
+    #date2year as string for plotting
+    BIND(SUBSTR(STR(?Zeit),1,4) AS ?year)
+}
+GROUP BY ?year
+ORDER BY ?year
+""")
+sparql.setReturnFormat(JSON)
+results = sparql.queryAndConvert()
+
+for result in results["results"]["bindings"]:
+    print('%s \t %s \t %s \t %s' %(result["year"]["value"], result["births"]["value"], result["deaths"]["value"], result["difference"]["value"]))
+
+plt.xlabel('year')
+plt.ylabel('count')
+plt.grid(True)
+for result in results["results"]["bindings"]:
+    plt.plot(float(result["year"]["value"]), float(result["births"]["value"]),'bo', label='births' if 'births' not in plt.gca().get_legend_handles_labels()[1] else '')
+    plt.plot(float(result["year"]["value"]), float(result["deaths"]["value"]),'ro', label='deaths' if 'deaths' not in plt.gca().get_legend_handles_labels()[1] else '')
+    plt.plot(float(result["year"]["value"]), float(result["difference"]["value"]),'go', label='difference' if 'difference' not in plt.gca().get_legend_handles_labels()[1] else '')
+plt.legend()
+plt.show()
+```
+
+    1980 	 2953.0 	 4482.0 	 -1529.0
+    1981 	 2989.0 	 4480.0 	 -1491.0
+    1982 	 3076.0 	 4453.0 	 -1377.0
+    1983 	 2994.0 	 4540.0 	 -1546.0
+    1984 	 2984.0 	 4328.0 	 -1344.0
+    1985 	 2953.0 	 4448.0 	 -1495.0
+    1986 	 2986.0 	 4489.0 	 -1503.0
+    1987 	 2942.0 	 4281.0 	 -1339.0
+    1988 	 3036.0 	 4241.0 	 -1205.0
+    1989 	 3044.0 	 4228.0 	 -1184.0
+    1990 	 3046.0 	 4330.0 	 -1284.0
+    1991 	 3342.0 	 4248.0 	 -906.0
+    1992 	 3406.0 	 4148.0 	 -742.0
+    1993 	 3400.0 	 4048.0 	 -648.0
+    1994 	 3483.0 	 4187.0 	 -704.0
+    1995 	 3419.0 	 4168.0 	 -749.0
+    1996 	 3430.0 	 4105.0 	 -675.0
+    1997 	 3459.0 	 4046.0 	 -587.0
+    1998 	 3455.0 	 3972.0 	 -517.0
+    1999 	 3489.0 	 3948.0 	 -459.0
+    2000 	 3577.0 	 3996.0 	 -419.0
+    2001 	 3472.0 	 3943.0 	 -471.0
+    2002 	 3553.0 	 3726.0 	 -173.0
+    2003 	 3629.0 	 3809.0 	 -180.0
+    2004 	 3791.0 	 3568.0 	 223.0
+    2005 	 3895.0 	 3604.0 	 291.0
+    2006 	 4029.0 	 3438.0 	 591.0
+    2007 	 4119.0 	 3480.0 	 639.0
+    2008 	 4349.0 	 3448.0 	 901.0
+    2009 	 4639.0 	 3417.0 	 1222.0
+    2010 	 4588.0 	 3395.0 	 1193.0
+    2011 	 4760.0 	 3290.0 	 1470.0
+    2012 	 4678.0 	 3330.0 	 1348.0
+    2013 	 4920.0 	 3465.0 	 1455.0
+    2014 	 5145.0 	 3334.0 	 1811.0
+    2015 	 5191.0 	 3400.0 	 1791.0
+    2016 	 5176.0 	 3178.0 	 1998.0
+    2017 	 5240.0 	 3279.0 	 1961.0
+    
+<img src="images/pythonplot.png" width="778px" style="float:none;margin-left:0">
+
+
+# 8 SSZVIS<a id="8"></a>
 
 SSZVIS is a visualization library of Statistik Stadt Zürich. The data model and the chart system is defined [here](https://sszvis-components.netlify.com/#/chart-system).
 
@@ -2343,7 +2993,7 @@ An example:
 <img src="images/SSZVIS_example.png" width="600px" style="float:none;margin-left:0">
 
 
-# 6 OpenSource and Repositories<a id="6"></a>
+# 9 OpenSource and Repositories<a id="9"></a>
 Statistik Stadt Zürich provides the code for LOSD under the BSD-3-Clause license. The code can freely be used but no support will be provided by Statistik Stadt Zürich.
 
 Relevant repositories:

@@ -10,9 +10,12 @@ IT-Fachtagung, 11. September 2018
 * [Alle Messungen für Bevölkerung nach Raum, Zeit](https://goo.gl/vezCXK)
 
 
+
 ### Referenzen
 
 * [RDF Data Cube Vokabular](https://www.w3.org/TR/vocab-data-cube/)
+
+
 
 ### Fragestellung
 
@@ -32,4 +35,4 @@ IT-Fachtagung, 11. September 2018
 
 ## Konfiguration Pivot Table
 
-![](/Users/ktk/workspace/ssz/documentation/examples/chart-config.png)
+![](chart-config.png)

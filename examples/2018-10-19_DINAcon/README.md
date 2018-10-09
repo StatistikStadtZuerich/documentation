@@ -1,6 +1,6 @@
 # DINAcon Workshop Linked Data Experience
 
-## Presenter
+## Table of contents
 
 People presenting: 
 
@@ -11,6 +11,8 @@ People presenting:
 | <a href="#30"> 3 </a> | Michael Grüebler   | Statistik Stadt Zürich          | Linked Open Statistical Data (Statistik Stadt Zürich) |
 | <a href="#40"> 4 </a> | Cristina Sarasua   | Universität Zürich              | Wikidata and crowd sourced data |
 | <a href="#50"> 5 </a> | Matthias Mazenauer | Statistisches Amt Kanton Zürich | Visualisation on linked data |
+
+![Visual agenda overview](agenda-overview.png "Visual agenda overview")
 
 <a id="10" />
 

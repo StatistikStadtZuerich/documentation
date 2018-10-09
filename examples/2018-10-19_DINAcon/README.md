@@ -30,78 +30,60 @@ People presenting:
 
 ## Michael Grüebler
 
-### Population "City"
-Queries the population of the quarter "City" from LOSD as an example
+### Population in the City of Zurich 
 
-[code link](http://yasgui.org/short/r19a_z-_X)
+Queries the population of the city, its districts and its quarters in 2017.
+
+[code link](http://yasgui.org/short/SJ2e_SqqX)
+```SPARQL
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
+PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
+PREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+SELECT ?RaumLabel ?Population WHERE {
+  ?sub a qb:Observation ;
+       qb:dataSet dataset:BEW-RAUM-ZEIT ;
+       measure:BEW ?Population ;
+       dimension:RAUM ?Raum ;
+       dimension:ZEIT ?Date .
+  ?Raum rdfs:label ?RaumLabel
+  FILTER(year(?Date) = 2017)
+} ORDER BY DESC(?Population)
+```
+
+### Population of quarters ready to link 
+
+Queries the population of all the quarters of the city of Zurich in 2017.
+For linking purposes the geometry and wikidata-identifiers are selected.  
+
+[code link](http://yasgui.org/short/Byg5OH5qm)
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
 PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
 PREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>
 PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
-SELECT ?Raum ?RaumLabel ?Zeit ?WikidataUID ?Bevoelkerung WHERE {
+SELECT ?Quarter ?Geometry ?WikidataUID ?QuarterLabel ?Population WHERE {
   ?sub a qb:Observation ;
        qb:dataSet dataset:BEW-RAUM-ZEIT ;
-       measure:BEW ?Bevoelkerung ;
-       dimension:RAUM ?Raum ;
-       
- 	dimension:ZEIT ?Zeit .
-  ?Raum owl:sameAs ?WikidataUID ;
+       measure:BEW ?Population ;
+       dimension:RAUM ?Quarter ;
+       dimension:ZEIT ?Date .
+  ?Quarter owl:sameAs ?WikidataUID ;
         skos:broader code:Quartier ;
-        rdfs:label ?RaumLabel .  
-  FILTER (?Raum=code:R00014)
-} ORDER BY ?Zeit
+        rdfs:label ?QuarterLabel .  
+  ?Quarter geo:hasGeometry ?Geometry .
+  FILTER(year(?Date) = 2017)
+} ORDER BY DESC(?Population)
 ```
 
-The query can be extended by removing the filter
-
-### Percentage of Foreigners
-
-Calculate the percentage of foreigners 
-
-[code link](http://yasgui.org/short/ry3q1rb_Q)
-```SPARQL
-PREFIX qb: <http://purl.org/linked-data/cube#>
-PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
-SELECT ?RaumLabel ?WikidataUID ?Time ?PercForeign
-WHERE{ 
-  GRAPH <https://linked.opendata.swiss/graph/zh/statistics>{
-    ?swiss a qb:Observation ;
-      qb:dataSet dataset:BEW-RAUM-ZEIT-HEL ;
-      <https://ld.stadt-zuerich.ch/statistics/property/RAUM> ?Location ;
-      <https://ld.stadt-zuerich.ch/statistics/property/ZEIT> ?Time .
-    
-  ?Location owl:sameAs ?WikidataUID ;
-        skos:broader <https://ld.stadt-zuerich.ch/statistics/code/Quartier> ;
-        rdfs:label ?RaumLabel .     
-
-   ?swiss   <https://ld.stadt-zuerich.ch/statistics/property/HEL> <https://ld.stadt-zuerich.ch/statistics/code/HEL1000> .
-   ?swiss  <https://ld.stadt-zuerich.ch/statistics/measure/BEW> ?NbrSwiss .
- 
-        
-    ?foreigner a qb:Observation ;
-      qb:dataSet dataset:BEW-RAUM-ZEIT-HEL ;
-      <https://ld.stadt-zuerich.ch/statistics/property/RAUM> ?Location ;
-      <https://ld.stadt-zuerich.ch/statistics/property/ZEIT> ?Time .
-    
-  ?Location owl:sameAs ?WikidataUID ;
-        skos:broader <https://ld.stadt-zuerich.ch/statistics/code/Quartier> ;
-        rdfs:label ?RaumLabel .     
-
-   ?foreigner   <https://ld.stadt-zuerich.ch/statistics/property/HEL> <https://ld.stadt-zuerich.ch/statistics/code/HEL2000> .
-   ?foreigner  <https://ld.stadt-zuerich.ch/statistics/measure/BEW> ?NbrForeign .
- 
-        BIND((?NbrForeign / (?NbrSwiss + ?NbrForeign) *100) AS ?PercForeign)
-        
-  }}
-ORDER BY ?RaumLabel ?Time ?NameOfCountry
-LIMIT 100
-```
 
 <a id="40" />
 

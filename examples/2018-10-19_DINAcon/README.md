@@ -24,13 +24,87 @@ People presenting:
 
 ## Pasquale Di Donato
 
+### All municipality boundaries in Canton
+
+[code link](http://yasgui.org/short/ryX8ZPicX)
+```SPARQL
+PREFIX schema: <http://schema.org/>
+PREFIX gn: <http://www.geonames.org/ontology#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX dct: <http://purl.org/dc/terms/>
+select ?Municipality ?Name ?WKT
+where
+{
+?Municipality a gn:A.ADM3 .
+?Municipality schema:name ?Name .
+?Municipality dct:issued ?Date .
+?Municipality gn:parentADM1 ?InCanton .
+?InCanton schema:name ?CantonName .
+?Municipality geo:hasGeometry ?Geometry .
+?Geometry geo:asWKT ?WKT .
+FILTER (?Date = "2018-01-01"^^xsd:date)
+FILTER (?CantonName = "Zürich")  
+}
+```
+
+### Boundary of the City of Zurich
+
+[code link](http://yasgui.org/short/BJlKbwjcX)
+```SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT * WHERE {
+  <https://ld.geo.admin.ch/boundaries/municipality/261:2018> <http://www.opengis.net/ont/geosparql#hasGeometry> ?geometry .
+   ?geometry <http://www.opengis.net/ont/geosparql#asWKT> ?wkt .  
+}
+```
+
+### Public Transport Stops in Zürich with city boundary
+
+[code link](http://yasgui.org/short/H1ixGvscX)
+```SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT * WHERE {
+  <https://ld.geo.admin.ch/boundaries/municipality/261:2018> <http://www.opengis.net/ont/geosparql#hasGeometry> ?geometry .
+   ?geometry <http://www.opengis.net/ont/geosparql#asWKT> ?wkt .                                                      
+  
+  ?stop rdf:type  <http://vocab.gtfs.org/terms#Stop> ;
+   <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat ;
+   <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?long ;
+   <http://schema.org/containedInPlace> ?municipality.
+
+  Filter (?municipality = <https://ld.geo.admin.ch/boundaries/municipality/261>)  
+  BIND(CONCAT('POINT(' , STR(?long), ' ', STR(?lat) , ')')  as ?Coords ) .
+} 
+```
+
+### Public Transport Stops in Zürich without city boundary
+
+[code link](http://yasgui.org/short/r1ZGMvocX)
+```SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT * WHERE {                                                      
+  
+  ?stop rdf:type  <http://vocab.gtfs.org/terms#Stop> ;
+   <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat ;
+   <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?long ;
+   <http://schema.org/containedInPlace> ?municipality.
+
+  Filter (?municipality = <https://ld.geo.admin.ch/boundaries/municipality/261>)  
+  BIND(CONCAT('POINT(' , STR(?long), ' ', STR(?lat) , ')')  as ?Coords ) .
+} 
+```
 
 
 <a id="30" />
 
 ## Michael Grüebler
 
-### Population in the City of Zurich 
+### Population of the City of Zurich 
 
 Queries the population of the city, its districts and its quarters in 2017.
 

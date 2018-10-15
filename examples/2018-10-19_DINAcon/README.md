@@ -10,18 +10,19 @@ People presenting:
 | <a href="#20"> 2 </a> | Pasquale Di Donato | Swisstopo                       | Linked Data für Geoinformation (Swisstopo) |
 | <a href="#30"> 3 </a> | Michael Grüebler   | Statistik Stadt Zürich          | Linked Open Statistical Data (Statistik Stadt Zürich) |
 | <a href="#40"> 4 </a> | Cristina Sarasua   | Universität Zürich              | Wikidata and crowd sourced data |
-| <a href="#50"> 5 </a> | Michael Grüebler   | Statistisches Amt Kanton Zürich | Federated Query |
+| <a href="#50"> 5 </a> | Michael Grüebler   | Statistik Stadt Zürich          | Federated Query |
 | <a href="#60"> 6 </a> | Matthias Mazenauer | Statistisches Amt Kanton Zürich | Visualisation on linked data |
 
 ![Visual agenda overview](agenda-overview.png "Visual agenda overview")
 
-<a id="10" />
+<a id="user-content-10" />
 
 ## Jean-Luc Cochard
 
+See Presentation: [link to be added]
 
 
-<a id="20" />
+<a id="user-content-20" />
 
 ## Pasquale Di Donato
 
@@ -130,7 +131,7 @@ SELECT * WHERE {
 limit 10
 ```
 
-<a id="30" />
+<a id="user-content-30" />
 
 ## Michael Grüebler
 
@@ -189,17 +190,60 @@ SELECT ?Quarter ?Geometry ?WikidataUID ?QuarterLabel ?Population WHERE {
 ```
 
 
-<a id="40" />
+<a id="user-content-40" />
 
 ## Cristina Sarasua  
 
 
+### Fountains of Wasserversorgung Zürich on Wikidata
 
+[code link] (http://tinyurl.com/y76e9awd)
+
+```SPARQL
+#Fountains in Zürich
+#defaultView:Map
+SELECT ?item ?Bild ?geographische_Koordinaten WHERE {
+  ?item p:P528 ?statement.
+  ?statement pq:P972 wd:Q53629101.
+  ?item wdt:P18 ?Bild.
+  ?item wdt:P625 ?geographische_Koordinaten. 
+}
+```
+
+### Fountains, Rivers, Brides and Swimmingpools in Zurich on Wikidata
+
+[code link] (http://tinyurl.com/y954qvgx)
+
+```SPARQL
+#Fountains in Zürich
+#defaultView:Map
+SELECT ?item  ?Bild ?coord ?coordColor WHERE {
+    
+  {?item p:P528 ?statement.
+        ?statement pq:P972 wd:Q53629101.   ?item wdt:P625 ?coord .
+       
+} UNION
+  {    
+    {?item wdt:P31/wdt:P279* wd:Q4022} UNION {?item wdt:P31/wdt:P279* wd:Q12280} UNION {?item wdt:P31/wdt:P279* wd:Q1501}
+        ?item wdt:P131 wd:Q72
+    }
+        
+      OPTIONAL {?item wdt:P18 ?Bild.}
+      OPTIONAL{   ?article schema:about ?item .
+    ?article schema:isPartOf <https://en.wikipedia.org/>.
+     ?articlev schema:about ?item .
+    ?articlev schema:isPartOf <https://en.wikivoyage.org/>.}
+  ?item wdt:P625 ?coord. 
+      BIND("#00FF00" AS ?coordColor) .
+         
+} 
+```
 
 
 ### Bonus Query: Number of rivers per canton in Wikidata 
 
 [code link](https://tinyurl.com/ybyxjxsx)
+
 ```SPARQL
 SELECT  ?canton ?cantonLabel (COUNT(?river) AS ?count) #?loc ?distance #?thing ?thingLabel 
 
@@ -214,7 +258,7 @@ WHERE {
 ```
 
 
-<a id="50" />
+<a id="user-content-50" />
 
 ## Federated Query (Michael Grüebler)
 
@@ -320,7 +364,7 @@ SELECT ?item  ?Bild ?coord ?coordColor WHERE {
   } LIMIT 300
 ```
 
-<a id="60" />
+<a id="user-content-60" />
 
 ## Matthias Mazenauer
 

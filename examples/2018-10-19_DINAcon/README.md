@@ -368,4 +368,6 @@ SELECT ?item  ?Bild ?coord ?coordColor WHERE {
 
 ## Matthias Mazenauer
 
+### Linked Data Visualization with D3js
 
+[Link to Observable Notebook](https://beta.observablehq.com/@mmznrstat/a-thriving-data-ecosystem)

@@ -263,9 +263,90 @@ WHERE {
 
 ## Federated Query (Michael Grüebler)
 
+### Federated Query of Boat-Stops (swisstopo) and Bridges (wikidata)
+[code link](http://yasgui.org/short/AaS9uB_wV)
+
+```SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+SELECT ?type ?item ?coord WHERE {
+  {
+    SELECT DISTINCT ("boat-stop" AS ?type) ?item ?coord  WHERE {
+      ?item rdf:type  <http://vocab.gtfs.org/terms#Stop> ;
+        <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat ;
+        <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?long ;
+        <http://schema.org/containedInPlace> <https://ld.geo.admin.ch/boundaries/municipality/261> ;
+        <https://ld.geo.admin.ch/def/transportation/meansOfTransportation> <https://ld.geo.admin.ch/codelist/MeansOfTransportation/8> .
+      BIND(STRDT(CONCAT('POINT(', ?long, ' ', ?lat, ')'), 'http://www.openlinksw.com/schemas/virtrdf#Geometry') AS ?coord).
+    }
+  }
+  UNION
+  {
+    SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql> {
+      SELECT DISTINCT ("bridge" AS ?type) ?item ?coord  WHERE {
+        ?item wdt:P31/wdt:P279* wd:Q12280 .
+        ?item wdt:P131 wd:Q72 . 
+        ?item wdt:P625 ?coord . 
+      } 
+    }
+  }     
+} 
+```
+
+### Federated Query of Boat-Stops (swisstopo), Bridges (wikidata) in the Quarter Rathaus (Statistik Stadt Zürich)
+[code link](http://yasgui.org/short/zA5ly1EP9)
+
+```SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+SELECT ?type ?item ?image ?coord WHERE {
+  SERVICE <https://ld.stadt-zuerich.ch/query> {
+    SELECT ?GeoWKT WHERE { 
+      code:R00011 geo:hasGeometry ?GeoQuarter . 
+      ?GeoQuarter geo:asWKT ?GeoWKT
+    } 
+  }
+  {
+    SELECT DISTINCT ("boat-stop" AS ?type) ?item ?coord  WHERE {
+      ?item rdf:type  <http://vocab.gtfs.org/terms#Stop> ;
+        <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat ;
+        <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?long ;
+        <http://schema.org/containedInPlace> <https://ld.geo.admin.ch/boundaries/municipality/261> ;
+        <https://ld.geo.admin.ch/def/transportation/meansOfTransportation> <https://ld.geo.admin.ch/codelist/MeansOfTransportation/8> .
+      BIND(STRDT(CONCAT('POINT(', ?long, ' ', ?lat, ')'), 'http://www.openlinksw.com/schemas/virtrdf#Geometry') AS ?coord).
+    } 
+  }
+  UNION
+  {
+    SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql> {
+      SELECT DISTINCT ("bridge" AS ?type) ?item ?coord ?image  WHERE {
+        ?item wdt:P31/wdt:P279* wd:Q12280 .
+        ?item wdt:P131 wd:Q72 .
+        ?item wdt:P625 ?coord . 
+        OPTIONAL {?item wdt:P18 ?image.}
+      } 
+    }
+  }    
+ 
+  FILTER (bif:st_within(?coord, ?GeoWKT))
+} 
+```
+
 ### All in one
 
 [code link](http://yasgui.org/short/Up6hzNRtU)
+
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

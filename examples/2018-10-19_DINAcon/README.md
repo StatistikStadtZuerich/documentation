@@ -299,7 +299,7 @@ SELECT ?type ?item ?coord WHERE {
 ```
 
 ### Federated Query of Boat-Stops (swisstopo), Bridges (wikidata) in the Quarter Rathaus (Statistik Stadt Zürich)
-[code link](http://yasgui.org/short/zA5ly1EP9)
+[code link](http://yasgui.org/short/RyUW-8w1m)
 
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

@@ -211,7 +211,7 @@ SELECT ?item ?Bild ?geographische_Koordinaten WHERE {
 }
 ```
 
-### Fountains, Rivers, Brides and Swimmingpools in Zurich on Wikidata
+### Fountains, Rivers, Bridges and Swimmingpools in Zurich on Wikidata
 
 [code link] (http://tinyurl.com/y954qvgx)
 

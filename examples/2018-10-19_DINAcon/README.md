@@ -163,7 +163,7 @@ SELECT ?RaumLabel ?Population WHERE {
 Queries the population of all the quarters of the city of Zurich in 2017.
 For linking purposes the geometry and wikidata-identifiers are selected.  
 
-[code link](http://yasgui.org/short/Byg5OH5qm)
+[code link](http://yasgui.org/short/ng3tRukV7)
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -175,7 +175,7 @@ PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
 PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
 PREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>
 PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
-SELECT ?Quarter ?Geometry ?WikidataUID ?QuarterLabel ?Population WHERE {
+SELECT ?Quarter ?WKT ?WikidataUID ?QuarterLabel ?Population WHERE {
   ?sub a qb:Observation ;
        qb:dataSet dataset:BEW-RAUM-ZEIT ;
        measure:BEW ?Population ;
@@ -185,6 +185,7 @@ SELECT ?Quarter ?Geometry ?WikidataUID ?QuarterLabel ?Population WHERE {
         skos:broader code:Quartier ;
         rdfs:label ?QuarterLabel .  
   ?Quarter geo:hasGeometry ?Geometry .
+  ?Geometry geo:asWKT ?WKT .
   FILTER(year(?Date) = 2017)
 } ORDER BY DESC(?Population)
 ```

@@ -19,8 +19,7 @@ People presenting:
 
 ## Jean-Luc Cochard
 
-See Presentation: [link to be added]
-
+[See Presentation] (https://docs.google.com/presentation/d/e/2PACX-1vR4Qr_q8Hb2mjOdCEwoQHjQlLxg0yrv1G5kyzHEtA_5lvdf9ZdFSWRoR2Sn4aClYQeWqYhncQUU3vVX/pub?start=false&loop=false&delayms=3000)
 
 <a id="user-content-20" />
 

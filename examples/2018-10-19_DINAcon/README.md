@@ -101,6 +101,50 @@ SELECT * WHERE {
 } 
 ```
 
+
+### Bonus Query: Statistics on Public Transport Stops in Zürich compared to Population by Quarter 
+
+[code link](http://yasgui.org/short/ewOtGGt57)
+
+```SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
+PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
+PREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+
+SELECT ?Quarter ?QuarterLabel (MIN(?Population) AS ?QPopulation) (COUNT(?stop) AS ?QStops) (MIN(?Population)/COUNT(?stop) AS ?PopulationPerStop) WHERE {
+   ?stop rdf:type  <http://vocab.gtfs.org/terms#Stop> ;
+   <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat ;
+   <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?long ;
+   <http://schema.org/containedInPlace> <https://ld.geo.admin.ch/boundaries/municipality/261> .
+  BIND(STRDT(CONCAT('POINT(', ?long, ' ', ?lat, ')'), 'http://www.openlinksw.com/schemas/virtrdf#Geometry') AS ?Stopwkt).
+  
+  SERVICE <https://ld.stadt-zuerich.ch/query> {
+    SELECT ?Quarter ?GeoWKT ?QuarterLabel ?Population WHERE {
+      ?sub a qb:Observation ;
+        qb:dataSet dataset:BEW-RAUM-ZEIT ;
+        measure:BEW ?Population ;
+        dimension:RAUM ?Quarter ;
+        dimension:ZEIT ?Date .
+      ?Quarter owl:sameAs ?WikidataUID ;
+        skos:broader code:Quartier ;
+        rdfs:label ?QuarterLabel ;  
+        geo:hasGeometry ?Geometry .
+      ?Geometry geo:asWKT ?GeoWKT .
+      FILTER(year(?Date) = 2017)
+    }    
+  }
+  FILTER (bif:st_within(?Stopwkt, ?GeoWKT)) 
+
+} GROUP BY ?Quarter ?QuarterLabel
+ORDER BY ?PopulationPerStop
+```
+
 ### Bonus Query: Points in Polygon: The stops in one quarter (Zürich Altstetten)
 
 [code link](http://yasgui.org/short/r1e0elC97)

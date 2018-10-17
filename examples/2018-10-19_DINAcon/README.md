@@ -104,13 +104,14 @@ SELECT * WHERE {
 
 ### Bonus Query: Statistics on Public Transport Stops in Zürich compared to Population by Quarter 
 
-[code link](http://yasgui.org/short/ewOtGGt57)
+[code link](http://yasgui.org/short/LuboF-mMH)
 
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
 PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
@@ -143,6 +144,7 @@ SELECT ?Quarter ?QuarterLabel (MIN(?Population) AS ?QPopulation) (COUNT(?stop) A
 
 } GROUP BY ?Quarter ?QuarterLabel
 ORDER BY ?PopulationPerStop
+
 ```
 
 ### Bonus Query: Points in Polygon: The stops in one quarter (Zürich Altstetten)

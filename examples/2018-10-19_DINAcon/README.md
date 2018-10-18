@@ -25,6 +25,127 @@ People presenting:
 
 ## Pasquale Di Donato
 
+
+### Get all versions of Canton Zürich
+
+[code link](http://yasgui.org/short/8gt_gJva5)
+```SPARQL
+PREFIX schema: <http://schema.org/>
+PREFIX gn: <http://www.geonames.org/ontology#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+SELECT ?Canton ?Name ?DateIssued ?ValidUntil
+WHERE {
+  ?Canton <http://purl.org/dc/terms/isVersionOf> <https://ld.geo.admin.ch/boundaries/canton/1> .
+  ?Canton <http://schema.org/name> ?Name .
+  ?Canton <http://purl.org/dc/terms/issued> ?DateIssued .
+  ?Canton <http://schema.org/validUntil> ?ValidUntil .
+}
+```
+
+### Top five highest stops
+
+[code link](http://yasgui.org/short/LOPF0RobU)
+```SPARQL
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+SELECT ?Stop ?Elevation {
+  ?Stop a <http://vocab.gtfs.org/terms#Stop>.
+  ?Stop <http://dbpedia.org/ontology/elevation> ?Elevation.
+  BIND(xsd:int(?Elevation) AS ?ElevationToInt)	
+} 
+ORDER BY DESC(?ElevationToInt)
+LIMIT 5
+```
+
+### Point in polygon
+
+[code link](http://yasgui.org/short/X69oJ698I)
+```SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT * WHERE {
+   ?stop rdf:type  <http://vocab.gtfs.org/terms#Stop> ;
+   <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat ;
+   <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?long .
+  BIND(STRDT(CONCAT('POINT(', ?long, ' ', ?lat, ')'), 'http://www.openlinksw.com/schemas/virtrdf#Geometry') AS ?Stopwkt).
+  BIND ("POLYGON((8.4536 47.3597,8.4577 47.3604,8.4627 47.3678,8.4697 47.3641,8.4563 47.3569,8.4536 47.3597 ))"^^<http://www.openlinksw.com/schemas/virtrdf#Geometry> AS ?GeoWKT ).
+    
+  FILTER (bif:st_within(?Stopwkt, ?GeoWKT)) 
+} 
+```
+
+### Municipality mutations in 2017
+
+[code link](http://yasgui.org/short/f0NgDjmyy)
+```SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX gont: <https://gont.ch/> 
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+#
+# This query gets municipality change events from BFS "Historisiertes Gemeindeverzeichnis"
+# It extracts and explains what happened if you click on one of the labels.
+# Note that this query returns zero for years before or after that, due to the lack of
+# shapes for older versions.
+#
+SELECT * WHERE {
+  SERVICE <http://data.admin.ch/query> {
+    ?event a gont:MunicipalityChangeEvent ;
+      gont:date ?date ;
+      gont:id ?eventid .
+  
+    ?munabo a gont:MunicipalityVersion ;
+      gont:longName ?abolitionName ;
+      gont:municipality ?munuri ;
+      gont:abolitionMode ?abmode ;
+      gont:abolitionEvent ?event .
+      ?abmode skos:prefLabel ?abolitionmodeName .
+  }
+  FILTER ( ?date >= "2017-01-01"^^xsd:date && ?date <= "2017-12-31"^^xsd:date )
+  ?shapeuri a <http://www.geonames.org/ontology#A.ADM3> ;
+    dct:hasVersion ?version16 ;
+    rdfs:seeAlso ?munuri .
+  ?version16 geo:hasGeometry ?Geometry .
+  ?Geometry geo:asWKT ?Coords  .
+  BIND (CONCAT('Gemeinde: <b>', ?abolitionName, '</b><br>Event: ', ?abolitionmodeName) AS ?CoordsLabel)
+}
+```
+
+### Municipality description from DBPedia
+
+[code link](http://yasgui.org/short/SixeHzcHU)
+```SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX fn: <http://www.w3.org/2005/xpath-functions#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX db: <http://dbpedia.org/>
+
+SELECT ?Municipality ?Name ?DBPediaAbstract WHERE {
+    ?Municipality a <http://schema.org/AdministrativeArea> . #specify only the non-versioned entries.
+    ?Municipality <http://schema.org/name> ?Name .	
+    ?Municipality a <http://www.geonames.org/ontology#A.ADM3> . #municipality only
+    ?Municipality <https://ld.geo.admin.ch/def/bfsNumber> ?bfsNumber . #connect to the ?bfsNumber found in wikidata.
+  	{
+    SELECT DISTINCT (xsd:integer(?bfs) AS ?bfsNumber) ?DBPedia ?DBPediaAbstract WHERE {
+ 		SERVICE <http://dbpedia.org/sparql>
+		{
+        ?DBPedia dbo:municipalityCode ?bfs . 
+        OPTIONAL {?DBPedia dbo:abstract ?DBPediaAbstract . FILTER (lang(?DBPediaAbstract) = "de")}
+    	}
+  	}
+  }
+}
+LIMIT 3
+```
+
 ### All municipality boundaries in Canton
 
 [code link](http://yasgui.org/short/ryX8ZPicX)

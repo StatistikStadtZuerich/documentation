@@ -7,11 +7,11 @@ People presenting:
 | Part                               | Presenter          | Organisation                    | Topic         | 
 | ---------------------------------- | ------------------ | ------------------------------- | ------------- | 
 | <a href="#user-content-10"> 1 </a> | Jean-Luc Cochard   | Schweizerisches Bundesarchiv    | Das Angebot von LINDAS (Bundesarchiv) |
-| <a href="#user-content-20"> 2 </a> | Pasquale Di Donato | Swisstopo                       | Linked Data für Geoinformation (Swisstopo) |
-| <a href="#user-content-30"> 3 </a> | Michael Grüebler   | Statistik Stadt Zürich          | Linked Open Statistical Data (Statistik Stadt Zürich) |
-| <a href="#user-content-40"> 4 </a> | Cristina Sarasua   | Universität Zürich              | Wikidata and crowd sourced data |
-| <a href="#user-content-50"> 5 </a> | Michael Grüebler   | Statistik Stadt Zürich          | Federated Query |
-| <a href="#user-content-60"> 6 </a> | Matthias Mazenauer | Statistisches Amt Kanton Zürich | Visualisation on linked data |
+| <a href="#user-content-20"> 2 </a> | Pasquale Di Donato | Swisstopo                       | Linked Data fÃ¼r Geoinformation (Swisstopo) |
+| <a href="#user-content-30"> 3 </a> | Michael GrÃ¼ebler   | Statistik Stadt ZÃ¼rich          | Linked Open Statistical Data (Statistik Stadt ZÃ¼rich) |
+| <a href="#user-content-40"> 4 </a> | Cristina Sarasua   | UniversitÃ¤t ZÃ¼rich              | Wikidata and crowd sourced data |
+| <a href="#user-content-50"> 5 </a> | Michael GrÃ¼ebler   | Statistik Stadt ZÃ¼rich          | Federated Query |
+| <a href="#user-content-60"> 6 </a> | Matthias Mazenauer | Statistisches Amt Kanton ZÃ¼rich | Visualisation on linked data |
 
 ![Visual agenda overview](agenda-overview.png "Visual agenda overview")
 
@@ -44,7 +44,7 @@ where
 ?Municipality geo:hasGeometry ?Geometry .
 ?Geometry geo:asWKT ?WKT .
 FILTER (?Date = "2018-01-01"^^xsd:date)
-FILTER (?CantonName = "Zürich")  
+FILTER (?CantonName = "ZÃ¼rich")  
 }
 ```
 
@@ -60,7 +60,7 @@ SELECT * WHERE {
 }
 ```
 
-### Public Transport Stops in Zürich with city boundary
+### Public Transport Stops in ZÃ¼rich with city boundary
 
 [code link](http://yasgui.org/short/H1ixGvscX)
 ```SPARQL
@@ -81,7 +81,7 @@ SELECT * WHERE {
 } 
 ```
 
-### Public Transport Stops in Zürich without city boundary
+### Public Transport Stops in ZÃ¼rich without city boundary
 
 [code link](http://yasgui.org/short/r1ZGMvocX)
 ```SPARQL
@@ -101,7 +101,7 @@ SELECT * WHERE {
 ```
 
 
-### Bonus Query: Statistics on Public Transport Stops in Zürich compared to Population by Quarter 
+### Bonus Query: Statistics on Public Transport Stops in ZÃ¼rich compared to Population by Quarter 
 
 [code link](http://yasgui.org/short/LuboF-mMH)
 
@@ -146,7 +146,7 @@ ORDER BY ?PopulationPerStop
 
 ```
 
-### Bonus Query: Points in Polygon: The stops in one quarter (Zürich Altstetten)
+### Bonus Query: Points in Polygon: The stops in one quarter (ZÃ¼rich Altstetten)
 
 [code link](http://yasgui.org/short/r1e0elC97)
 ```SPARQL
@@ -178,7 +178,7 @@ limit 10
 
 <a id="user-content-30" />
 
-## Michael Grüebler
+## Michael GrÃ¼ebler
 
 ### Population of the City of Zurich 
 
@@ -241,12 +241,12 @@ SELECT ?Quarter ?WKT ?WikidataUID ?QuarterLabel ?Population WHERE {
 ## Cristina Sarasua  
 
 
-### Fountains of Wasserversorgung Zürich on Wikidata
+### Fountains of Wasserversorgung ZÃ¼rich on Wikidata
 
 [code link] (http://tinyurl.com/y76e9awd)
 
 ```SPARQL
-#Fountains in Zürich
+#Fountains in ZÃ¼rich
 #defaultView:Map
 SELECT ?item ?Bild ?geographische_Koordinaten WHERE {
   ?item p:P528 ?statement.
@@ -261,7 +261,7 @@ SELECT ?item ?Bild ?geographische_Koordinaten WHERE {
 [code link] (http://tinyurl.com/y954qvgx)
 
 ```SPARQL
-#Fountains in Zürich
+#Fountains in ZÃ¼rich
 #defaultView:Map
 SELECT ?item  ?Bild ?coord ?coordColor WHERE {
     
@@ -306,9 +306,9 @@ WHERE {
 
 <a id="user-content-50" />
 
-## Federated Queries (Michael Grüebler)
+## Federated Queries (Michael GrÃ¼ebler)
 
-### Federated Query of Stops (swisstopo) by Quarter (Statistik Stadt Zürich)
+### Federated Query of Stops (swisstopo) by Quarter (Statistik Stadt ZÃ¼rich)
 
 [code link](http://yasgui.org/short/VEPe3CjYc)
 
@@ -373,7 +373,7 @@ SELECT ?type ?item ?coord WHERE {
 } 
 ```
 
-### Federated Query of Boat-Stops (swisstopo), Bridges (wikidata) in the Quarter Rathaus (Statistik Stadt Zürich)
+### Federated Query of Boat-Stops (swisstopo), Bridges (wikidata) in the Quarter Rathaus (Statistik Stadt ZÃ¼rich)
 [code link](http://yasgui.org/short/RyUW-8w1m)
 
 ```SPARQL
@@ -425,4 +425,4 @@ SELECT ?type ?item ?image ?coord WHERE {
 
 ### Linked Data Visualization with D3js
 
-[Link to Observable Notebook](https://beta.observablehq.com/@mmznrstat/a-thriving-data-ecosystem)
+[Link to Observable Notebook](https://beta.observablehq.com/@mmznrstat/dinacon2019) 

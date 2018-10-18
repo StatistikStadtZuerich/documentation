@@ -7,11 +7,11 @@ People presenting:
 | Part                               | Presenter          | Organisation                    | Topic         | 
 | ---------------------------------- | ------------------ | ------------------------------- | ------------- | 
 | <a href="#user-content-10"> 1 </a> | Jean-Luc Cochard   | Schweizerisches Bundesarchiv    | Das Angebot von LINDAS (Bundesarchiv) |
-| <a href="#user-content-20"> 2 </a> | Pasquale Di Donato | Swisstopo                       | Linked Data für Geoinformation (Swisstopo) |
-| <a href="#user-content-30"> 3 </a> | Michael Grüebler   | Statistik Stadt Zürich          | Linked Open Statistical Data (Statistik Stadt Zürich) |
-| <a href="#user-content-40"> 4 </a> | Cristina Sarasua   | Universität Zürich              | Wikidata and crowd sourced data |
-| <a href="#user-content-50"> 5 </a> | Michael Grüebler   | Statistik Stadt Zürich          | Federated Query |
-| <a href="#user-content-60"> 6 </a> | Matthias Mazenauer | Statistisches Amt Kanton Zürich | Visualisation on linked data |
+| <a href="#user-content-20"> 2 </a> | Pasquale Di Donato | Swisstopo                       | Linked Data fÃ¼r Geoinformation (Swisstopo) |
+| <a href="#user-content-30"> 3 </a> | Michael GrÃ¼ebler   | Statistik Stadt ZÃ¼rich          | Linked Open Statistical Data (Statistik Stadt ZÃ¼rich) |
+| <a href="#user-content-40"> 4 </a> | Cristina Sarasua   | UniversitÃ¤t ZÃ¼rich              | Wikidata and crowd sourced data |
+| <a href="#user-content-50"> 5 </a> | Michael GrÃ¼ebler   | Statistik Stadt ZÃ¼rich          | Federated Query |
+| <a href="#user-content-60"> 6 </a> | Matthias Mazenauer | Statistisches Amt Kanton ZÃ¼rich | Visualisation on linked data |
 
 ![Visual agenda overview](agenda-overview.png "Visual agenda overview")
 
@@ -19,8 +19,7 @@ People presenting:
 
 ## Jean-Luc Cochard
 
-See Presentation: [link to be added]
-
+[See Presentation](https://docs.google.com/presentation/d/e/2PACX-1vR4Qr_q8Hb2mjOdCEwoQHjQlLxg0yrv1G5kyzHEtA_5lvdf9ZdFSWRoR2Sn4aClYQeWqYhncQUU3vVX/pub?start=false&loop=false&delayms=3000)
 
 <a id="user-content-20" />
 
@@ -45,7 +44,7 @@ where
 ?Municipality geo:hasGeometry ?Geometry .
 ?Geometry geo:asWKT ?WKT .
 FILTER (?Date = "2018-01-01"^^xsd:date)
-FILTER (?CantonName = "Zürich")  
+FILTER (?CantonName = "ZÃ¼rich")  
 }
 ```
 
@@ -61,7 +60,7 @@ SELECT * WHERE {
 }
 ```
 
-### Public Transport Stops in Zürich with city boundary
+### Public Transport Stops in ZÃ¼rich with city boundary
 
 [code link](http://yasgui.org/short/H1ixGvscX)
 ```SPARQL
@@ -82,7 +81,7 @@ SELECT * WHERE {
 } 
 ```
 
-### Public Transport Stops in Zürich without city boundary
+### Public Transport Stops in ZÃ¼rich without city boundary
 
 [code link](http://yasgui.org/short/r1ZGMvocX)
 ```SPARQL
@@ -101,7 +100,53 @@ SELECT * WHERE {
 } 
 ```
 
-### Bonus Query: Points in Polygon: The stops in one quarter (Zürich Altstetten)
+
+### Bonus Query: Statistics on Public Transport Stops in ZÃ¼rich compared to Population by Quarter 
+
+[code link](http://yasgui.org/short/LuboF-mMH)
+
+```SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
+PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
+PREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+
+SELECT ?Quarter ?QuarterLabel (MIN(?Population) AS ?QPopulation) (COUNT(?stop) AS ?QStops) (MIN(?Population)/COUNT(?stop) AS ?PopulationPerStop) WHERE {
+   ?stop rdf:type  <http://vocab.gtfs.org/terms#Stop> ;
+   <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat ;
+   <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?long ;
+   <http://schema.org/containedInPlace> <https://ld.geo.admin.ch/boundaries/municipality/261> .
+  BIND(STRDT(CONCAT('POINT(', ?long, ' ', ?lat, ')'), 'http://www.openlinksw.com/schemas/virtrdf#Geometry') AS ?Stopwkt).
+  
+  SERVICE <https://ld.stadt-zuerich.ch/query> {
+    SELECT ?Quarter ?GeoWKT ?QuarterLabel ?Population WHERE {
+      ?sub a qb:Observation ;
+        qb:dataSet dataset:BEW-RAUM-ZEIT ;
+        measure:BEW ?Population ;
+        dimension:RAUM ?Quarter ;
+        dimension:ZEIT ?Date .
+      ?Quarter owl:sameAs ?WikidataUID ;
+        skos:broader code:Quartier ;
+        rdfs:label ?QuarterLabel ;  
+        geo:hasGeometry ?Geometry .
+      ?Geometry geo:asWKT ?GeoWKT .
+      FILTER(year(?Date) = 2017)
+    }    
+  }
+  FILTER (bif:st_within(?Stopwkt, ?GeoWKT)) 
+
+} GROUP BY ?Quarter ?QuarterLabel
+ORDER BY ?PopulationPerStop
+
+```
+
+### Bonus Query: Points in Polygon: The stops in one quarter (ZÃ¼rich Altstetten)
 
 [code link](http://yasgui.org/short/r1e0elC97)
 ```SPARQL
@@ -133,7 +178,7 @@ limit 10
 
 <a id="user-content-30" />
 
-## Michael Grüebler
+## Michael GrÃ¼ebler
 
 ### Population of the City of Zurich 
 
@@ -163,7 +208,7 @@ SELECT ?RaumLabel ?Population WHERE {
 Queries the population of all the quarters of the city of Zurich in 2017.
 For linking purposes the geometry and wikidata-identifiers are selected.  
 
-[code link](http://yasgui.org/short/Byg5OH5qm)
+[code link](http://yasgui.org/short/ng3tRukV7)
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -175,7 +220,7 @@ PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
 PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
 PREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>
 PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
-SELECT ?Quarter ?Geometry ?WikidataUID ?QuarterLabel ?Population WHERE {
+SELECT ?Quarter ?WKT ?WikidataUID ?QuarterLabel ?Population WHERE {
   ?sub a qb:Observation ;
        qb:dataSet dataset:BEW-RAUM-ZEIT ;
        measure:BEW ?Population ;
@@ -185,6 +230,7 @@ SELECT ?Quarter ?Geometry ?WikidataUID ?QuarterLabel ?Population WHERE {
         skos:broader code:Quartier ;
         rdfs:label ?QuarterLabel .  
   ?Quarter geo:hasGeometry ?Geometry .
+  ?Geometry geo:asWKT ?WKT .
   FILTER(year(?Date) = 2017)
 } ORDER BY DESC(?Population)
 ```
@@ -195,12 +241,12 @@ SELECT ?Quarter ?Geometry ?WikidataUID ?QuarterLabel ?Population WHERE {
 ## Cristina Sarasua  
 
 
-### Fountains of Wasserversorgung Zürich on Wikidata
+### Fountains of Wasserversorgung ZÃ¼rich on Wikidata
 
 [code link] (http://tinyurl.com/y76e9awd)
 
 ```SPARQL
-#Fountains in Zürich
+#Fountains in ZÃ¼rich
 #defaultView:Map
 SELECT ?item ?Bild ?geographische_Koordinaten WHERE {
   ?item p:P528 ?statement.
@@ -210,12 +256,12 @@ SELECT ?item ?Bild ?geographische_Koordinaten WHERE {
 }
 ```
 
-### Fountains, Rivers, Brides and Swimmingpools in Zurich on Wikidata
+### Fountains, Rivers, Bridges and Swimmingpools in Zurich on Wikidata
 
 [code link] (http://tinyurl.com/y954qvgx)
 
 ```SPARQL
-#Fountains in Zürich
+#Fountains in ZÃ¼rich
 #defaultView:Map
 SELECT ?item  ?Bild ?coord ?coordColor WHERE {
     
@@ -260,109 +306,118 @@ WHERE {
 
 <a id="user-content-50" />
 
-## Federated Query (Michael Grüebler)
+## Federated Queries (Michael GrÃ¼ebler)
 
-### All in one
+### Federated Query of Stops (swisstopo) by Quarter (Statistik Stadt ZÃ¼rich)
 
-[code link](http://yasgui.org/short/Up6hzNRtU)
+[code link](http://yasgui.org/short/VEPe3CjYc)
+
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX schema: <http://schema.org/>
-PREFIX gn: <http://www.geonames.org/ontology#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-PREFIX dct: <http://purl.org/dc/terms/>
-
-PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-PREFIX wd: <http://www.wikidata.org/entity/>
-PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
-PREFIX ps: <http://www.wikidata.org/prop/statement/>
-PREFIX p: <http://www.wikidata.org/prop/>
-PREFIX wikibase: <http://wikiba.se/ontology#>
-PREFIX bd: <http://www.bigdata.com/rdf#>
-
-PREFIX qb: <http://purl.org/linked-data/cube#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
-PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
-PREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>
-PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
 
-SELECT ?item ?Bild ?fountainCoord ?fountainCoordColor ?WKT ?Coords ?WKTColor ?CoordsColor ?QuarterLabel ?Population ?WKTQuarter ?WKTQuarterColor
-WHERE {
-  	SERVICE <https://ld.geo.admin.ch/query> {
-
-SELECT ?WKT ?Coords ?WKTColor ?CoordsColor WHERE {
-?Municipality a gn:A.ADM3 ;
-  dct:isVersionOf ?Mainmun ;
-  schema:name ?Name ;
-  dct:issued ?Date ;
-  gn:parentADM1 <https://ld.geo.admin.ch/boundaries/canton/1:2018> ;
-  geo:hasGeometry ?Geometry .
-#?InCanton schema:name ?CantonName .
-?Geometry geo:asWKT ?WKT .
- #FILTER (?Name IN ("Zürich", "Uster"))                                                       
- #FILTER (?CantonName = "Bern")     
-  
-  ?stop rdf:type  <http://vocab.gtfs.org/terms#Stop> ;
+SELECT ?Quarter (COUNT(?stop) AS ?count) WHERE {
+   ?stop rdf:type  <http://vocab.gtfs.org/terms#Stop> ;
    <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat ;
    <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?long ;
-   <http://schema.org/containedInPlace> ?Mainmun ;
-   <https://ld.geo.admin.ch/def/transportation/meansOfTransportation> <https://ld.geo.admin.ch/codelist/MeansOfTransportation/8> .
-
-  #Filter (?muni = <https://ld.geo.admin.ch/boundaries/municipality/261>)  
-  BIND(CONCAT('POINT(' , STR(?long), ' ', STR(?lat) , ')')  as ?Coords ) .
-      BIND("#999999" AS ?WKTColor)
-      BIND("#0000FF" AS ?CoordsColor)
-}       
-
-     }
-
-  SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql> {
-
-SELECT ?item  ?Bild ?coord ?coordColor WHERE {
-    
-  {?item p:P528 ?statement.
-        ?statement pq:P972 wd:Q53629101.   ?item wdt:P625 ?coord .
-       
-} UNION
-  {    
-    {?item wdt:P31/wdt:P279* wd:Q4022} UNION {?item wdt:P31/wdt:P279* wd:Q12280} UNION {?item wdt:P31/wdt:P279* wd:Q1501}
-        ?item wdt:P131 wd:Q72
-    }
-        
-      OPTIONAL {?item wdt:P18 ?Bild.}
-      OPTIONAL{   ?article schema:about ?item .
-    ?article schema:isPartOf <https://en.wikipedia.org/>.
-     ?articlev schema:about ?item .
-    ?articlev schema:isPartOf <https://en.wikivoyage.org/>.}
-  ?item wdt:P625 ?coord. 
-      BIND("#00FF00" AS ?coordColor) .
-     
-      
-   
-      
-} 
-
-} 
-
-
-  ?sub a qb:Observation ;
-       qb:dataSet dataset:BEW-RAUM-ZEIT ;
-       measure:BEW ?Population ;
-       dimension:RAUM ?Quarter ;
-       dimension:ZEIT ?Zeit .
-  ?Quarter owl:sameAs ?WikidataUID ;
-        skos:broader code:Quartier ;
-        rdfs:label ?QuarterLabel .  
-  ?Quarter geo:hasGeometry ?GeoQuarter .
-  ?GeoQuarter geo:asWKT ?WKTQuarter .
-  FILTER(year(?Zeit) = 2017) .
-  BIND("#FF0000" AS ?WKTQuarterColor) .
+   <http://schema.org/containedInPlace> <https://ld.geo.admin.ch/boundaries/municipality/261> .
+  BIND(STRDT(CONCAT('POINT(', ?long, ' ', ?lat, ')'), 'http://www.openlinksw.com/schemas/virtrdf#Geometry') AS ?Stopwkt).
   
-  } LIMIT 300
+  SERVICE <https://ld.stadt-zuerich.ch/query> {
+    SELECT ?Quarter ?GeoWKT WHERE { 
+      ?Quarter a <http://schema.org/Place>;
+      geo:hasGeometry ?GeoQuarter ;
+      skos:broader <https://ld.stadt-zuerich.ch/statistics/code/Quartier> .
+      ?GeoQuarter geo:asWKT ?GeoWKT
+    } 
+  }
+  FILTER (bif:st_within(?Stopwkt, ?GeoWKT)) 
+
+} GROUP BY ?Quarter
 ```
+
+### Federated Query of Boat-Stops (swisstopo) and Bridges (wikidata)
+[code link](http://yasgui.org/short/AaS9uB_wV)
+
+```SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+SELECT ?type ?item ?coord WHERE {
+  {
+    SELECT DISTINCT ("boat-stop" AS ?type) ?item ?coord  WHERE {
+      ?item rdf:type  <http://vocab.gtfs.org/terms#Stop> ;
+        <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat ;
+        <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?long ;
+        <http://schema.org/containedInPlace> <https://ld.geo.admin.ch/boundaries/municipality/261> ;
+        <https://ld.geo.admin.ch/def/transportation/meansOfTransportation> <https://ld.geo.admin.ch/codelist/MeansOfTransportation/8> .
+      BIND(STRDT(CONCAT('POINT(', ?long, ' ', ?lat, ')'), 'http://www.openlinksw.com/schemas/virtrdf#Geometry') AS ?coord).
+    }
+  }
+  UNION
+  {
+    SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql> {
+      SELECT DISTINCT ("bridge" AS ?type) ?item ?coord  WHERE {
+        ?item wdt:P31/wdt:P279* wd:Q12280 .
+        ?item wdt:P131 wd:Q72 . 
+        ?item wdt:P625 ?coord . 
+      } 
+    }
+  }     
+} 
+```
+
+### Federated Query of Boat-Stops (swisstopo), Bridges (wikidata) in the Quarter Rathaus (Statistik Stadt ZÃ¼rich)
+[code link](http://yasgui.org/short/RyUW-8w1m)
+
+```SPARQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+SELECT ?type ?item ?image ?coord WHERE {
+  SERVICE <https://ld.stadt-zuerich.ch/query> {
+    SELECT ?GeoWKT WHERE { 
+      code:R00011 geo:hasGeometry ?GeoQuarter . 
+      ?GeoQuarter geo:asWKT ?GeoWKT
+    } 
+  }
+  {
+    SELECT DISTINCT ("boat-stop" AS ?type) ?item ?coord  WHERE {
+      ?item rdf:type  <http://vocab.gtfs.org/terms#Stop> ;
+        <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat ;
+        <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?long ;
+        <http://schema.org/containedInPlace> <https://ld.geo.admin.ch/boundaries/municipality/261> ;
+        <https://ld.geo.admin.ch/def/transportation/meansOfTransportation> <https://ld.geo.admin.ch/codelist/MeansOfTransportation/8> .
+      BIND(STRDT(CONCAT('POINT(', ?long, ' ', ?lat, ')'), 'http://www.openlinksw.com/schemas/virtrdf#Geometry') AS ?coord).
+    } 
+  }
+  UNION
+  {
+    SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql> {
+      SELECT DISTINCT ("bridge" AS ?type) ?item ?coord ?image  WHERE {
+        ?item wdt:P31/wdt:P279* wd:Q12280 .
+        ?item wdt:P131 wd:Q72 .
+        ?item wdt:P625 ?coord . 
+        OPTIONAL {?item wdt:P18 ?image.}
+      } 
+    }
+  }    
+ 
+  FILTER (bif:st_within(?coord, ?GeoWKT))
+} 
+```
+
 
 <a id="user-content-60" />
 
@@ -370,5 +425,4 @@ SELECT ?item  ?Bild ?coord ?coordColor WHERE {
 
 ### Linked Data Visualization with D3js
 
-[A thriving Data Ecosystem](https://beta.observablehq.com/@mmznrstat/a-thriving-data-ecosystem)
-[Linked Data Journey through Switzerland](https://beta.observablehq.com/@mmznrstat/dinacon2019)
+[Link to Observable Notebook](https://beta.observablehq.com/@mmznrstat/dinacon2019) 

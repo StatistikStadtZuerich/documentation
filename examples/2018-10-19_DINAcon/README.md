@@ -6,9 +6,9 @@ People presenting:
 
 | Part                               | Presenter          | Organisation                    | Topic         | 
 | ---------------------------------- | ------------------ | ------------------------------- | ------------- | 
-| <a href="#user-content-10"> 1 </a> | Jean-Luc Cochard   | Schweizerisches Bundesarchiv    | Das Angebot von LINDAS (Bundesarchiv) |
-| <a href="#user-content-20"> 2 </a> | Pasquale Di Donato | Swisstopo                       | Linked Data für Geoinformation (Swisstopo) |
-| <a href="#user-content-30"> 3 </a> | Michael Grüebler   | Statistik Stadt Zürich          | Linked Open Statistical Data (Statistik Stadt Zürich) |
+| <a href="#user-content-10"> 1 </a> | Jean-Luc Cochard   | Schweizerisches Bundesarchiv    | Das Angebot von LINDAS |
+| <a href="#user-content-20"> 2 </a> | Pasquale Di Donato | Swisstopo                       | Linked Data für Geoinformation |
+| <a href="#user-content-30"> 3 </a> | Michael Grüebler   | Statistik Stadt Zürich          | Linked Open Statistical Data |
 | <a href="#user-content-40"> 4 </a> | Cristina Sarasua   | Universität Zürich              | Wikidata and crowd sourced data |
 | <a href="#user-content-50"> 5 </a> | Michael Grüebler   | Statistik Stadt Zürich          | Federated Query |
 | <a href="#user-content-60"> 6 </a> | Matthias Mazenauer | Statistisches Amt Kanton Zürich | Visualisation on linked data |

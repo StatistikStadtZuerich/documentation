@@ -361,6 +361,7 @@ SELECT ?Quarter ?WKT ?WikidataUID ?QuarterLabel ?Population WHERE {
 
 ## Cristina Sarasua  
 
+[Jupyter-Python Notebook on Wikidata SPARQL](https://github.com/WikidataZurichMeetup/meetup-2/blob/master/meetupNotebook_SPARL.ipynb)
 
 ### Fountains of Wasserversorgung Zürich on Wikidata
 

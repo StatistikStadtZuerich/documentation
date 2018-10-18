@@ -426,4 +426,5 @@ SELECT ?type ?item ?image ?coord WHERE {
 ### Linked Data Visualization with D3js
 
 [A thriving Data Ecosystem](https://beta.observablehq.com/@mmznrstat/a-thriving-data-ecosystem)
+
 [Linked Data Journey through Switzerland](https://beta.observablehq.com/@mmznrstat/dinacon2019)

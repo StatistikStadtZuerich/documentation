@@ -370,4 +370,5 @@ SELECT ?item  ?Bild ?coord ?coordColor WHERE {
 
 ### Linked Data Visualization with D3js
 
-[Link to Observable Notebook](https://beta.observablehq.com/@mmznrstat/a-thriving-data-ecosystem)
+[A thriving Data Ecosystem](https://beta.observablehq.com/@mmznrstat/a-thriving-data-ecosystem)
+[Linked Data Journey through Switzerland](https://beta.observablehq.com/@mmznrstat/dinacon2019)

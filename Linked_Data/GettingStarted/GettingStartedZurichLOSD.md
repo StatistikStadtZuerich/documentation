@@ -753,3 +753,62 @@ WHERE {
 ORDER BY DESC(?m2PerPerson)
 ```
 
+The query can also be executed from the **program R** (e.g. for further analysis or visualization). What has to be done? 
+After executing the query in the Wikidata query service the 'code button' (bottom right) has to be used to copy the query to R. In R the query runs based on the SPARQL package.  
+
+```R
+#packages
+    library(SPARQL)
+    library(tidyverse)
+    library(scales)
+    library(emojifont)
+    
+#neutral design
+    neutral <- theme_bw() + theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        strip.background = element_rect(colour="grey85"),
+        panel.border = element_rect(colour = "grey85"))
+ 
+#SPARQL query (from wikidata)   
+    endpoint <- "https://query.wikidata.org/sparql"
+    query <- 'PREFIX qb: <http://purl.org/linked-data/cube#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>\nPREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>\nPREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n\nSELECT ?spaceLabel ?forestHect ?population ?m2PerPerson\nWHERE {\n  SERVICE <https://ld.stadt-zuerich.ch/query> {\n  SELECT * WHERE{ \n    ?obspop a qb:Observation ;\n      qb:dataSet dataset:BEW-RAUM-ZEIT ;\n      measure:BEW ?population ;\n      dimension:RAUM ?space ;\n      dimension:ZEIT ?time . \n    ?obsforest a qb:Observation ;\n      qb:dataSet dataset:STF-RAUM-ZEIT-BBA ;\n      measure:STF ?forestHect ; \n      dimension:BBA code:BBA2000 ;\n      dimension:RAUM ?space ;\n      dimension:ZEIT ?time .    \n    ?space skos:broader code:Quartier ;\n	  rdfs:label ?spaceLabel .  \n    FILTER(?time = "2017-12-31"^^xsd:date) \n    BIND((ROUND(?forestHect * 10000 / ?population)) AS ?m2PerPerson)\n  }\n  }}\n\nORDER BY DESC(?m2PerPerson)\n\n'
+    
+    qd <- SPARQL(endpoint,query)
+    df <- qd$results
+    
+#prepare plot data
+    forestData <- as_tibble(df) %>% 
+        mutate(space = if_else(spaceLabel == "HÃ¶ngg", "Hoengg", 
+                       if_else(spaceLabel == "MÃ¼hlebach", "Muehlebach", spaceLabel))) %>% 
+        arrange(desc(m2PerPerson), space)
+    forest <- mutate(forestData, 
+        spaceFactor = parse_factor(space, forestData$space)) %>% 
+        select(spaceFactor, m2PerPerson)
+      
+#barplot          
+    pdf("E:/temp/forest_ggplot-bars.pdf", width = 6, height = 5)    
+    
+        ggplot() + neutral +
+            geom_bar(data = forest, aes(x = spaceFactor, y = m2PerPerson), 
+                fill = "#94BF69", stat = "identity", width = 0.7) +
+            coord_flip() + scale_x_discrete(limits = rev(forestData$space)) + 
+            scale_y_continuous(breaks = pretty_breaks()) + 
+            labs (x = "", y = "m² forest per person")
+                     
+    dev.off()          
+          
+#with trees
+    search_emoji('tree')    
+    
+    ggplot() + neutral +
+        geom_bar(data = forest, aes(x = spaceFactor, y = m2PerPerson), 
+            fill = "#4A807C", stat = "identity", width = 0.7) +
+        coord_flip() + scale_x_discrete(limits = rev(forestData$space)) + 
+        scale_y_continuous(breaks = pretty_breaks()) + 
+        geom_emoji(alias = "evergreen_tree", color = "#2C3C3F", size = 5, 
+            x = forest$spaceFactor, y = forest$m2PerPerson) +
+        labs (x = "", y = "m² forest per person")    
+    
+```
+
+

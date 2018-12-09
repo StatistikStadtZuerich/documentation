@@ -18,6 +18,8 @@
   - <a href="#81"> 8.1 Zurich and Basel </a>
   - <a href="#82"> 8.2 Fountain pictures from wikidata </a>  
   - <a href="#83"> 8.3 Edinburgh vs. Zurich </a>  
+ - <a href="#90"> 9 Zurich data to Wikidata query to R  </a>
+  - <a href="#91"> 9.1 Forested area per person </a> 
 
 <a id="10" />
 
@@ -705,4 +707,49 @@ ORDER BY DESC (?yearLabel)
 ```
 
 
+<a id="90" />
+
+# 9 Zurich data to Wikidata query to R
+
+<a id="91" />
+
+## 9.1 Forested area per person a
+The Zurich data can be analyzed with federated queries with the **Wikidata query service** ([https://query.wikidata.org/](https://query.wikidata.org/)). Below a code is shown that calculates for each city quarter the proportion of forested area per person. 
+
+[code link](http://tinyurl.com/y8tw9wyc)
+```SPARQL
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
+PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
+PREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?spaceLabel ?forestHect ?population ?m2PerPerson
+WHERE {
+
+  SERVICE <https://ld.stadt-zuerich.ch/query> {
+  SELECT * WHERE{ 
+
+    ?obspop a qb:Observation ;
+      qb:dataSet dataset:BEW-RAUM-ZEIT ;
+      measure:BEW ?population ;
+      dimension:RAUM ?space ;
+      dimension:ZEIT ?time . 
+    ?obsforest a qb:Observation ;
+      qb:dataSet dataset:STF-RAUM-ZEIT-BBA ;
+      measure:STF ?forestHect ; 
+      dimension:BBA code:BBA2000 ;
+      dimension:RAUM ?space ;
+      dimension:ZEIT ?time .    
+    ?space skos:broader code:Quartier ;
+	  rdfs:label ?spaceLabel .  
+    FILTER(?time = "2017-12-31"^^xsd:date) 
+    BIND((ROUND(?forestHect * 10000 / ?population)) AS ?m2PerPerson)
+  }}
+  }
+ORDER BY DESC(?m2PerPerson)
+```
 

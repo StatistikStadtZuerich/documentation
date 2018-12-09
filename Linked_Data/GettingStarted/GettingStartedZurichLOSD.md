@@ -811,4 +811,4 @@ After executing the query in the Wikidata query service the 'code button' (botto
     
 ```
 
-
+![forest per person](images/9_forestPerPerson.PNG)

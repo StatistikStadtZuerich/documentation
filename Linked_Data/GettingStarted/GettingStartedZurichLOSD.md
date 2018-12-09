@@ -742,7 +742,7 @@ Unfortunately the results cannot be processed directly in another program (e.g. 
     dev.off()     
 ```
 
-<img src="images/12_fertility.png" width="1000" height="667"/>
+<img src="images/12_fert.png" width="700" height="352"/>
 
 <a id="90" />
 

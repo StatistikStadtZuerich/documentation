@@ -20,8 +20,9 @@
   - <a href="#83"> 8.3 Edinburgh vs. Zurich </a>  
  - <a href="#90"> 9 Zurich data to Wikidata query to R  </a>
   - <a href="#91"> 9.1 Forested area per person </a> 
-  - <a href="#92"> 9.2 Musical instruments </a>  
-
+  - <a href="#92"> 9.2 Musical instruments </a>
+  - <a href="#93"> 9.3 Baby names </a>    
+  
 <a id="10" />
 
 # 1 Getting started 
@@ -892,4 +893,45 @@ Similarly as in the previous example (9.1 on forested area) the query is copied 
     dev.off()
 ```
 <img src="images/10_instruments_wordc.png" width="800" height="522"/>
+
+## 9.3 Baby names
+How popular are traditional names such as Maria or Josef nowadays for babies living in the City of Zurich? How is the situation looking at different versions of 'Josef' such as Joseph (e.g. Englisch, French) or Guiseppe (Italian)? First, the query is run with the **Wikidata query service** ([https://query.wikidata.org/](https://query.wikidata.org/)).
+
+[code link](http://tinyurl.com/y969w9k6)
+```SPARQL
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
+PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
+PREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+
+SELECT ?nameLabel ?year ?sexEN (SUM(?births) AS ?births)
+WHERE 
+{
+  SERVICE <https://ld.stadt-zuerich.ch/query> {
+    SELECT * WHERE {
+
+    ?obser a qb:Observation ;
+      qb:dataSet dataset:GEB-RAUM-ZEIT-NAF-NAM-SEX ;
+	measure:GEB ?births ;
+	dimension:RAUM code:R30000 ;
+	#first names only (excluding middle names) 
+	dimension:NAF code:NAF0001 ; 
+	dimension:ZEIT ?time ;
+	dimension:SEX ?sex ;
+	dimension:NAM ?name .
+
+    ?sex rdfs:label ?sexLabel.
+    ?name rdfs:label ?nameLabel.
+
+    FILTER (?nameLabel  IN ('Maria', 'Josef', 'Joseph', 'Giuseppe', 'José'))
+    BIND(if(?sexLabel='weiblich','female','male') as ?sexEN)
+    BIND(year(?time) AS ?year)   
+    }} 
+}
+GROUP BY  ?nameLabel ?year ?sexEN
+ORDER BY ?nameLabel ?year ?sexEN
+```
+
 

@@ -708,6 +708,41 @@ ORDER BY DESC (?yearLabel)
 }}
 ```
 
+Unfortunately the results cannot be processed directly in another program (e.g. R). However, if the code is run on the Scottish beta version, a csv file can be downloaded: ([#https://statistics.gov.scot/sparql-beta](#https://statistics.gov.scot/sparql-beta)). This is analysed in R.
+
+```R
+#packages
+    library(tidyverse)
+    
+#colors
+    colorSSZ <- c("#5182B3", "#60BF97")
+    
+#neutral design
+    neutral <- theme_bw() + theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        strip.background = element_rect(colour="grey85"),
+        panel.border = element_rect(colour = "grey85"))
+
+#import data
+    fert <- read_csv("E:/temp/sparql.csv") %>% 
+            mutate(area = if_else(areaLabel == "Stadt Zürich (ab 1934)", 
+                "Zuerich", "Edinburgh"),
+            areaFactor = parse_factor(area, c("Zuerich", "Edinburgh"))) %>% 
+            select(yearLabel, areaFactor, fertility)
+                   
+#lineplot          
+    pdf("E:/temp/fertility.pdf", width = 6, height = 4)   
+        ggplot() + neutral +
+            geom_line(data = fert, aes(x = yearLabel, y = fertility, 
+                color = areaFactor), size = 0.5) +
+            scale_colour_manual(values = colorSSZ) + 
+            scale_x_continuous(limits = c(2002, 2017), breaks = seq(2002, 2017, by = 2)) +
+            scale_y_continuous(limits = c(0, 50), breaks = seq(0, 50, by = 10)) +
+            labs (x = "", y = "fertility rate (babies per \nand 1000 women aged 15 to 49)", color = "")  
+    dev.off()     
+```
+
+<img src="images/12_fertility.png" width="1000" height="667"/>
 
 <a id="90" />
 

@@ -779,7 +779,7 @@ WHERE {
       qb:dataSet dataset:STF-RAUM-ZEIT-BBA ;
       measure:STF ?forestHect ; 
       dimension:BBA code:BBA2000 ;
-      dimension:RAUM ?space ;
+      dimension:RAUM ?space ; 
       dimension:ZEIT ?time .    
     ?space skos:broader code:Quartier ;
 	  rdfs:label ?spaceLabel .  

@@ -934,4 +934,49 @@ GROUP BY  ?nameLabel ?year ?sexEN
 ORDER BY ?nameLabel ?year ?sexEN
 ```
 
+Similarly as in the previous examples (9.1 and 9.2) the query is copied from Wikidata (code button at bottom right, select R) to the **program R**.   
 
+```R
+#packages
+    library(SPARQL)
+    library(tidyverse)
+    library(scales)
+    
+#colors
+    colorSSZ <- c("#CC6788", "#5182B3", "#60BF97", "#94BF69")
+    
+#neutral design
+    neutral <- theme_bw() + theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        strip.background = element_rect(colour="grey85"),
+        panel.border = element_rect(colour = "grey85"))
+
+#SPARQL query (from wikidata)   
+    endpoint <- "https://query.wikidata.org/sparql"
+    query <- 'PREFIX qb: <http://purl.org/linked-data/cube#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>\nPREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>\nPREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>\nPREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>\n\nSELECT ?nameLabel ?year ?sexEN (SUM(?births) AS ?births)\nWHERE \n{\n  SERVICE <https://ld.stadt-zuerich.ch/query> {\n    SELECT * WHERE {\n\n    ?obser a qb:Observation ;\n      qb:dataSet dataset:GEB-RAUM-ZEIT-NAF-NAM-SEX ;\n	measure:GEB ?births ;\n	dimension:RAUM code:R30000 ;\n	#first names only (excluding middle names) \n	dimension:NAF code:NAF0001 ; \n	dimension:ZEIT ?time ;\n	dimension:SEX ?sex ;\n	dimension:NAM ?name .\n\n    ?sex rdfs:label ?sexLabel.\n    ?name rdfs:label ?nameLabel.\n\n    FILTER (?nameLabel  IN (\'Maria\', \'Josef\', \'Joseph\', \'Giuseppe\'))\n    BIND(if(?sexLabel=\'weiblich\',\'female\',\'male\') as ?sexEN)\n    BIND(year(?time) AS ?year)   \n    }} \n}\nGROUP BY  ?nameLabel ?year ?sexEN\nORDER BY ?nameLabel ?year ?sexEN\n\n'
+    
+    qd <- SPARQL(endpoint,query)
+    df <- qd$results
+    
+#data for plots
+    names <- as_tibble(df) %>% 
+        mutate(yearInt = parse_number(year),
+          sex = parse_factor(sexEN, c("female", "male")),
+          name = parse_factor(nameLabel, c("Maria", "Josef", "Joseph", "Giuseppe"))) %>% 
+        filter(!((name == 'Maria') & (sex == 'male'))) %>% 
+        select(yearInt, name, births)    
+                       
+#barplot          
+    pdf("E:/temp/babynames.pdf", width = 8, height = 3)    
+        ggplot() + neutral +
+            geom_bar(data = names, aes(x = yearInt, y = births, fill = name), 
+                stat = "identity", width = 0.6) +
+            facet_wrap(~ name, nrow = 1) +
+            scale_fill_manual(values = colorSSZ) +
+            scale_x_continuous(breaks = pretty_breaks()) + 
+            scale_y_continuous(breaks = pretty_breaks()) +          
+            labs (x = "", y = "births per year") + 
+            guides(fill = FALSE)                     
+    dev.off()              
+```
+<img src="images/11_babynames.png" width="900" height="338"/>

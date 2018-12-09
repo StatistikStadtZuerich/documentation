@@ -19,9 +19,9 @@
   - <a href="#82"> 8.2 Fountain pictures from wikidata </a>  
   - <a href="#83"> 8.3 Edinburgh vs. Zurich </a>  
  - <a href="#90"> 9 Zurich data to Wikidata query to R  </a>
-  - <a href="#91"> 9.1 Forested area per person </a> 
-  - <a href="#92"> 9.2 Musical instruments </a>
-  - <a href="#93"> 9.3 Baby names </a>    
+ 	- <a href="#91"> 9.1 Forested area per person </a> 
+ 	- <a href="#92"> 9.2 Musical instruments </a>
+ 	- <a href="#93"> 9.3 Baby names </a>    
   
 <a id="10" />
 

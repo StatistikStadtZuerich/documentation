@@ -891,5 +891,5 @@ Similarly as in the previous example (9.1 on forested area) the query is copied 
                 plot.background = element_rect(fill = "darkblue"))
     dev.off()
 ```
-
+<img src="images/10_instruments_wordcloud.png" width="3470" height="2210"/>
 

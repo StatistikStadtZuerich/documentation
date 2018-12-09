@@ -20,6 +20,7 @@
   - <a href="#83"> 8.3 Edinburgh vs. Zurich </a>  
  - <a href="#90"> 9 Zurich data to Wikidata query to R  </a>
   - <a href="#91"> 9.1 Forested area per person </a> 
+  - <a href="#92"> 9.2 Musical instruments </a>  
 
 <a id="10" />
 
@@ -812,3 +813,41 @@ After executing the query in the Wikidata query service the 'code button' (botto
 ```
 
 <img src="images/9_forestPerPerson.png" width="787" height="626"/>
+
+<a id="92" />
+
+## 9.1 Musical instruments
+Which are the most populare instruments at the 'Musikkonservatorium Zurich'? The previous example of the document (chapter 4) is simplified to produce a wordcloud image in R. First the instrument data are assessed with **Wikidata query service** ([https://query.wikidata.org/](https://query.wikidata.org/)). 
+
+[code link](http://tinyurl.com/y8z5prua)
+
+```SPARQL
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
+PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
+PREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+
+SELECT ?instruLabel ?students ?instruComment
+WHERE{ 
+
+  SERVICE <https://ld.stadt-zuerich.ch/query> {
+  SELECT * WHERE{ 
+
+    ?obser a qb:Observation ;
+      qb:dataSet dataset:SCH-RAUM-ZEIT-BTA-SST ; 
+      measure:SCH ?students ;
+      dimension:ZEIT ?time ; 
+      dimension:BTA code:BTA7701 ; #music school (Musikkonservatorium Zuerich)          
+      dimension:RAUM code:R30000; #entire city               
+      dimension:SST ?instru . 
+    ?instru rdfs:label ?instruLabel .
+    ?instru rdfs:comment ?instruComment .
+    FILTER(?time = "2017"^^xsd:gYear)
+    FILTER(?students > 0)   
+   
+  }}
+  }
+ORDER BY DESC(?students)
+```

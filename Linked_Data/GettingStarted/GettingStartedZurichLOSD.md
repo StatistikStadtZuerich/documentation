@@ -713,7 +713,7 @@ ORDER BY DESC (?yearLabel)
 
 <a id="91" />
 
-## 9.1 Forested area per person a
+## 9.1 Forested area per person
 The Zurich data can be analyzed with federated queries with the **Wikidata query service** ([https://query.wikidata.org/](https://query.wikidata.org/)). Below a code is shown that calculates for each city quarter the proportion of forested area per person. 
 
 [code link](http://tinyurl.com/y8tw9wyc)

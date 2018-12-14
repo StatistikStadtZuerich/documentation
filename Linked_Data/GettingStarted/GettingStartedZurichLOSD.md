@@ -19,7 +19,8 @@
   - <a href="#82"> 8.2 Fountain pictures from wikidata </a> 
 - <a href="#90"> 9 Zurich data to Wikidata query to R  </a>
  	- <a href="#91"> 9.1 Forested area per person </a> 
-   
+ 	- <a href="#92"> 9.2 Musical instruments </a>
+	  
 <a id="10" />
 
 # 1 Getting started 
@@ -709,6 +710,86 @@ After executing the query in the Wikidata query service the 'code button' (botto
 ```
 
 <img src="images/9_forestPerPerson.png" width="787" height="626"/>
+
+
+<a id="92" />
+
+## 9.2 Musical instruments
+Which are the most populare instruments at the 'Musikkonservatorium Zurich'? The previous example of the document (chapter 4) is simplified to produce a wordcloud image in R. First the instrument data are assessed with **Wikidata query service** ([https://query.wikidata.org/](https://query.wikidata.org/)). 
+
+[code link](http://tinyurl.com/y8z5prua)
+
+```SPARQL
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
+PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
+PREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+
+SELECT ?instruLabel ?students ?instruComment
+WHERE{ 
+
+  SERVICE <https://ld.stadt-zuerich.ch/query> {
+  SELECT * WHERE{ 
+
+    ?obser a qb:Observation ;
+      qb:dataSet dataset:SCH-RAUM-ZEIT-BTA-SST ; 
+      measure:SCH ?students ;
+      dimension:ZEIT ?time ; 
+      dimension:BTA code:BTA7701 ; #music school (Musikkonservatorium Zuerich)          
+      dimension:RAUM code:R30000; #entire city               
+      dimension:SST ?instru . 
+    ?instru rdfs:label ?instruLabel .
+    ?instru rdfs:comment ?instruComment .
+    FILTER(?time = "2017"^^xsd:gYear)
+    FILTER(?students > 0)   
+   
+  }}
+  }
+ORDER BY DESC(?students)
+```
+
+Similarly as in the previous example (9.1 on forested area) the query is copied from Wikidata (code button at bottom right, select R) to the **program R**.   
+
+```R
+#packages
+    library(SPARQL)
+    library(tidyverse)
+    library(ggwordcloud)
+
+#plot design
+    design <- theme_bw() + theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        strip.background = element_rect(colour="darkblue"),
+        panel.border = element_rect(colour = "darkblue"))
+     
+#SPARQL query (from wikidata)   
+    endpoint <- "https://query.wikidata.org/sparql"
+    query <- 'PREFIX qb: <http://purl.org/linked-data/cube#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>\nPREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>\nPREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>\nPREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>\n\nSELECT ?instruLabel ?students ?instruComment\nWHERE{ \n\n  SERVICE <https://ld.stadt-zuerich.ch/query> {\n  SELECT * WHERE{ \n\n    ?obser a qb:Observation ;\n      qb:dataSet dataset:SCH-RAUM-ZEIT-BTA-SST ; \n      measure:SCH ?students ;\n      dimension:ZEIT ?time ; \n      dimension:BTA code:BTA7701 ; #music school (Musikkonservatorium Zuerich)          \n      dimension:RAUM code:R30000; #entire city               \n      dimension:SST ?instru . \n    ?instru rdfs:label ?instruLabel .\n    ?instru rdfs:comment ?instruComment .\n    FILTER(?time = "2017"^^xsd:gYear)\n    FILTER(?students > 0)   \n   \n  }}\n  }\nORDER BY DESC(?students)\n'
+    
+    qd <- SPARQL(endpoint,query)
+    df <- qd$results
+        
+#plot data
+    instr <- as_tibble(df) %>% 
+        mutate(instrument = 
+            if_else(instruLabel == "QuerflÃ¶te", "Querfloete", 
+            if_else(instruLabel == "BlockflÃ¶te", "Blockfloete", 
+            if_else(instruLabel == "PanflÃ¶te", "Panfloete", instruLabel))),
+            size = students^0.6) %>% 
+        select(instrument, students, size)
+              
+#word cloud          
+    pdf("E:/temp/instruments_wordcloud.pdf", width = 6, height = 4)    
+        ggplot(instr, aes(label = instrument, size = size)) + design +
+            geom_text_wordcloud_area(shape = "circle", color = "gold") +
+            scale_size_area(max_size = 20) +
+            theme(panel.background = element_rect(fill = "darkblue"),
+                plot.background = element_rect(fill = "darkblue"))
+    dev.off()
+```
+<img src="images/10_instruments_wordc.png" width="800" height="522"/>
 
 
 

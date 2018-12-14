@@ -684,7 +684,7 @@ After executing the query in the Wikidata query service the 'code button' (botto
         select(spaceFactor, m2PerPerson)
       
 #barplot          
-    pdf("E:/temp/forest_ggplot-bars.pdf", width = 6, height = 5)    
+    pdf("C:/temp/forest_ggplot-bars.pdf", width = 6, height = 5)    
     
         ggplot() + neutral +
             geom_bar(data = forest, aes(x = spaceFactor, y = m2PerPerson), 
@@ -781,7 +781,7 @@ Similarly as in the previous example (9.1 on forested area) the query is copied 
         select(instrument, students, size)
               
 #word cloud          
-    pdf("E:/temp/instruments_wordcloud.pdf", width = 6, height = 4)    
+    pdf("C:/temp/instruments_wordcloud.pdf", width = 6, height = 4)    
         ggplot(instr, aes(label = instrument, size = size)) + design +
             geom_text_wordcloud_area(shape = "circle", color = "gold") +
             scale_size_area(max_size = 20) +

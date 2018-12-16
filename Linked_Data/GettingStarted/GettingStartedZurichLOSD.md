@@ -17,6 +17,7 @@
 - <a href="#80"> 8 Federated queries  </a>
   - <a href="#81"> 8.1 Zurich and Basel </a>
   - <a href="#82"> 8.2 Fountain pictures from wikidata </a> 
+  - <a href="#83"> 8.3 Edinburgh vs. Zurich </a>    
 - <a href="#90"> 9 Zurich data to Wikidata query to R  </a>
  	- <a href="#91"> 9.1 Forested area per person </a> 
  	- <a href="#92"> 9.2 Musical instruments </a>
@@ -604,6 +605,144 @@ WHERE {
 <img src="images/8_fountains.PNG" width="552" height="426"/>
 
 <a id="83" />
+
+## 8.3 Edinburgh vs. Zurich
+A federated query is used to compare the fertility rates of Edinburgh and Zurich. For this query, the Scottish SPARQL endpoint is used (https://statistics.gov.scot/sparql#).
+
+```SPARQL
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sdmx: <http://purl.org/linked-data/sdmx/2009/concept#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX void: <http://rdfs.org/ns/void#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX code: <https://ld.stadt-zuerich.ch/statistics/code/>
+PREFIX dataset: <https://ld.stadt-zuerich.ch/statistics/dataset/>
+PREFIX measure: <https://ld.stadt-zuerich.ch/statistics/measure/>
+PREFIX dimension: <https://ld.stadt-zuerich.ch/statistics/property/>
+
+SELECT *
+WHERE{{
+SELECT ?areaLabel ?yearLabel (SUM(?babies1) AS ?babies) (SUM(?women1) AS ?women) (SUM(?babies1/?women1 * 1000) AS ?fertility)
+
+WHERE{{
+SELECT ?areaLabel ?yearLabel (SUM(?countBabies) AS ?babies1)
+WHERE{ 
+    ?obser a qb:Observation ;
+    	qb:dataSet <http://statistics.gov.scot/data/births> ;
+	  <http://purl.org/linked-data/sdmx/2009/dimension#refPeriod> ?year ;
+	  <http://statistics.gov.scot/def/dimension/timePeriod> <http://statistics.gov.scot/def/concept/time-period/calendar-year> ; 
+	  <http://statistics.gov.scot/def/dimension/gender> <http://statistics.gov.scot/def/concept/gender/all> ; 
+	  <http://purl.org/linked-data/sdmx/2009/dimension#refArea> ?area ;
+	  <http://statistics.gov.scot/def/measure-properties/count> ?countBabies .
+	?area <http://www.w3.org/2000/01/rdf-schema#label> ?areaLabel .  
+	?year <http://www.w3.org/2000/01/rdf-schema#label> ?yearLabel .    
+	FILTER(?area =  <http://statistics.gov.scot/id/statistical-geography/S12000036>) . 
+  }
+GROUP BY ?areaLabel ?yearLabel 
+}
+{
+SELECT ?areaLabel ?yearLabel (SUM(?count) AS ?women1)
+WHERE{ 
+    ?obser a qb:Observation ;
+      qb:dataSet <http://statistics.gov.scot/data/population-estimates-current-geographic-boundaries> ;
+	  <http://statistics.gov.scot/def/dimension/age> ?age ;
+	  <http://statistics.gov.scot/def/dimension/sex> <http://statistics.gov.scot/def/concept/sex/female> ;
+	  <http://purl.org/linked-data/sdmx/2009/dimension#refPeriod> ?year ;
+	  <http://purl.org/linked-data/sdmx/2009/dimension#refArea> ?area ;
+	  <http://statistics.gov.scot/def/measure-properties/count> ?count .
+	?area <http://www.w3.org/2000/01/rdf-schema#label> ?areaLabel .
+	?year <http://www.w3.org/2000/01/rdf-schema#label> ?yearLabel .   
+	FILTER(?area =  <http://statistics.gov.scot/id/statistical-geography/S12000036>) . 
+	FILTER(
+   	  ?age =  <http://statistics.gov.scot/def/concept/age/15-19> || 
+  	  ?age =  <http://statistics.gov.scot/def/concept/age/20-24> ||
+  	  ?age =  <http://statistics.gov.scot/def/concept/age/25-29> ||  
+   	  ?age =  <http://statistics.gov.scot/def/concept/age/30-34> || 
+          ?age =  <http://statistics.gov.scot/def/concept/age/35-39> || 
+          ?age =  <http://statistics.gov.scot/def/concept/age/40-44> ||   
+	  ?age =  <http://statistics.gov.scot/def/concept/age/45-49>) .  
+  }
+GROUP BY ?areaLabel ?yearLabel 
+}}
+GROUP BY ?areaLabel ?yearLabel
+ORDER BY DESC (?yearLabel)
+}
+UNION
+{
+SERVICE <https://ld.stadt-zuerich.ch/query> 
+	{SELECT *
+        WHERE {          
+SELECT ?areaLabel ?yearLabel (MIN(?birth) AS ?babies) (SUM(?population) AS ?women) ((?babies/?women*1000) AS ?fertility)
+WHERE{ 
+  GRAPH <https://linked.opendata.swiss/graph/zh/statistics>{   
+    ?obpop a qb:Observation ;
+      qb:dataSet dataset:BEW-RAUM-ZEIT-ALT-SEX ;  
+      measure:BEW ?population ;
+      dimension:ALT ?age ; 
+      dimension:SEX code:SEX0002 ;       
+      dimension:RAUM ?area ;
+      dimension:ZEIT ?time .
+    ?area rdfs:label ?areaLabel .    
+    ?obgeb a qb:Observation ;
+      qb:dataSet dataset:GEB-RAUM-ZEIT ;     
+      measure:GEB ?birth ;
+      dimension:RAUM ?area ;
+      dimension:ZEIT ?time .    
+    ?age rdfs:label ?ageLabel. 
+    ?area rdfs:label ?areaLabel.    
+    BIND(SUBSTR(STR(?age),45,7) AS ?agegroup)
+    BIND(SUBSTR(STR(?time),1,4) AS ?yearLabel)  
+    FILTER (?agegroup  IN ('ALT0504', 'ALT0505', 'ALT0506', 'ALT0507', 'ALT0508', 'ALT0509', 'ALT0510'))
+    FILTER (?area = code:R30000)   
+  }}
+
+GROUP BY ?areaLabel ?yearLabel 
+ORDER BY DESC (?yearLabel)
+}}
+}}
+```
+
+Unfortunately the results cannot be processed directly in another program (e.g. R). However, if the code is run on the Scottish beta version, a csv file can be downloaded: ([#https://statistics.gov.scot/sparql-beta](#https://statistics.gov.scot/sparql-beta)). This is analysed in R.
+
+```R
+#packages
+    library(tidyverse)
+    
+#colors
+    colorSSZ <- c("#5182B3", "#60BF97")
+    
+#neutral design
+    neutral <- theme_bw() + theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        strip.background = element_rect(colour="grey85"),
+        panel.border = element_rect(colour = "grey85"))
+
+#import data
+    fert <- read_csv("E:/temp/sparql.csv") %>% 
+            mutate(area = if_else(areaLabel == "Stadt Zürich (ab 1934)", 
+                "Zuerich", "Edinburgh"),
+            areaFactor = parse_factor(area, c("Zuerich", "Edinburgh"))) %>% 
+            select(yearLabel, areaFactor, fertility)
+                   
+#lineplot          
+    pdf("C:/temp/fertility.pdf", width = 6, height = 4)   
+        ggplot() + neutral +
+            geom_line(data = fert, aes(x = yearLabel, y = fertility, 
+                color = areaFactor), size = 0.5) +
+            scale_colour_manual(values = colorSSZ) + 
+            scale_x_continuous(limits = c(2002, 2017), breaks = seq(2002, 2017, by = 2)) +
+            scale_y_continuous(limits = c(0, 50), breaks = seq(0, 50, by = 10)) +
+            labs (x = "", y = "fertility rate (babies per \nand 1000 women aged 15 to 49)", color = "")  
+    dev.off()     
+```
+
+<img src="images/12_fert.png" width="700" height="352"/>
 
 
 <a id="90" />

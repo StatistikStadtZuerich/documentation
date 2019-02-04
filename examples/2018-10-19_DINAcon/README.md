@@ -76,7 +76,7 @@ SELECT * WHERE {
 
 ### Municipality mutations in 2017
 
-[code link](http://yasgui.org/short/f0NgDjmyy)
+[code link](http://yasgui.org/short/vfzwEleGz)
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -84,6 +84,7 @@ PREFIX gont: <https://gont.ch/>
 PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX gn: <http://www.geonames.org/ontology#>
 #
 # This query gets municipality change events from BFS "Historisiertes Gemeindeverzeichnis"
 # It extracts and explains what happened if you click on one of the labels.
@@ -104,7 +105,7 @@ SELECT * WHERE {
       ?abmode skos:prefLabel ?abolitionmodeName .
   }
   FILTER ( ?date >= "2017-01-01"^^xsd:date && ?date <= "2017-12-31"^^xsd:date )
-  ?shapeuri a <http://www.geonames.org/ontology#A.ADM3> ;
+  ?shapeuri gn:featureCode gn:A.ADM3 ;
     dct:hasVersion ?version16 ;
     rdfs:seeAlso ?munuri .
   ?version16 geo:hasGeometry ?Geometry .
@@ -115,7 +116,7 @@ SELECT * WHERE {
 
 ### Municipality description from DBPedia
 
-[code link](http://yasgui.org/short/SixeHzcHU)
+[code link](http://yasgui.org/short/XQl-FvKZo)
 ```SPARQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -127,11 +128,12 @@ PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX fn: <http://www.w3.org/2005/xpath-functions#>
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX db: <http://dbpedia.org/>
+PREFIX gn: <http://www.geonames.org/ontology#>
 
 SELECT ?Municipality ?Name ?DBPediaAbstract WHERE {
     ?Municipality a <http://schema.org/AdministrativeArea> . #specify only the non-versioned entries.
     ?Municipality <http://schema.org/name> ?Name .	
-    ?Municipality a <http://www.geonames.org/ontology#A.ADM3> . #municipality only
+    ?Municipality gn:featureCode gn:A.ADM3 . #municipality only
     ?Municipality <https://ld.geo.admin.ch/def/bfsNumber> ?bfsNumber . #connect to the ?bfsNumber found in wikidata.
   	{
     SELECT DISTINCT (xsd:integer(?bfs) AS ?bfsNumber) ?DBPedia ?DBPediaAbstract WHERE {
@@ -148,7 +150,7 @@ LIMIT 3
 
 ### All municipality boundaries in Canton
 
-[code link](http://yasgui.org/short/ryX8ZPicX)
+[code link](http://yasgui.org/short/wTA1NheD-)
 ```SPARQL
 PREFIX schema: <http://schema.org/>
 PREFIX gn: <http://www.geonames.org/ontology#>
@@ -157,7 +159,7 @@ PREFIX dct: <http://purl.org/dc/terms/>
 select ?Municipality ?Name ?WKT
 where
 {
-?Municipality a gn:A.ADM3 .
+?Municipality gn:featureCode gn:A.ADM3 .
 ?Municipality schema:name ?Name .
 ?Municipality dct:issued ?Date .
 ?Municipality gn:parentADM1 ?InCanton .

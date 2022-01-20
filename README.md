@@ -1,3 +1,5 @@
+Disclaimer. The information on these pages is no longer up-to-date and not all examples are executable.
+
 # Linked Open Statistical Data 
 This documentation covers using the linked open statistical data service provided by the [Statistics Office of the City of Zurich](https://www.stadt-zuerich.ch/statistik). 
 
